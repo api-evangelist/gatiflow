@@ -1,0 +1,18 @@
+generated: '2026-09-21'
+method: searched
+source: https://gatiflow.io/api-docs
+name: GatiFlow Intelligence API lifecycle
+versioning: >-
+  API path is versioned (/api/v1/...). The OpenAPI contract carries info.version
+  2.2.0 and is generated from the running routes and diffed against them by the
+  test suite, so the published contract cannot drift from the live API. A separate
+  hand-curated product changelog runs at v2.x (currently v2.10).
+deprecation: >-
+  No formal deprecation policy or Sunset/Deprecation (RFC 8594) header usage is
+  published, and no operation in the current contract is marked deprecated.
+status_page: https://stats.uptimerobot.com/9fR5IzLq0q
+changelog: https://gatiflow.io/changelog
+deprecated_operations: []
+note: >-
+  Status page is an UptimeRobot public status board linked from the site footer as
+  "Status". Data-inquiry / incident contact is support@gatiflow.io.

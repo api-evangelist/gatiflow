@@ -1,0 +1,18 @@
+generated: '2026-09-21'
+method: generated
+source: >-
+  openapi/gatiflow-openapi.yml (all operationIds verified against the spec) plus
+  gatiflow.io/api-docs. GatiFlow publishes no skills or AGENTS.md of its own (its
+  llms.txt is a docs index, not an agent skill file).
+skills:
+- file: gatiflow-weekly-intelligence.md
+  name: gatiflow-weekly-intelligence
+  method: generated
+  description: Pull the current GatiFlow market/talent intelligence report, export it, walk retained snapshots for week-over-week movement, and self-audit API usage against plan limits.
+  operations: 5
+  operation_ids:
+  - report_api_v1_intelligence_report_get
+  - export_report_api_v1_intelligence_report_export_get
+  - report_history_list_api_v1_intelligence_report_history_get
+  - report_at_snapshot_api_v1_intelligence_report_at__snapshot_id__get
+  - get_my_usage_api_v1_usage_get

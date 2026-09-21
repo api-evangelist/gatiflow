@@ -1,0 +1,68 @@
+generated: '2026-09-21'
+method: searched
+source: https://gatiflow.io/
+name: GatiFlow Intelligence API plans
+audience: developer-api
+pricing_basis: tiered-subscription
+published: true
+delivery:
+  delivery: managed
+plan_count: 4
+currency: USD
+billing_period: monthly
+note: >-
+  Four subscription tiers priced on the landing page (https://gatiflow.io/). The
+  full feature comparison is behind a login at /billing; the per-plan rate limits,
+  daily quotas and export availability quoted here are published on the public
+  /api-docs page. All new accounts start on a 14-day Starter trial (no credit card);
+  after the trial an account falls back to the Free read-only tier.
+plans:
+- name: Free
+  price_text: No charge
+  description: >-
+    Free read-only tier that all accounts fall back to after the 14-day Starter
+    trial. 5 requests/minute, 10 requests/day, 3 signals per report, no export, no
+    snapshot history.
+  features:
+  - Free daily insights from 13 public data sources
+  - Latest Deep Dive preview (no API key)
+  limits:
+  - 5 requests/minute
+  - 10 requests/day
+  - 3 signals per report
+  - No export
+  - Snapshot history excluded
+- name: Starter
+  price: 49
+  price_text: $49 /mo
+  description: >-
+    Entry paid tier; the 14-day trial default. 60 requests/minute, 2,000
+    requests/day.
+  features:
+  - Full intelligence report
+  - Snapshot history retention (per plan)
+  limits:
+  - 60 requests/minute
+  - 2,000 requests/day
+- name: Pro
+  price: 149
+  price_text: $149 /mo
+  description: >-
+    Most Popular tier. 120 requests/minute, 10,000 requests/day, CSV export.
+  features:
+  - CSV export of the intelligence report
+  - Per-signal velocity and evidence
+  limits:
+  - 120 requests/minute
+  - 10,000 requests/day
+- name: Business
+  price: 499
+  price_text: $499 /mo
+  description: >-
+    Top tier. 300 requests/minute, 50,000 requests/day, CSV or PDF export.
+  features:
+  - CSV or PDF export of the intelligence report
+  - Longest snapshot retention
+  limits:
+  - 300 requests/minute
+  - 50,000 requests/day

@@ -1,0 +1,84 @@
+generated: '2026-09-21'
+method: generated
+source: openapi/gatiflow-openapi.yml
+description: Recommended x-agentic-access execution contracts, classified heuristically from
+  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment. See research/curity/agentic-governance/.
+summary:
+  operations: 7
+  by_action_class:
+    connected: 7
+  by_consequence:
+    read: 7
+  human_in_the_loop_required: 0
+operations:
+- path: /api/v1/intelligence/report
+  method: get
+  operationId: report_api_v1_intelligence_report_get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/intelligence/report-history
+  method: get
+  operationId: report_history_list_api_v1_intelligence_report_history_get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/intelligence/report/at/{snapshot_id}
+  method: get
+  operationId: report_at_snapshot_api_v1_intelligence_report_at__snapshot_id__get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/intelligence/report/export
+  method: get
+  operationId: export_report_api_v1_intelligence_report_export_get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/public/deep-dive
+  method: get
+  operationId: get_latest_deep_dive_api_v1_public_deep_dive_get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/public/weekly-report
+  method: get
+  operationId: weekly_report_api_v1_public_weekly_report_get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/usage
+  method: get
+  operationId: get_my_usage_api_v1_usage_get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none

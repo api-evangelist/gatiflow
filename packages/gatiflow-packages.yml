@@ -1,0 +1,17 @@
+generated: '2026-09-21'
+method: none
+source: >-
+  npm, PyPI and RubyGems registry search (2026-09-21) plus the GatiFlow /api-docs
+  page.
+packages: []
+note: >-
+  No first-party client library or SDK is published for the GatiFlow Intelligence
+  API. The documentation directs consumers to generate a client from the OpenAPI 3.1
+  contract (gatiflow.io/openapi.json) rather than to an official SDK; there is no
+  SDK or CLI page. One npm package bearing the org scope, @gatiflow/react-native
+  (v1.0.0, published 2026-05-23), describes itself as a "Crash reporting and
+  analytics SDK for React Native" — a different product category with no relation to
+  this read-only market-intelligence JSON API (no crash-reporting or React Native
+  surface exists in the contract). It is treated as a name collision, NOT a
+  first-party package, and is deliberately not listed. PyPI (gatiflow) and RubyGems
+  (gatiflow) return no package.

@@ -1,0 +1,40 @@
+{
+  "@context": {
+    "@vocab": "https://gatiflow.io/schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "gatiflow": "https://gatiflow.io/schema#",
+    "HTTPValidationError": "gatiflow:HTTPValidationError",
+    "detail": {
+      "@id": "gatiflow:detail",
+      "@container": "@list"
+    },
+    "ValidationError": "gatiflow:ValidationError",
+    "ctx": {
+      "@id": "gatiflow:ctx"
+    },
+    "input": {
+      "@id": "gatiflow:input"
+    },
+    "loc": {
+      "@id": "gatiflow:loc",
+      "@container": "@list"
+    },
+    "msg": {
+      "@id": "gatiflow:msg",
+      "@type": "xsd:string"
+    },
+    "type": {
+      "@id": "gatiflow:type",
+      "@type": "xsd:string"
+    }
+  },
+  "@type": "schema:Dataset",
+  "schema:name": "GatiFlow API JSON-LD context",
+  "schema:description": "A JSON-LD @context for the objects GatiFlow's own API contract declares: one class per component schema, one property per declared field, typed from the contract. Derived by script (derive-json-ld.py, 2026-09-21) from openapi/gatiflow-openapi.yml.",
+  "dcterms:created": "2026-09-21",
+  "dcterms:source": [
+    "openapi/gatiflow-openapi.yml"
+  ]
+}

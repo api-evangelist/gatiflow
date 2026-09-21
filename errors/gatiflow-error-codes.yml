@@ -1,0 +1,55 @@
+generated: '2026-09-21'
+method: searched
+source: https://gatiflow.io/api-docs
+name: GatiFlow Intelligence API error catalog
+format: >-
+  Custom JSON error envelope (not RFC 9457): {"status":"error","error":{"message",
+  "code","http_status","request_id"}}. Validation failures (422) use the OpenAPI
+  HTTPValidationError shape {"detail":[{loc,msg,type}]}.
+envelope: '{ "status": "error", "error": { "message", "code", "http_status", "request_id" } }'
+problems:
+- status: 401
+  code: (auth)
+  title: API key required or invalid
+  description: >-
+    Missing/invalid X-API-Key, or a session-only operation called with an API key.
+    Documented: "an API key sent to an operation that requires it receives 401".
+  remediation: Send a valid gf_-prefixed API key in the X-API-Key header.
+  source: docs
+- status: 404
+  code: NOT_FOUND
+  title: Resource not found
+  description: >-
+    Observed live on api.gatiflow.io for unknown paths and unknown snapshot ids.
+    Envelope confirmed: {"status":"error","error":{"message":"Not Found",
+    "code":"NOT_FOUND","http_status":404,"request_id":"..."}}.
+  remediation: Verify the path and any snapshot_id (obtained from report-history).
+  source: live probe (api.gatiflow.io)
+- status: 422
+  code: validation_error
+  title: Request validation failed
+  description: >-
+    OpenAPI HTTPValidationError — a query parameter (e.g. limit out of range, bad
+    export format) failed validation.
+  remediation: Correct the offending parameter; detail[] names loc and msg.
+  source: openapi
+- status: 503
+  code: (stale)
+  title: Intelligence not fresh
+  description: >-
+    The intelligence report endpoint returns 503 with Retry-After rather than
+    serving data older than 24 hours.
+  remediation: Retry after the interval in the Retry-After header.
+  source: docs
+- status: 429
+  code: (rate_limit)
+  title: Rate limit or daily quota exceeded
+  description: >-
+    Per-plan per-minute rate limit or daily quota exhausted; X-RateLimit-* /
+    X-DailyQuota-* headers report the ceilings.
+  remediation: Back off per Retry-After; upgrade plan for higher limits.
+  source: docs
+note: >-
+  Only the 404 NOT_FOUND envelope was observed on a live unauthenticated response;
+  the other rows are documented on /api-docs and the OpenAPI. The machine `code`
+  string is confirmed only for NOT_FOUND.

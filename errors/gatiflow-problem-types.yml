@@ -1,0 +1,45 @@
+generated: '2026-09-21'
+method: derived
+generator: derive-problem-types.py
+source:
+- openapi/gatiflow-openapi.yml
+format: custom
+envelope:
+  media_type: application/json
+  schema: HTTPValidationError
+coverage:
+  operations: 7
+  statuses_declared: 5
+problems:
+- status: 400
+  title: Bad Request
+  description: snapshot_id is not in the YYYYMMDDTHHmm format.
+  operations: 1
+  media_types: []
+  schema: null
+- status: 403
+  title: Forbidden
+  description: The plan does not retain history.
+  operations: 2
+  media_types: []
+  schema: null
+- status: 404
+  title: Not Found
+  description: No snapshot with that id inside the plan retention window.
+  operations: 1
+  media_types: []
+  schema: null
+- status: 422
+  title: Unprocessable Content
+  description: Validation Error
+  operations: 6
+  media_types:
+  - application/json
+  schema: HTTPValidationError
+- status: 429
+  title: Too Many Requests
+  description: 'Too many requests from this address. This operation takes no credential, so the ceiling is per caller
+    address: 60 requests a minute.'
+  operations: 1
+  media_types: []
+  schema: null

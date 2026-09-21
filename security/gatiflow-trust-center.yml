@@ -1,0 +1,34 @@
+generated: '2026-09-21'
+method: searched
+source: https://gatiflow.io/compliance
+url: https://gatiflow.io/compliance
+certifications:
+- name: SOC 2 Type II
+  status: in progress
+  evidence: 'Compliance page section 7 (Audit & Transparency): "SOC 2 Type II : (In
+    progress)". Not a currently-held attestation.'
+- name: Penetration testing
+  status: quarterly
+  evidence: 'Compliance page: "Quarterly security vulnerability assessment".'
+compliance_frameworks:
+- GDPR (EU) — legitimate interest for public data (Art 6(1)(f))
+- LGPD (Brazil) — Art 7 IX
+- CCPA (California) — publicly-available-information exemption
+- PIPEDA (Canada)
+- APPI (Japan)
+- PDPA (Singapore)
+- UK DPA 2018
+encryption:
+- TLS 1.3 in transit
+- AES-256 at rest
+note: >-
+  GatiFlow publishes a self-described "Ethics & Compliance Protocol" (v2.2, April
+  2026) rather than a third-party trust portal. No third-party certification is
+  currently held; SOC 2 Type II is stated as in progress. Regulatory-compliance
+  claims (GDPR/LGPD/CCPA and others) are self-attested. Data-inquiry contact:
+  privacy@gatiflow.io.
+evidence:
+- source: https://gatiflow.io/compliance
+  detail: 'Section 3 Legal Compliance Framework; section 7 Audit & Transparency (SOC
+    2 Type II in progress, quarterly pen testing); section 4.2 encryption (TLS 1.3 /
+    AES-256).'

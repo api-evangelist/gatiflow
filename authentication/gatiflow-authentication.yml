@@ -1,0 +1,26 @@
+generated: '2026-09-21'
+method: derived
+source: openapi/gatiflow-openapi.yml
+summary:
+  types:
+  - apiKey
+  - http
+  api_key_in:
+  - header
+schemes:
+- name: ApiKeyAuth
+  type: apiKey
+  in: header
+  parameter: X-API-Key
+  description: API key (prefix gf_) created in Dashboard → API Keys.
+  sources:
+  - openapi/gatiflow-openapi.yml
+- name: SessionBearer
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  description: Web session token issued to the browser at sign-in. It is not part of the public
+    API and cannot be created from an API key; an API key sent to an operation that requires
+    it receives 401.
+  sources:
+  - openapi/gatiflow-openapi.yml

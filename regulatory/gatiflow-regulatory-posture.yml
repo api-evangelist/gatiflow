@@ -1,0 +1,57 @@
+generated: '2026-09-21'
+method: searched
+source: https://gatiflow.io/compliance
+signals:
+  ai_transparency:
+    url: https://gatiflow.io/compliance
+    section: '4.5 AI Content Integrity'
+    evidence:
+    - source: https://gatiflow.io/compliance
+      http_status: 200
+      fetched: '2026-09-21'
+      quote: '4.5 AI Content Integrity — Always Labeled: Every AI-generated narrative [declares itself].'
+    - source: https://gatiflow.io/changelog
+      http_status: 200
+      fetched: '2026-09-21'
+      quote: >-
+        "AI-generated content now declares itself in report metadata (EU AI Act
+        compliance)." (v2.5, May 2026)
+    note: >-
+      GatiFlow's reports and narratives are AI-generated (daily narratives use Claude
+      Sonnet with a numeric fact-check pass, per the changelog). AI-generated content
+      is labelled in report metadata, cited as EU AI Act compliance. This is the
+      substance of an AI-content transparency signal.
+  data_subject_request:
+    url: https://gatiflow.io/opt-out
+    section: '3. Legal Compliance Framework / opt-out'
+    channel: privacy@gatiflow.io
+    stated_sla: within one month (GDPR Art 12); within 15 business days (LGPD Art 19)
+    rights_named:
+    - access
+    - correction
+    - deletion
+    - objection
+    - removal of a named developer profile from the pipeline
+    evidence:
+    - source: https://gatiflow.io/compliance
+      http_status: 200
+      fetched: '2026-09-21'
+      quote: >-
+        "Data Inquiries : Written requests handled via privacy@gatiflow.io within one
+        month (Article 12)." — GDPR section 3.1.
+    - source: https://gatiflow.io/opt-out
+      http_status: 200
+      fetched: '2026-09-21'
+      quote: >-
+        A named developer can be excluded from every future report; the exclusion is
+        applied inside the pipeline, not at render time, so the profile stops being
+        collected (llms.txt / opt-out page).
+    note: >-
+      Data-removal requests via privacy@gatiflow.io and a self-serve /opt-out that
+      excludes a named developer profile at the pipeline level.
+note: >-
+  Horizontal regulatory signals harvested from GatiFlow's own compliance, changelog
+  and opt-out pages. No SBOM, VPAT/accessibility conformance report, dated
+  subprocessor table, or transparency report with substance was found — those
+  signals are honestly absent. GatiFlow self-attests GDPR/LGPD/CCPA/PIPEDA/APPI/PDPA/
+  UK-DPA compliance (see security/gatiflow-trust-center.yml).

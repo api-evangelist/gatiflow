@@ -1,0 +1,56 @@
+generated: '2026-09-21'
+method: searched
+source: https://gatiflow.io/api-docs
+name: GatiFlow Intelligence API conventions
+authentication:
+  style: api-key-header
+  header: X-API-Key
+  key_prefix: gf_
+  note: >-
+    API key in the X-API-Key header grants read access. A separate JWT session
+    bearer is used only by the web app and is not part of the public API.
+pagination:
+  style: limit-parameter
+  params:
+  - name: limit
+    on: GET /api/v1/intelligence/report-history
+    range: 1-50
+  - name: limit
+    on: GET /api/v1/usage
+    default: 100
+    max: 500
+  note: >-
+    Snapshot history and usage listings take a limit query parameter. Point-in-time
+    snapshots are addressed by id (format YYYYMMDDTHHmm) obtained from report-history.
+error_envelope:
+  shape: '{ "status": "error", "error": { "message", "code", "http_status", "request_id" } }'
+  note: >-
+    Observed live on api.gatiflow.io (e.g. 404 NOT_FOUND). Every error carries a
+    request_id for tracing. Validation errors (422) use the OpenAPI HTTPValidationError
+    shape. This is a custom envelope, not RFC 9457 problem+json.
+request_id: >-
+  Each error response includes error.request_id (UUID) for correlation with support.
+rate_limit_signaling:
+  headers:
+  - X-RateLimit-Limit
+  - X-RateLimit-Remaining
+  - X-RateLimit-Reset
+  - X-DailyQuota-Limit
+  - X-DailyQuota-Remaining
+  - Retry-After
+  stale_data: 503 with Retry-After when the intelligence report is older than 24 hours
+versioning: URL path versioning (/api/v1)
+idempotency:
+  coverage: na
+  note: >-
+    The public API is entirely read-only (seven GET operations, no write surface),
+    so idempotency keys and replay protection do not apply. All GETs are naturally
+    idempotent.
+reversibility:
+  status: na
+  note: >-
+    No write, create, delete or mutating operation exists in the public API, so
+    there is nothing to reverse. Read-only surface.
+dry_run:
+  status: na
+  note: Read-only API; no mutating action to rehearse.

@@ -1,0 +1,83 @@
+generated: '2026-09-21'
+method: searched
+source: https://gatiflow.io/changelog
+name: GatiFlow changelog
+scheme: semver-ish (v2.x, hand-curated)
+current_version: '2.10'
+note: >-
+  Hand-curated customer-facing changelog; internal refactors and minor fixes are
+  omitted. Recent window captured below; the API contract itself is at version
+  2.2.0 (info.version in the OpenAPI).
+entries:
+- version: '2.10'
+  date: '2026-07'
+  breaking: false
+  highlights:
+  - Interactive Swagger UI live at api.gatiflow.io/docs with try-it-out
+  - Fixed a dashboard glitch showing HTTP 502 on API-key revocation
+- version: '2.9'
+  date: '2026-06'
+  breaking: false
+  highlights:
+  - Download-JSON button on the Report page
+  - Hiring & Opportunity Signals load collapsed with Show All toggle
+- version: '2.8'
+  date: '2026-06'
+  breaking: false
+  highlights:
+  - Weekly Digest and Saturday Deep Dive emails delivered at local time
+  - Timezone auto-detected at registration
+- version: '2.7'
+  date: '2026-06'
+  breaking: false
+  highlights:
+  - Insights became a true daily brief synthesized from four collection cycles
+  - Weekly Digest redesigned to look forward with plaintext version
+  - arXiv research-paper source restored
+- version: '2.6'
+  date: '2026-05'
+  breaking: false
+  highlights:
+  - Landing page rebuilt responsive and screen-reader accessible
+  - Trend Reading 101 email course polish
+- version: '2.5'
+  date: '2026-05'
+  breaking: false
+  highlights:
+  - AI-generated content now declares itself in report metadata (EU AI Act compliance)
+  - Confidence intervals exposed on every report
+  - Monthly cap on AI spend
+- version: '2.4'
+  date: '2026-04'
+  breaking: false
+  highlights:
+  - Stripe webhook idempotency hardened against partial failures
+  - Watchlist signal collection moved to background tasks
+- version: '2.3'
+  date: '2026-03'
+  breaking: false
+  highlights:
+  - Centralized opt-out filter excludes opted-out subjects from all report paths
+  - Registration requires explicit Terms + Privacy consent (LGPD/GDPR)
+  - Real client IP propagation for per-user rate limits and audit logs
+- version: '2.2'
+  date: '2026-02'
+  breaking: false
+  highlights:
+  - Saturday Deep Dive 1800-word article with web-grounded fact-checking
+  - Daily narratives use Claude Sonnet with numeric fact-check pass
+  - RS256 JWT activated in production
+- version: '2.1'
+  date: '2026-02'
+  breaking: false
+  highlights:
+  - Token blacklisting via Redis, httpOnly refresh-token cookie
+  - Auth rate limiting (10 attempts/min per IP)
+  - Stripe webhook signature validation
+- version: '2.0'
+  date: '2026-02'
+  breaking: true
+  highlights:
+  - Unified monorepo (9 repos consolidated)
+  - Full intelligence pipeline RealCollector to Enricher to Scorer to Assembler
+  - First production deployment of Pro and Business plans

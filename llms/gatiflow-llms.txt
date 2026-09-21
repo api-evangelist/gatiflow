@@ -1,0 +1,37 @@
+# GatiFlow
+
+> GatiFlow turns public developer activity into structured market, talent and hiring signals, and serves them as a read-only JSON API. Thirteen public sources are polled on a six-hour cycle. A trend is published only once two independent sources confirm it, or the same source repeats it across cycles; confidence is computed from source authority, diversity and persistence rather than raw mention count; and every signal carries the evidence behind it — the sources, the counts, and the week-over-week movement across fourteen days of history.
+
+Access is an API key with the `gf_` prefix, sent in the `X-API-Key` header. Creating one requires an account; registration opens a 14-day Starter trial once the email address is verified. One operation, the latest Deep Dive preview, answers with no credential at all.
+
+What the report contains is shaped by plan: the caps on signals, trends and talent profiles, whether per-signal velocity and evidence are included, whether the export is available, and how long snapshots are retained. The documentation below states the current values; this file deliberately does not repeat them, because they change and a stale copy is worse than a pointer.
+
+The API is read-only. There is no operation that writes, and no endpoint that returns personal contact details.
+
+## API
+
+- [OpenAPI 3.1 specification](https://gatiflow.io/openapi.json): The published contract — seven operations, their parameters, their response shapes and a worked example for each, including the empty and not-yet-published states. Generated from the running routes and compared against them by the test suite, so it cannot drift from the API it describes.
+- [API documentation](https://gatiflow.io/api-docs): The same surface in prose — use cases, quick start, authentication, rate limits and the endpoint list.
+- [Interactive documentation](https://api.gatiflow.io/docs): Swagger UI against the live API. Authorize with an API key and call any published operation from the browser.
+- [apis.json index](https://gatiflow.io/apis.json): Machine-readable index of this API and the documents that describe it.
+
+## How the signals are produced
+
+- [Methodology](https://gatiflow.io/methodology): The sources, the two-source confirmation rule, how confidence is computed, and what the numbers do not mean.
+- [Changelog](https://gatiflow.io/changelog): What shipped, when, and what it changed about the output.
+
+## Access
+
+- [Create an account](https://gatiflow.io/register): Required before an API key can be issued.
+- [Compliance](https://gatiflow.io/compliance): Data handling, retention and the sub-processors involved.
+
+## Policies
+
+- [Terms of Service](https://gatiflow.io/terms): Including what may and may not be done with the returned data.
+- [Privacy Policy](https://gatiflow.io/privacy)
+- [Acceptable Use Policy](https://gatiflow.io/aup)
+- [Remove a developer profile](https://gatiflow.io/opt-out): A named developer can be excluded from every future report. The exclusion is applied inside the pipeline, not at render time, so the profile stops being collected rather than stops being shown.
+
+## Optional
+
+- [Academy](https://gatiflow.io/academy): Written material on reading trend data — what a confidence score can and cannot support, and where the instruments fail.

@@ -1,0 +1,48 @@
+generated: '2026-09-21'
+method: derived
+generator: derive-mcp-candidate.py
+source:
+- openapi/gatiflow-openapi.yml
+status: candidate
+deployment:
+  mode: none
+  auth: unknown
+  verified: derived
+note: No MCP server was found. No probe result in the dossier. Candidate tools below are derived from the 7 operation(s) in the provider's own
+  OpenAPI (7 listed); they describe what a server WOULD expose, not one that exists.
+tools:
+- name: report_api_v1_intelligence_report_get
+  operationId: report_api_v1_intelligence_report_get
+  method: GET
+  path: /api/v1/intelligence/report
+  description: Generate an intelligence report
+- name: report_history_list_api_v1_intelligence_report_history_get
+  operationId: report_history_list_api_v1_intelligence_report_history_get
+  method: GET
+  path: /api/v1/intelligence/report-history
+  description: List retained report snapshots
+- name: report_at_snapshot_api_v1_intelligence_report_at_snapshot_id
+  operationId: report_at_snapshot_api_v1_intelligence_report_at__snapshot_id__get
+  method: GET
+  path: /api/v1/intelligence/report/at/{snapshot_id}
+  description: Retrieve an archived report snapshot
+- name: export_report_api_v1_intelligence_report_export_get
+  operationId: export_report_api_v1_intelligence_report_export_get
+  method: GET
+  path: /api/v1/intelligence/report/export
+  description: Export the report as a file
+- name: get_latest_deep_dive_api_v1_public_deep_dive_get
+  operationId: get_latest_deep_dive_api_v1_public_deep_dive_get
+  method: GET
+  path: /api/v1/public/deep-dive
+  description: Get the latest Deep Dive preview
+- name: weekly_report_api_v1_public_weekly_report_get
+  operationId: weekly_report_api_v1_public_weekly_report_get
+  method: GET
+  path: /api/v1/public/weekly-report
+  description: Get the Daily Insights payload
+- name: get_my_usage_api_v1_usage_get
+  operationId: get_my_usage_api_v1_usage_get
+  method: GET
+  path: /api/v1/usage
+  description: List recent calls made with this API key

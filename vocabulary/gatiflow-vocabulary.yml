@@ -1,0 +1,20 @@
+generated: '2026-09-21'
+method: derived
+generator: derive-vocabulary.py
+source: openapi/gatiflow-openapi.yml
+vocabulary:
+  name: GatiFlow Domain Vocabulary
+  description: 'Terms declared by GatiFlow''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions.
+    Derived, not authored.'
+  version: '2026-09-21'
+  terms:
+  - term: HTTPValidationError
+    definition: 'Object declared by the contract with fields: detail.'
+    tags:
+    - Object
+    source: openapi/gatiflow-openapi.yml#/components/schemas/HTTPValidationError
+  - term: ValidationError
+    definition: 'Object declared by the contract with fields: ctx, input, loc, msg, type.'
+    tags:
+    - Object
+    source: openapi/gatiflow-openapi.yml#/components/schemas/ValidationError
