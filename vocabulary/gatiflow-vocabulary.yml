@@ -1,4 +1,4 @@
-generated: '2026-09-21'
+generated: '2026-09-25'
 method: derived
 generator: derive-vocabulary.py
 source: openapi/gatiflow-openapi.yml
@@ -6,7 +6,7 @@ vocabulary:
   name: GatiFlow Domain Vocabulary
   description: 'Terms declared by GatiFlow''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions.
     Derived, not authored.'
-  version: '2026-09-21'
+  version: '2026-09-25'
   terms:
   - term: HTTPValidationError
     definition: 'Object declared by the contract with fields: detail.'

@@ -1,4 +1,4 @@
-generated: '2026-09-21'
+generated: '2026-09-25'
 method: derived
 generator: derive-conformance.py
 source: openapi/ (1 document(s), 0 mutating operations)

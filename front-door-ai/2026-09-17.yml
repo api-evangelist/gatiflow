@@ -1,0 +1,31 @@
+# Front Door AI Index — gatiflow — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: gatiflow
+  lexicon_version: '1.0'
+  probed_at: '2026-09-25'
+  host: gatiflow.io
+  final_host: gatiflow.io
+  ownership: own
+  owner: gatiflow
+  shares_host_with: null
+  inherited_from: null
+  alias_of: null
+  verdict: scored
+  score: 12
+  band: 5
+  band_label: prominent
+  host_score: 12
+  density: 13.94
+  words: 861
+  tiers:
+    agentic: 0
+    core: 10
+    model: 2
+  ambiguous: 8
+  top_terms:
+    AI: 9
+    intelligence: 8
+    Hugging Face: 2
+    ML: 1

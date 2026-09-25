@@ -1,16 +1,16 @@
 aid: gatiflow
 name: GatiFlow
-description: GatiFlow is a market, talent and hiring intelligence product that turns public developer
-  activity into structured signals and serves them as a read-only JSON API. Thirteen public sources —
-  GitHub, StackOverflow, HackerNews, Dev.to, arXiv, OpenReview, npm, PyPI, HuggingFace, Adzuna, Remotive
-  and SEC EDGAR — are polled on a six-hour cycle; a trend is published only once two independent sources
-  confirm it, confidence is computed from source authority, diversity and persistence rather than raw
-  mention count, and every signal carries its evidence and week-over-week movement. The public GatiFlow
-  Intelligence API exposes seven read-only operations (the current report, snapshot history, a point-in-time
-  snapshot, a CSV/PDF export, the daily insights payload, the latest Deep Dive preview, and per-key usage),
-  authenticated with a gf_-prefixed API key in the X-API-Key header, priced across Free, Starter ($49/mo),
-  Pro ($149/mo) and Business ($499/mo) plans.
-url: https://raw.githubusercontent.com/api-evangelist/gatiflow/refs/heads/main/apis.yml
+description: GatiFlow is a market, talent and hiring intelligence product that turns public developer activity into
+  structured signals and serves them as a read-only JSON API. Thirteen public sources — GitHub, StackOverflow, HackerNews,
+  Dev.to, arXiv, OpenReview, npm, PyPI, HuggingFace, Adzuna, Remotive, job boards (Greenhouse and Lever public postings)
+  and SEC EDGAR — are polled on a six-hour cycle; a trend-category signal is published only once two independent
+  sources confirm it or one source repeats it across two collection cycles, confidence is computed from source authority,
+  diversity and persistence rather than raw mention count, and every signal carries its evidence and week-over-week
+  movement. The public GatiFlow Intelligence API exposes seven read-only operations (the current report, snapshot
+  history, a point-in-time snapshot, a CSV/PDF export, the daily insights payload, the latest Deep Dive preview,
+  and per-key usage), authenticated with a gf_-prefixed API key in the X-API-Key header, priced across Free, Starter
+  ($49/mo), Pro ($149/mo) and Business ($499/mo) plans.
+url: https://gatiflow.io/apis.json
 x-type: company
 x-source: harvest:apis-io-add
 x-tier: profiled
@@ -18,14 +18,14 @@ x-tier-reason: enrichment pass 2026-09-21 (local-v5; was apis.io/add submission 
 position: Producing
 specificationVersion: '0.20'
 created: '2026-09-21'
-modified: '2026-09-21'
+modified: '2026-09-25'
 image: https://gatiflow.io/favicon.svg
 tags:
 - Market Intelligence
 - Developer Signals
 - Trends
 - Hiring
-- Open-Source
+- Open Source
 - Research
 - B2B SaaS
 - Artificial Intelligence
@@ -38,12 +38,17 @@ tags_raw:
 - Research
 - B2B SaaS
 - AI
+- Open-Source
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Hosts
+  url: hosts/gatiflow-hosts.yml
+- type: Vendors
+  url: vendors/gatiflow-vendors.yml
 - type: AgenticAccess
   url: agentic-access/gatiflow-agentic-access.yml
 - type: RateLimits
@@ -98,18 +103,33 @@ common:
   url: https://gatiflow.io/compliance
 - type: DataSubjectRequest
   url: https://gatiflow.io/opt-out
+- type: APIsJSON
+  url: https://gatiflow.io/apis.json
+- type: DeveloperPortal
+  url: https://gatiflow.io/api-docs
+- type: GettingStarted
+  url: https://gatiflow.io/api-docs
+- type: Pricing
+  url: https://gatiflow.io/#pricing
+- type: Security
+  url: https://gatiflow.io/aup
+- type: Support
+  url: mailto:support@gatiflow.io
+- type: Blog
+  url: https://gatiflow.io/academy
+- type: Webhooks
+  url: https://gatiflow.io/
 apis:
 - aid: gatiflow:gatiflow-intelligence-api
   name: GatiFlow Intelligence API
-  description: A read-only JSON API over the GatiFlow signal pipeline. Seven published operations return
-    the current intelligence report (content scales with plan), its retained snapshots, a point-in-time
-    snapshot by id, a CSV/PDF file export (CSV on Pro, CSV or PDF on Business), the shared Daily Insights
-    payload, the latest Deep Dive preview (the one operation needing no credential), and the calls made
-    with an API key. Authentication is a gf_-prefixed API key in the X-API-Key header; a separate JWT
-    session bearer is web-app only. Per-plan rate limits and daily quotas are surfaced in X-RateLimit-*
-    and X-DailyQuota-* headers, and the report endpoint returns 503 with Retry-After rather than serving
-    intelligence older than 24 hours. OpenAPI 3.1, version 2.2.0, served at gatiflow.io/openapi.json with
-    servers[] https://api.gatiflow.io.
+  description: A read-only JSON API over the GatiFlow signal pipeline. Seven published operations return the current
+    intelligence report (content scales with plan), its retained snapshots, a point-in-time snapshot by id, a CSV/PDF
+    file export (CSV on Pro, CSV or PDF on Business), the shared Daily Insights payload, the latest Deep Dive preview
+    (the one operation needing no credential), and the calls made with an API key. Authentication is a gf_-prefixed
+    API key in the X-API-Key header; a separate JWT session bearer is web-app only. Per-plan rate limits and daily
+    quotas are surfaced in X-RateLimit-* and X-DailyQuota-* headers, and the report endpoint returns 503 with Retry-After
+    rather than serving intelligence older than 24 hours. OpenAPI 3.1, version 2.2.0, served at gatiflow.io/openapi.json
+    with servers[] https://api.gatiflow.io.
   humanURL: https://gatiflow.io/api-docs
   baseURL: https://api.gatiflow.io
   image: https://gatiflow.io/favicon.svg
@@ -132,7 +152,7 @@ apis:
   - type: SignUp
     url: https://gatiflow.io/register
 x-enrichment:
-  date: '2026-09-21'
+  date: '2026-09-25'
   status: enriched
-  artifacts_added: 24
+  artifacts_added: 2
   pass: local-v5

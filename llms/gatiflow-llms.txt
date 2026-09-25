@@ -17,7 +17,7 @@ The API is read-only. There is no operation that writes, and no endpoint that re
 
 ## How the signals are produced
 
-- [Methodology](https://gatiflow.io/methodology): The sources, the two-source confirmation rule, how confidence is computed, and what the numbers do not mean.
+- [Methodology](https://gatiflow.io/methodology): The sources, when a trend signal is published and when it is held back, how confidence is computed, and what the numbers do not mean.
 - [Changelog](https://gatiflow.io/changelog): What shipped, when, and what it changed about the output.
 
 ## Access

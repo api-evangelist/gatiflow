@@ -1,0 +1,53 @@
+generated: '2026-09-25'
+method: derived
+source: the pre-flight dossier, apis.yml pointers, spec servers, well-known, vendors -- nothing fetched here
+generator: derive-hosts.py
+summary:
+  hosts: 3
+  own: 2
+  other_domain: 1
+  platform: 0
+  roles:
+  - api
+  - status
+  - website
+hosts:
+- host: api.gatiflow.io
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: gatiflow.io
+  role: api
+  relation: own
+- host: gatiflow.io
+  found_by:
+  - pointer
+  - apis[]
+  - vendor-detect
+  types:
+  - Compliance
+  - ChangeLog
+  - Website
+  - Login
+  - TermsOfService
+  - PrivacyPolicy
+  - AITransparency
+  - DataSubjectRequest
+  serves:
+  - docs
+  - hosting
+  vendor: vercel
+  registrable_domain: gatiflow.io
+  role: website
+  relation: own
+- host: stats.uptimerobot.com
+  found_by:
+  - pointer
+  types:
+  - StatusPage
+  serves: []
+  registrable_domain: uptimerobot.com
+  role: status
+  relation: other-domain
