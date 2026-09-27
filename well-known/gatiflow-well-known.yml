@@ -1,4 +1,4 @@
-generated: '2026-09-25'
+generated: '2026-09-27'
 method: probed
 generator: harvest-well-known.py
 source: Live GET of the named /.well-known/ path list on every host the record knows; every row is a request that
@@ -6,7 +6,7 @@ source: Live GET of the named /.well-known/ path list on every host the record k
 summary:
   hosts_probed: 3
   paths_probed: 33
-  documents_served: 0
+  documents_served: 2
 hosts:
 - host: api.gatiflow.io
   control:
@@ -54,8 +54,10 @@ hosts:
     bytes: 0
   documents:
   - path: /.well-known/security.txt
-    status: 404
+    status: 200
     standard: RFC 9116
+    content_type: text/plain; charset=utf-8
+    file: gatiflow-security.txt
   - path: /.well-known/openid-configuration
     status: 404
     standard: OpenID Connect Discovery 1.0
@@ -66,8 +68,10 @@ hosts:
     status: 404
     standard: RFC 9728
   - path: /.well-known/api-catalog
-    status: 404
+    status: 200
     standard: RFC 9727
+    content_type: application/linkset+json; profile="https://www.rfc-editor.org/info/rfc9727"
+    file: gatiflow-api-catalog.json
   - path: /.well-known/apis.json
     status: 404
     standard: APIs.json

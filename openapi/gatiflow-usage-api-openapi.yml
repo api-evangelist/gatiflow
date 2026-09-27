@@ -1,16 +1,16 @@
 openapi: 3.2.0
 info:
-  title: Gatiflow Usage API
-  version: 2.2.0
   contact:
     email: support@gatiflow.io
     name: GatiFlow Support
     url: https://gatiflow.io/api-docs
+  description: Customer-facing GatiFlow Intelligence API.
   license:
     name: Proprietary
     url: https://gatiflow.io/terms
   termsOfService: https://gatiflow.io/terms
-  description: 'Operations tagged usage across 2 of this provider''s published API definitions: gatiflow-openapi.json, gatiflow-openapi.yml. Each path carries the servers of the definition it was published in.'
+  title: GatiFlow SaaS API — Public Usage API
+  version: 2.3.0
 servers:
 - description: Production
   url: https://api.gatiflow.io
@@ -69,58 +69,188 @@ paths:
                     - endpoint: /intelligence/report
                       status_code: 429
                       timestamp: '2026-09-03T05:57:41.008320+00:00'
-              schema: {}
+              schema:
+                $ref: '#/components/schemas/UsageLog'
           description: Recent calls made with the API key used on this request.
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The X-API-Key header is missing, or the key is unknown, revoked or expired.
+        '402':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The organization has no subscription, or the subscription is not active.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The organization is inactive, or its owner's email address is still unverified after the three-day grace period.
         '422':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-          description: Validation Error
+                $ref: '#/components/schemas/ErrorResponse'
+          description: A parameter is missing, malformed or out of range. error.details lists each problem.
       security:
       - ApiKeyAuth: []
       summary: List recent calls made with this API key
       tags:
       - Usage
-    servers:
-    - description: Production
-      url: https://api.gatiflow.io
 components:
   schemas:
-    HTTPValidationError:
+    ErrorDetail:
+      description: What went wrong, and the id to quote when asking about it.
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
-      title: HTTPValidationError
+        code:
+          description: NOT_FOUND for a 404, VALIDATION_ERROR for a 422, HTTP_ERROR for every other refusal.
+          enum:
+          - HTTP_ERROR
+          - NOT_FOUND
+          - VALIDATION_ERROR
+          - INTERNAL_ERROR
+          title: Code
+          type: string
+        details:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - items:
+              $ref: '#/components/schemas/ValidationIssue'
+            type: array
+          description: The list of problems on a 422; an empty object otherwise.
+          title: Details
+        http_status:
+          title: Http Status
+          type: integer
+        message:
+          description: Why the request was refused, in plain words.
+          title: Message
+          type: string
+        request_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Also sent as the X-Request-ID response header.
+          title: Request Id
+      required:
+      - message
+      - code
+      - http_status
+      - request_id
+      - details
+      title: ErrorDetail
       type: object
-    ValidationError:
+    ErrorMetadata:
+      properties:
+        provider:
+          title: Provider
+          type: string
+        timestamp:
+          format: date-time
+          title: Timestamp
+          type: string
+        version:
+          title: Version
+          type: string
+      required:
+      - timestamp
+      - provider
+      - version
+      title: ErrorMetadata
+      type: object
+    ErrorResponse:
+      description: Every refusal the API returns, whatever its status.
+      properties:
+        error:
+          $ref: '#/components/schemas/ErrorDetail'
+        metadata:
+          $ref: '#/components/schemas/ErrorMetadata'
+        status:
+          const: error
+          title: Status
+          type: string
+      required:
+      - status
+      - error
+      - metadata
+      title: ErrorResponse
+      type: object
+    UsageLog:
+      description: The request log of the API key used on the call, newest first.
+      properties:
+        org_name:
+          title: Org Name
+          type: string
+        total_returned:
+          title: Total Returned
+          type: integer
+        usage:
+          items:
+            $ref: '#/components/schemas/UsageEvent'
+          title: Usage
+          type: array
+      required:
+      - org_name
+      - total_returned
+      - usage
+      title: UsageLog
+      type: object
+    UsageEvent:
+      properties:
+        endpoint:
+          title: Endpoint
+          type: string
+        status_code:
+          title: Status Code
+          type: integer
+        timestamp:
+          anyOf:
+          - type: string
+          - type: 'null'
+          format: date-time
+          title: Timestamp
+      required:
+      - endpoint
+      - status_code
+      - timestamp
+      title: UsageEvent
+      type: object
+    ValidationIssue:
+      description: One problem with the request, as a 422 lists it in ``error.details``.
       properties:
         ctx:
-          title: Context
-          type: object
+          description: The constraint that failed, as text.
+          title: Ctx
+          type: string
         input:
           title: Input
         loc:
+          description: Where the problem is, for example ['query', 'limit'].
           items:
             anyOf:
             - type: string
             - type: integer
-          title: Location
+          title: Loc
           type: array
         msg:
-          title: Message
+          title: Msg
           type: string
         type:
-          title: Error Type
+          title: Type
+          type: string
+        url:
+          title: Url
           type: string
       required:
+      - type
       - loc
       - msg
-      - type
-      title: ValidationError
+      title: ValidationIssue
       type: object
   securitySchemes:
     ApiKeyAuth:
@@ -136,6 +266,8 @@ components:
 externalDocs:
   description: API documentation
   url: https://gatiflow.io/api-docs
-x-refined-from:
-- gatiflow-openapi.json
-- gatiflow-openapi.yml
+x-provenance:
+  generated_from: the running routes (app/api/public_docs.py), compared byte for byte by the test suite
+  method: published
+  publisher: GatiFlow
+  source: https://gatiflow.io/openapi.json

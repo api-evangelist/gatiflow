@@ -1,0 +1,318 @@
+{
+  "asyncapi": "3.0.0",
+  "channels": {
+    "intelligenceAlert": {
+      "address": null,
+      "description": "The path of the registered URL. It belongs to the receiver, so it is not fixed here.",
+      "messages": {
+        "intelligenceAlert": {
+          "$ref": "#/components/messages/intelligenceAlert"
+        }
+      },
+      "servers": [
+        {
+          "$ref": "#/servers/subscriber"
+        }
+      ],
+      "title": "intelligence:alert"
+    }
+  },
+  "components": {
+    "messages": {
+      "intelligenceAlert": {
+        "contentType": "application/json",
+        "correlationId": {
+          "description": "One id per logical delivery, repeated on every retry.",
+          "location": "$message.header#/X-GatiFlow-Delivery-Id"
+        },
+        "headers": {
+          "properties": {
+            "X-GatiFlow-Attempt": {
+              "description": "Which attempt this is, 1 to 5.",
+              "maximum": 5,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "X-GatiFlow-Delivery-Id": {
+              "description": "One id per logical delivery, repeated on every retry. Use it to discard duplicates.",
+              "format": "uuid",
+              "type": "string"
+            },
+            "X-GatiFlow-Event": {
+              "description": "The event type, the same value as event in the body.",
+              "enum": [
+                "intelligence:alert"
+              ],
+              "type": "string"
+            },
+            "X-GatiFlow-Signature": {
+              "description": "t=<unix timestamp>,v1=<HMAC-SHA256 hex of '<timestamp>.<raw body>' under the webhook secret>. Compare in constant time and reject a mismatch.",
+              "pattern": "^t=[0-9]+,v1=[0-9a-f]{64}$",
+              "type": "string"
+            },
+            "X-GatiFlow-Timestamp": {
+              "description": "The t= value of the signature, on its own. It is fixed when the event is raised and travels unchanged through every retry.",
+              "type": "integer"
+            }
+          },
+          "required": [
+            "X-GatiFlow-Event",
+            "X-GatiFlow-Signature",
+            "X-GatiFlow-Timestamp",
+            "X-GatiFlow-Delivery-Id",
+            "X-GatiFlow-Attempt"
+          ],
+          "type": "object"
+        },
+        "name": "intelligence:alert",
+        "payload": {
+          "$ref": "#/components/schemas/AlertEvent"
+        },
+        "summary": "Alerts raised for the organization's watchlist",
+        "title": "Watchlist alerts"
+      }
+    },
+    "schemas": {
+      "AlertData": {
+        "properties": {
+          "alert_count": {
+            "minimum": 1.0,
+            "title": "Alert Count",
+            "type": "integer"
+          },
+          "alerts": {
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/SpikeAlert"
+                },
+                {
+                  "$ref": "#/components/schemas/EmergingAlert"
+                },
+                {
+                  "$ref": "#/components/schemas/NewHirerAlert"
+                }
+              ]
+            },
+            "title": "Alerts",
+            "type": "array"
+          },
+          "generated_at": {
+            "format": "date-time",
+            "title": "Generated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "alert_count",
+          "alerts",
+          "generated_at"
+        ],
+        "title": "AlertData",
+        "type": "object"
+      },
+      "AlertEvent": {
+        "description": "The body of every ``intelligence:alert`` delivery.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/AlertData"
+          },
+          "event": {
+            "const": "intelligence:alert",
+            "title": "Event",
+            "type": "string"
+          }
+        },
+        "required": [
+          "event",
+          "data"
+        ],
+        "title": "AlertEvent",
+        "type": "object"
+      },
+      "EmergingAlert": {
+        "description": "A watched topic appeared, with no baseline to compare against yet.",
+        "properties": {
+          "current_mentions": {
+            "title": "Current Mentions",
+            "type": "integer"
+          },
+          "sources": {
+            "description": "Number of independent sources that observed it.",
+            "title": "Sources",
+            "type": "integer"
+          },
+          "topic": {
+            "title": "Topic",
+            "type": "string"
+          },
+          "type": {
+            "const": "emerging",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "topic",
+          "current_mentions",
+          "sources"
+        ],
+        "title": "EmergingAlert",
+        "type": "object"
+      },
+      "NewHirerAlert": {
+        "description": "A watched company appeared in the hiring feed for the first time.",
+        "properties": {
+          "company": {
+            "title": "Company",
+            "type": "string"
+          },
+          "source": {
+            "title": "Source",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "type": {
+            "const": "new_hirer",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "company",
+          "title",
+          "source"
+        ],
+        "title": "NewHirerAlert",
+        "type": "object"
+      },
+      "SpikeAlert": {
+        "description": "A watched topic grew past the spike threshold against its baseline.",
+        "properties": {
+          "change_pct": {
+            "title": "Change Pct",
+            "type": "number"
+          },
+          "current_mentions": {
+            "title": "Current Mentions",
+            "type": "integer"
+          },
+          "sources": {
+            "description": "Number of independent sources that observed it.",
+            "title": "Sources",
+            "type": "integer"
+          },
+          "topic": {
+            "title": "Topic",
+            "type": "string"
+          },
+          "type": {
+            "const": "spike",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "topic",
+          "change_pct",
+          "current_mentions",
+          "sources"
+        ],
+        "title": "SpikeAlert",
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "webhookSignature": {
+        "description": "Every request is signed by GatiFlow. X-GatiFlow-Signature is t=<unix timestamp>,v1=<hex>, where <hex> is the HMAC-SHA256 of '<timestamp>.<raw body>' under the secret shown once when the webhook was created. Recompute it and compare in constant time.",
+        "in": "header",
+        "name": "X-GatiFlow-Signature",
+        "type": "httpApiKey"
+      }
+    }
+  },
+  "defaultContentType": "application/json",
+  "id": "https://gatiflow.io/asyncapi.json",
+  "info": {
+    "contact": {
+      "email": "support@gatiflow.io",
+      "name": "GatiFlow Support",
+      "url": "https://gatiflow.io/api-docs"
+    },
+    "description": "The events GatiFlow sends to the HTTPS endpoints an organization registers in Settings. The same event is declared in the webhooks section of https://gatiflow.io/openapi.json; this document states it in the format event tooling reads.\n\nSent to every active webhook of an organization on the Pro or Business plan when a collection cycle raises alerts that match its watchlist: a watched topic spiking or emerging, or a watched company appearing in the hiring feed for the first time. Alerts are raised while Signal Alerts is switched on in Settings, and one delivery carries every alert the cycle raised for the organization.\n\nCollection runs every six hours and delivery runs in the same cycle, right after the alerts are raised. A delivery that is not acknowledged is retried at each following cycle, up to five attempts, with the same X-GatiFlow-Delivery-Id; after the fifth failure the webhook is switched off and the organization owner is emailed. Ordering between deliveries is not guaranteed.\n\nVerify every request before acting on it: X-GatiFlow-Signature is t=<unix timestamp>,v1=<hex>, where <hex> is the HMAC-SHA256 of '<timestamp>.<raw body>' under the secret shown once when the webhook was created. See https://gatiflow.io/api-docs/webhooks.",
+    "externalDocs": {
+      "description": "Webhooks",
+      "url": "https://gatiflow.io/api-docs/webhooks"
+    },
+    "license": {
+      "name": "Proprietary",
+      "url": "https://gatiflow.io/terms"
+    },
+    "tags": [
+      {
+        "name": "webhooks"
+      }
+    ],
+    "termsOfService": "https://gatiflow.io/terms",
+    "title": "GatiFlow Webhooks",
+    "version": "2.3.0"
+  },
+  "operations": {
+    "sendIntelligenceAlert": {
+      "action": "send",
+      "bindings": {
+        "http": {
+          "bindingVersion": "0.3.0",
+          "method": "POST"
+        }
+      },
+      "channel": {
+        "$ref": "#/channels/intelligenceAlert"
+      },
+      "description": "Sent to every active webhook of an organization on the Pro or Business plan when a collection cycle raises alerts that match its watchlist: a watched topic spiking or emerging, or a watched company appearing in the hiring feed for the first time. Alerts are raised while Signal Alerts is switched on in Settings, and one delivery carries every alert the cycle raised for the organization.\n\nCollection runs every six hours and delivery runs in the same cycle, right after the alerts are raised. A delivery that is not acknowledged is retried at each following cycle, up to five attempts, with the same X-GatiFlow-Delivery-Id; after the fifth failure the webhook is switched off and the organization owner is emailed. Ordering between deliveries is not guaranteed.\n\nVerify every request before acting on it: X-GatiFlow-Signature is t=<unix timestamp>,v1=<hex>, where <hex> is the HMAC-SHA256 of '<timestamp>.<raw body>' under the secret shown once when the webhook was created. See https://gatiflow.io/api-docs/webhooks.",
+      "messages": [
+        {
+          "$ref": "#/channels/intelligenceAlert/messages/intelligenceAlert"
+        }
+      ],
+      "summary": "Alerts raised for the organization's watchlist",
+      "title": "Alerts raised for the organization's watchlist"
+    }
+  },
+  "servers": {
+    "subscriber": {
+      "bindings": {
+        "http": {}
+      },
+      "description": "The HTTPS URL registered in Settings. GatiFlow is the client: it resolves the host once per attempt, refuses private and internal addresses, connects only on port 443 or 8443, and pins the certificate presented on the first attempt.",
+      "host": "{host}",
+      "protocol": "https",
+      "security": [
+        {
+          "$ref": "#/components/securitySchemes/webhookSignature"
+        }
+      ],
+      "title": "Your webhook endpoint",
+      "variables": {
+        "host": {
+          "description": "Host of the registered URL, with :8443 when that port is used.",
+          "examples": [
+            "hooks.example.com"
+          ]
+        }
+      }
+    }
+  },
+  "x-provenance": {
+    "generated_from": "https://gatiflow.io/openapi.json",
+    "method": "published",
+    "publisher": "GatiFlow",
+    "source": "https://gatiflow.io/asyncapi.json"
+  }
+}

@@ -1,11 +1,11 @@
-generated: '2026-09-25'
+generated: '2026-09-27'
 method: derived
 generator: derive-conformance.py
-source: openapi/ (1 document(s), 0 mutating operations)
+source: openapi/ (4 document(s), 0 mutating operations)
 standards:
-- id: openapi-3.1
+- id: openapi-3.2
   conforms: true
-  evidence: the document declares 3.1.0
+  evidence: the document declares 3.2.0
 - id: oauth2
   conforms: false
   evidence: 'securitySchemes: ApiKeyAuth (apiKey), SessionBearer (http)'
@@ -18,5 +18,8 @@ standards:
 - id: pagination
   conforms: true
   evidence: list operations take limit
+- id: ratelimit-headers
+  conforms: true
+  evidence: responses declare Retry-After, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset-Seconds
 note: 'Derived from the provider''s own OpenAPI only: what the contract declares. Claims the contract cannot carry (PCI DSS, SOC 2, FAPI, ISO
   20022) come from the documentation reader and are merged below when found.'

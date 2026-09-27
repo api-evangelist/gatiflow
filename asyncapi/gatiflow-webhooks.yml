@@ -1,0 +1,45 @@
+generated: '2026-09-27'
+method: searched
+generator: derive-webhooks.py
+source:
+- https://gatiflow.io/api-docs/webhooks
+- openapi/gatiflow-webhooks-api-openapi.yml
+description: Webhook surface documented at gatiflow.io/api-docs/webhooks and declared in the webhooks section of
+  the provider's OpenAPI; the provider also publishes it as AsyncAPI 3.0 at https://gatiflow.io/asyncapi.json (saved
+  verbatim as asyncapi/gatiflow-webhooks-asyncapi.json).
+management_operations: []
+events:
+- event: intelligence:alert
+  description: Alerts raised for the organization's watchlist
+  declared_in: webhooks
+  alert_types:
+  - spike
+  - emerging
+  - new_hirer
+  schema: https://gatiflow.io/schemas/AlertEvent.json
+asyncapi: https://gatiflow.io/asyncapi.json
+availability: Pro and Business plans; up to 5 HTTPS endpoints per organization, registered in Settings
+delivery:
+  method: 'POST, Content-Type: application/json'
+  timing: 'Delivery runs in the same cycle, right after the alerts are raised: one POST per webhook, carrying every
+    alert the cycle raised for the organization. A cycle sends at most 20 deliveries within 30 seconds; the rest
+    wait for the next one.'
+  timeout: Answer within 10 seconds.
+  success: Any status below 400 counts as delivered; redirects are not followed.
+  retries: A failed attempt is retried at each following cycle, up to 5 attempts, with the same X-GatiFlow-Delivery-Id
+    . After the fifth failure the webhook is switched off and the organization owner is emailed.
+  ordering: Ordering between deliveries is not guaranteed.
+  endpoint_requirements: HTTPS on port 443 or 8443, on a host that resolves to a public address. The certificate
+    the endpoint presents on the first attempt is pinned.
+signature:
+  header: X-GatiFlow-Signature
+  format: t=<unix timestamp>,v1=<hex>
+  algorithm: HMAC-SHA256
+  signed_payload: '''<timestamp>.<raw body>'''
+  secret: per webhook, shown once when it is created
+headers:
+- X-GatiFlow-Event
+- X-GatiFlow-Signature
+- X-GatiFlow-Timestamp
+- X-GatiFlow-Delivery-Id
+- X-GatiFlow-Attempt

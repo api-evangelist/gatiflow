@@ -1,10 +1,10 @@
-generated: '2026-09-21'
+generated: '2026-09-27'
 method: searched
 source: https://gatiflow.io/compliance
 signals:
   ai_transparency:
     url: https://gatiflow.io/compliance
-    section: '4.5 AI Content Integrity'
+    section: 4.5 AI Content Integrity
     evidence:
     - source: https://gatiflow.io/compliance
       http_status: 200
@@ -13,17 +13,13 @@ signals:
     - source: https://gatiflow.io/changelog
       http_status: 200
       fetched: '2026-09-21'
-      quote: >-
-        "AI-generated content now declares itself in report metadata (EU AI Act
-        compliance)." (v2.5, May 2026)
-    note: >-
-      GatiFlow's reports and narratives are AI-generated (daily narratives use Claude
-      Sonnet with a numeric fact-check pass, per the changelog). AI-generated content
-      is labelled in report metadata, cited as EU AI Act compliance. This is the
-      substance of an AI-content transparency signal.
+      quote: '"AI-generated content now declares itself in report metadata (EU AI Act compliance)." (v2.5, May 2026)'
+    note: GatiFlow's reports and narratives are AI-generated (daily narratives use Claude Sonnet with a numeric
+      fact-check pass, per the changelog). AI-generated content is labelled in report metadata, cited as EU AI Act
+      compliance. This is the substance of an AI-content transparency signal.
   data_subject_request:
     url: https://gatiflow.io/opt-out
-    section: '3. Legal Compliance Framework / opt-out'
+    section: 3. Legal Compliance Framework / opt-out
     channel: privacy@gatiflow.io
     stated_sla: within one month (GDPR Art 12); within 15 business days (LGPD Art 19)
     rights_named:
@@ -36,22 +32,43 @@ signals:
     - source: https://gatiflow.io/compliance
       http_status: 200
       fetched: '2026-09-21'
-      quote: >-
-        "Data Inquiries : Written requests handled via privacy@gatiflow.io within one
-        month (Article 12)." — GDPR section 3.1.
+      quote: '"Data Inquiries : Written requests handled via privacy@gatiflow.io within one month (Article 12)."
+        — GDPR section 3.1.'
     - source: https://gatiflow.io/opt-out
       http_status: 200
       fetched: '2026-09-21'
-      quote: >-
-        A named developer can be excluded from every future report; the exclusion is
-        applied inside the pipeline, not at render time, so the profile stops being
-        collected (llms.txt / opt-out page).
-    note: >-
-      Data-removal requests via privacy@gatiflow.io and a self-serve /opt-out that
-      excludes a named developer profile at the pipeline level.
-note: >-
-  Horizontal regulatory signals harvested from GatiFlow's own compliance, changelog
-  and opt-out pages. No SBOM, VPAT/accessibility conformance report, dated
-  subprocessor table, or transparency report with substance was found — those
-  signals are honestly absent. GatiFlow self-attests GDPR/LGPD/CCPA/PIPEDA/APPI/PDPA/
-  UK-DPA compliance (see security/gatiflow-trust-center.yml).
+      quote: A named developer can be excluded from every future report; the exclusion is applied inside the pipeline,
+        not at render time, so the profile stops being collected (llms.txt / opt-out page).
+    note: Data-removal requests via privacy@gatiflow.io and a self-serve /opt-out that excludes a named developer
+      profile at the pipeline level.
+  sbom:
+    url: https://api.gatiflow.io/sbom.cdx.json
+    format: CycloneDX 1.6
+    component: GatiFlow Intelligence API 2.3.0
+    components: 52
+    local_copy: security/gatiflow-sbom.cdx.json
+    evidence:
+    - source: https://api.gatiflow.io/sbom.cdx.json
+      http_status: 200
+      fetched: '2026-09-27'
+      content_type: application/vnd.cyclonedx+json
+    - source: https://gatiflow.io/api-docs
+      http_status: 200
+      fetched: '2026-09-27'
+      quote: api.gatiflow.io/sbom.cdx.json — the software bill of materials of the running API, in CycloneDX, read
+        from the packages the service has installed.
+  support_lifetime:
+    url: https://gatiflow.io/api-docs#versioning
+    stated_period: A version receives fixes, security fixes included, until its Sunset date, and it is never sunset
+      less than 90 days after its successor is published.
+    evidence:
+    - source: https://gatiflow.io/api-docs
+      http_status: 200
+      fetched: '2026-09-27'
+      quote: Support lifetime. A version receives fixes, security fixes included, until its Sunset date, and it
+        is never sunset less than 90 days after its successor is published.
+note: 'Horizontal regulatory signals harvested from GatiFlow''s own compliance, changelog, opt-out and API documentation
+  pages. 2026-09-27: a CycloneDX 1.6 SBOM of the running API (api.gatiflow.io/sbom.cdx.json, 52 components) and
+  a stated support lifetime were added. No VPAT/accessibility conformance report, dated subprocessor table, or transparency
+  report with substance was found — those signals are honestly absent. GatiFlow self-attests GDPR/LGPD/CCPA/PIPEDA/APPI/PDPA/UK-DPA
+  compliance (see security/gatiflow-trust-center.yml).'

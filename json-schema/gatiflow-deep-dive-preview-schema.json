@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/gatiflow/main/json-schema/gatiflow-deep-dive-preview-schema.json",
+  "title": "DeepDivePreview",
+  "description": "The opening of the latest Deep Dive, or ``status: no_article``.",
+  "x-generated": "2026-09-27",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/gatiflow-public-api-openapi.yml#/components/schemas/DeepDivePreview",
+  "properties": {
+    "full_article_available": {
+      "title": "Full Article Available",
+      "type": "boolean"
+    },
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "message": {
+      "title": "Message",
+      "type": "string"
+    },
+    "preview": {
+      "title": "Preview",
+      "type": "string"
+    },
+    "published_at": {
+      "format": "date-time",
+      "title": "Published At",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "ok",
+        "no_article"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "title": {
+      "title": "Title",
+      "type": "string"
+    },
+    "topic": {
+      "title": "Topic",
+      "type": "string"
+    },
+    "upgrade_message": {
+      "title": "Upgrade Message",
+      "type": "string"
+    },
+    "word_count": {
+      "title": "Word Count",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "status"
+  ],
+  "type": "object"
+}

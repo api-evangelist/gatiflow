@@ -1,0 +1,61 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://gatiflow.io/.well-known/api-catalog",
+      "item": [
+        {
+          "href": "https://api.gatiflow.io",
+          "title": "GatiFlow Intelligence API"
+        }
+      ]
+    },
+    {
+      "anchor": "https://api.gatiflow.io",
+      "service-desc": [
+        {
+          "href": "https://gatiflow.io/openapi.json",
+          "type": "application/vnd.oai.openapi+json;version=3.1",
+          "title": "OpenAPI 3.1 contract"
+        },
+        {
+          "href": "https://gatiflow.io/asyncapi.json",
+          "type": "application/json",
+          "title": "AsyncAPI 3.0 contract of the webhooks GatiFlow sends"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://gatiflow.io/api-docs",
+          "type": "text/html",
+          "title": "API documentation"
+        }
+      ],
+      "service-meta": [
+        {
+          "href": "https://gatiflow.io/apis.json",
+          "type": "application/json",
+          "title": "APIs.json index"
+        }
+      ],
+      "status": [
+        {
+          "href": "https://stats.uptimerobot.com/9fR5IzLq0q",
+          "type": "text/html",
+          "title": "Status page"
+        }
+      ],
+      "terms-of-service": [
+        {
+          "href": "https://gatiflow.io/terms",
+          "type": "text/html"
+        }
+      ],
+      "privacy-policy": [
+        {
+          "href": "https://gatiflow.io/privacy",
+          "type": "text/html"
+        }
+      ]
+    }
+  ]
+}

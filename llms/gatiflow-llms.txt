@@ -14,6 +14,10 @@ The API is read-only. There is no operation that writes, and no endpoint that re
 - [API documentation](https://gatiflow.io/api-docs): The same surface in prose — use cases, quick start, authentication, rate limits and the endpoint list.
 - [Interactive documentation](https://api.gatiflow.io/docs): Swagger UI against the live API. Authorize with an API key and call any published operation from the browser.
 - [apis.json index](https://gatiflow.io/apis.json): Machine-readable index of this API and the documents that describe it.
+- [Webhooks](https://gatiflow.io/api-docs/webhooks): The watchlist alerts GatiFlow pushes to Pro and Business organizations, how to verify the signature, and how retries work.
+- [AsyncAPI contract](https://gatiflow.io/asyncapi.json): The same webhook as an AsyncAPI 3.0 document, generated from the OpenAPI contract.
+- [Code examples](https://gatiflow.io/api-docs/examples): curl, Python and JavaScript for every operation an API key, or no credential, can call.
+- [Postman collection](https://gatiflow.io/postman_collection.json): One request per published operation, generated from the contract.
 
 ## How the signals are produced
 
@@ -30,8 +34,11 @@ The API is read-only. There is no operation that writes, and no endpoint that re
 - [Terms of Service](https://gatiflow.io/terms): Including what may and may not be done with the returned data.
 - [Privacy Policy](https://gatiflow.io/privacy)
 - [Acceptable Use Policy](https://gatiflow.io/aup)
+- [Versioning and deprecation](https://gatiflow.io/api-docs#versioning): How changes ship and how much notice comes before anything is removed.
+- [security.txt](https://gatiflow.io/.well-known/security.txt): Where to report a vulnerability.
 - [Remove a developer profile](https://gatiflow.io/opt-out): A named developer can be excluded from every future report. The exclusion is applied inside the pipeline, not at render time, so the profile stops being collected rather than stops being shown.
 
 ## Optional
 
+- [Roadmap](https://gatiflow.io/roadmap): What is planned for the API next, without dates.
 - [Academy](https://gatiflow.io/academy): Written material on reading trend data — what a confidence score can and cannot support, and where the instruments fail.

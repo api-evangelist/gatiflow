@@ -1,8 +1,10 @@
-generated: '2026-09-25'
+generated: '2026-09-27'
 method: derived
 generator: derive-mcp-candidate.py
 source:
-- openapi/gatiflow-openapi.yml
+- openapi/gatiflow-intelligence-api-openapi.yml
+- openapi/gatiflow-public-api-openapi.yml
+- openapi/gatiflow-usage-api-openapi.yml
 status: candidate
 deployment:
   mode: none
@@ -16,11 +18,26 @@ tools:
   method: GET
   path: /api/v1/intelligence/report
   description: Generate an intelligence report
+- name: get_latest_deep_dive_api_v1_public_deep_dive_get
+  operationId: get_latest_deep_dive_api_v1_public_deep_dive_get
+  method: GET
+  path: /api/v1/public/deep-dive
+  description: Get the latest Deep Dive preview
+- name: get_my_usage_api_v1_usage_get
+  operationId: get_my_usage_api_v1_usage_get
+  method: GET
+  path: /api/v1/usage
+  description: List recent calls made with this API key
 - name: report_history_list_api_v1_intelligence_report_history_get
   operationId: report_history_list_api_v1_intelligence_report_history_get
   method: GET
   path: /api/v1/intelligence/report-history
   description: List retained report snapshots
+- name: weekly_report_api_v1_public_weekly_report_get
+  operationId: weekly_report_api_v1_public_weekly_report_get
+  method: GET
+  path: /api/v1/public/weekly-report
+  description: Get the Daily Insights payload
 - name: report_at_snapshot_api_v1_intelligence_report_at_snapshot_id
   operationId: report_at_snapshot_api_v1_intelligence_report_at__snapshot_id__get
   method: GET
@@ -31,18 +48,3 @@ tools:
   method: GET
   path: /api/v1/intelligence/report/export
   description: Export the report as a file
-- name: get_latest_deep_dive_api_v1_public_deep_dive_get
-  operationId: get_latest_deep_dive_api_v1_public_deep_dive_get
-  method: GET
-  path: /api/v1/public/deep-dive
-  description: Get the latest Deep Dive preview
-- name: weekly_report_api_v1_public_weekly_report_get
-  operationId: weekly_report_api_v1_public_weekly_report_get
-  method: GET
-  path: /api/v1/public/weekly-report
-  description: Get the Daily Insights payload
-- name: get_my_usage_api_v1_usage_get
-  operationId: get_my_usage_api_v1_usage_get
-  method: GET
-  path: /api/v1/usage
-  description: List recent calls made with this API key

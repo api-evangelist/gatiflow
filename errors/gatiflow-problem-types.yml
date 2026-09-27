@@ -1,45 +1,74 @@
-generated: '2026-09-25'
+generated: '2026-09-27'
 method: derived
 generator: derive-problem-types.py
 source:
-- openapi/gatiflow-openapi.yml
+- openapi/gatiflow-intelligence-api-openapi.yml
+- openapi/gatiflow-public-api-openapi.yml
+- openapi/gatiflow-usage-api-openapi.yml
+- openapi/gatiflow-webhooks-api-openapi.yml
 format: custom
 envelope:
   media_type: application/json
-  schema: HTTPValidationError
+  schema: ErrorResponse
 coverage:
   operations: 7
-  statuses_declared: 5
+  statuses_declared: 8
 problems:
 - status: 400
   title: Bad Request
   description: snapshot_id is not in the YYYYMMDDTHHmm format.
-  operations: 1
-  media_types: []
-  schema: null
-- status: 403
-  title: Forbidden
-  description: The plan does not retain history.
   operations: 2
-  media_types: []
-  schema: null
-- status: 404
-  title: Not Found
-  description: No snapshot with that id inside the plan retention window.
-  operations: 1
-  media_types: []
-  schema: null
-- status: 422
-  title: Unprocessable Content
-  description: Validation Error
+  media_types:
+  - application/json
+  schema: ErrorResponse
+- status: 401
+  title: Unauthorized
+  description: The X-API-Key header is missing, or the key is unknown, revoked or expired.
   operations: 6
   media_types:
   - application/json
-  schema: HTTPValidationError
+  schema: ErrorResponse
+- status: 402
+  title: Payment Required
+  description: The organization has no subscription, or the subscription is not active.
+  operations: 6
+  media_types:
+  - application/json
+  schema: ErrorResponse
+- status: 403
+  title: Forbidden
+  description: The organization is inactive, its owner's email address is still unverified after the three-day grace
+    period, or the key lacks the intellige
+  operations: 5
+  media_types:
+  - application/json
+  schema: ErrorResponse
+- status: 404
+  title: Not Found
+  description: No snapshot with that id inside the plan retention window.
+  operations: 2
+  media_types:
+  - application/json
+  schema: ErrorResponse
+- status: 422
+  title: Unprocessable Content
+  description: A parameter is missing, malformed or out of range. error.details lists each problem.
+  operations: 6
+  media_types:
+  - application/json
+  schema: ErrorResponse
 - status: 429
   title: Too Many Requests
-  description: 'Too many requests from this address. This operation takes no credential, so the ceiling is per caller
-    address: 60 requests a minute.'
-  operations: 1
-  media_types: []
-  schema: null
+  description: 'The plan''s per-minute rate limit or daily quota is exhausted. error.message says which: Rate limit
+    exceeded, or Daily quota exceeded.'
+  operations: 5
+  media_types:
+  - application/json
+  schema: ErrorResponse
+- status: 503
+  title: Service Unavailable
+  description: The underlying data is older than 24 hours. Sent with a Retry-After header, in seconds.
+  operations: 3
+  media_types:
+  - application/json
+  schema: StaleDataError

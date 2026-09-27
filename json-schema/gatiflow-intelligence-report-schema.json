@@ -1,0 +1,827 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/gatiflow/main/json-schema/gatiflow-intelligence-report-schema.json",
+  "title": "IntelligenceReport",
+  "description": "The intelligence report for the calling organization.\n\nThe same shape is served for an archived snapshot, which carries no\n``client_info`` because it was built by the collection cycle rather than\nfor a caller.",
+  "x-generated": "2026-09-27",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/gatiflow-intelligence-api-openapi.yml#/components/schemas/IntelligenceReport",
+  "properties": {
+    "analytics": {
+      "$ref": "#/$defs/ReportAnalytics"
+    },
+    "client_info": {
+      "$ref": "#/$defs/ClientInfo"
+    },
+    "contract": {
+      "$ref": "#/$defs/ReportContract"
+    },
+    "generated_at": {
+      "format": "date-time",
+      "title": "Generated At",
+      "type": "string"
+    },
+    "metadata": {
+      "$ref": "#/$defs/ReportMetadata"
+    },
+    "org_id": {
+      "title": "Org Id",
+      "type": "string"
+    },
+    "plan": {
+      "title": "Plan",
+      "type": "string"
+    },
+    "schema_version": {
+      "description": "The contract shape this payload follows, 1.0 or 1.2.",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "score": {
+      "$ref": "#/$defs/ReportScore"
+    },
+    "sections": {
+      "$ref": "#/$defs/ReportSections"
+    },
+    "trend_analysis": {
+      "$ref": "#/$defs/TrendAnalysis"
+    }
+  },
+  "required": [
+    "schema_version",
+    "org_id",
+    "plan",
+    "generated_at",
+    "contract",
+    "metadata",
+    "score",
+    "sections",
+    "analytics"
+  ],
+  "type": "object",
+  "$defs": {
+    "AIGeneratedDeclaration": {
+      "description": "Which parts of the payload a language model wrote.",
+      "properties": {
+        "applies_to": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Applies To",
+          "type": "array"
+        },
+        "model": {
+          "title": "Model",
+          "type": "string"
+        },
+        "purpose": {
+          "title": "Purpose",
+          "type": "string"
+        },
+        "regulation": {
+          "title": "Regulation",
+          "type": "string"
+        }
+      },
+      "required": [
+        "applies_to",
+        "model",
+        "purpose"
+      ],
+      "title": "AIGeneratedDeclaration",
+      "type": "object"
+    },
+    "ClientInfo": {
+      "description": "Who the report was built for and how much of today's quota is used.",
+      "properties": {
+        "client_name": {
+          "title": "Client Name",
+          "type": "string"
+        },
+        "daily_limit": {
+          "title": "Daily Limit",
+          "type": "integer"
+        },
+        "org_name": {
+          "title": "Org Name",
+          "type": "string"
+        },
+        "plan": {
+          "title": "Plan",
+          "type": "string"
+        },
+        "subscription_status": {
+          "title": "Subscription Status",
+          "type": "string"
+        },
+        "trial_days_remaining": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Trial Days Remaining"
+        },
+        "used_today": {
+          "title": "Used Today",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "client_name",
+        "org_name",
+        "plan",
+        "daily_limit",
+        "used_today"
+      ],
+      "title": "ClientInfo",
+      "type": "object"
+    },
+    "ExecutiveSummary": {
+      "description": "The report overview. ``narrative`` is written by a language model and\ndeclared as such in ``metadata.ai_generated``.",
+      "properties": {
+        "narrative": {
+          "title": "Narrative",
+          "type": "string"
+        },
+        "overall_confidence": {
+          "title": "Overall Confidence",
+          "type": "number"
+        },
+        "summary": {
+          "title": "Summary",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "summary",
+        "narrative",
+        "overall_confidence"
+      ],
+      "title": "ExecutiveSummary",
+      "type": "object"
+    },
+    "MarketOverview": {
+      "properties": {
+        "average_score": {
+          "title": "Average Score",
+          "type": "number"
+        },
+        "top_score": {
+          "title": "Top Score",
+          "type": "number"
+        },
+        "total_profiles_analyzed": {
+          "title": "Total Profiles Analyzed",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "total_profiles_analyzed",
+        "average_score",
+        "top_score"
+      ],
+      "title": "MarketOverview",
+      "type": "object"
+    },
+    "OrgBriefing": {
+      "description": "Business plan only: a paragraph on the organization's own watchlist.",
+      "properties": {
+        "narrative": {
+          "title": "Narrative",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "narrative"
+      ],
+      "title": "OrgBriefing",
+      "type": "object"
+    },
+    "ReportAnalytics": {
+      "description": "Distributions over the talent profiles in the report.",
+      "properties": {
+        "market_overview": {
+          "$ref": "#/$defs/MarketOverview"
+        },
+        "role_distribution": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "Role Distribution",
+          "type": "object"
+        },
+        "seniority_distribution": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "description": "Profiles per score band.",
+          "title": "Seniority Distribution",
+          "type": "object"
+        },
+        "seniority_levels": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "description": "Profiles per seniority label.",
+          "title": "Seniority Levels",
+          "type": "object"
+        },
+        "stack_distribution": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "Stack Distribution",
+          "type": "object"
+        },
+        "strategic_insights": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Strategic Insights",
+          "type": "array"
+        }
+      },
+      "required": [
+        "market_overview",
+        "seniority_distribution",
+        "seniority_levels",
+        "stack_distribution",
+        "role_distribution",
+        "strategic_insights"
+      ],
+      "title": "ReportAnalytics",
+      "type": "object"
+    },
+    "ReportCapabilities": {
+      "properties": {
+        "exports": {
+          "description": "Export formats the plan includes.",
+          "items": {
+            "enum": [
+              "csv",
+              "pdf"
+            ],
+            "type": "string"
+          },
+          "title": "Exports",
+          "type": "array"
+        },
+        "org_briefing": {
+          "title": "Org Briefing",
+          "type": "boolean"
+        },
+        "show_confidence": {
+          "title": "Show Confidence",
+          "type": "boolean"
+        },
+        "show_evidence": {
+          "title": "Show Evidence",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "exports",
+        "show_evidence",
+        "show_confidence",
+        "org_briefing"
+      ],
+      "title": "ReportCapabilities",
+      "type": "object"
+    },
+    "ReportContract": {
+      "description": "What the plan entitles the caller to. Schema 1.0, the default, carries\nthe first three fields only; 1.1 and 1.2 add capabilities and limits.",
+      "properties": {
+        "capabilities": {
+          "$ref": "#/$defs/ReportCapabilities"
+        },
+        "limits": {
+          "$ref": "#/$defs/ReportLimits"
+        },
+        "plan_level": {
+          "title": "Plan Level",
+          "type": "string"
+        },
+        "report_type": {
+          "title": "Report Type",
+          "type": "string"
+        },
+        "schema_version": {
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "plan_level",
+        "report_type"
+      ],
+      "title": "ReportContract",
+      "type": "object"
+    },
+    "ReportLimits": {
+      "properties": {
+        "max_signals": {
+          "title": "Max Signals",
+          "type": "integer"
+        },
+        "max_talents": {
+          "title": "Max Talents",
+          "type": "integer"
+        },
+        "max_trends": {
+          "title": "Max Trends",
+          "type": "integer"
+        },
+        "profile_companies": {
+          "title": "Profile Companies",
+          "type": "integer"
+        },
+        "profile_topics": {
+          "title": "Profile Topics",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "max_trends",
+        "max_talents",
+        "max_signals"
+      ],
+      "title": "ReportLimits",
+      "type": "object"
+    },
+    "ReportMetadata": {
+      "description": "Provenance of the report: when it was built, from what, and how fresh\nthe underlying data is.",
+      "properties": {
+        "ai_generated": {
+          "$ref": "#/$defs/AIGeneratedDeclaration"
+        },
+        "collection_health": {
+          "additionalProperties": true,
+          "title": "Collection Health",
+          "type": "object"
+        },
+        "confidentiality": {
+          "title": "Confidentiality",
+          "type": "string"
+        },
+        "corroboration_gate": {
+          "enum": [
+            "active",
+            "inactive"
+          ],
+          "title": "Corroboration Gate",
+          "type": "string"
+        },
+        "data_age_hours": {
+          "title": "Data Age Hours",
+          "type": "number"
+        },
+        "data_collected_at": {
+          "title": "Data Collected At",
+          "type": "string"
+        },
+        "data_source": {
+          "title": "Data Source",
+          "type": "string"
+        },
+        "generated_at": {
+          "format": "date-time",
+          "title": "Generated At",
+          "type": "string"
+        },
+        "narrative_credits": {
+          "additionalProperties": true,
+          "title": "Narrative Credits",
+          "type": "object"
+        },
+        "narrative_exhausted": {
+          "title": "Narrative Exhausted",
+          "type": "boolean"
+        },
+        "product": {
+          "title": "Product",
+          "type": "string"
+        },
+        "quality": {
+          "additionalProperties": true,
+          "title": "Quality",
+          "type": "object"
+        },
+        "raw_observations_held": {
+          "title": "Raw Observations Held",
+          "type": "integer"
+        },
+        "relevance_ranking": {
+          "enum": [
+            "active",
+            "neutral"
+          ],
+          "title": "Relevance Ranking",
+          "type": "string"
+        },
+        "report_version": {
+          "title": "Report Version",
+          "type": "string"
+        },
+        "staleness_warning": {
+          "title": "Staleness Warning",
+          "type": "string"
+        },
+        "watermark": {
+          "description": "Present on the expired-trial preview only.",
+          "title": "Watermark",
+          "type": "string"
+        }
+      },
+      "required": [
+        "generated_at",
+        "product",
+        "report_version",
+        "confidentiality",
+        "ai_generated"
+      ],
+      "title": "ReportMetadata",
+      "type": "object"
+    },
+    "ReportScore": {
+      "description": "Aggregate confidence over the signals in the report.",
+      "properties": {
+        "categories": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "title": "Categories",
+          "type": "object"
+        },
+        "collection_health": {
+          "additionalProperties": true,
+          "title": "Collection Health",
+          "type": "object"
+        },
+        "confidence_interval": {
+          "additionalProperties": true,
+          "title": "Confidence Interval",
+          "type": "object"
+        },
+        "cross_source_signals": {
+          "title": "Cross Source Signals",
+          "type": "integer"
+        },
+        "overall_confidence": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Overall Confidence",
+          "type": "number"
+        },
+        "signal_count": {
+          "minimum": 0.0,
+          "title": "Signal Count",
+          "type": "integer"
+        },
+        "source_diversity": {
+          "title": "Source Diversity",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "overall_confidence",
+        "signal_count"
+      ],
+      "title": "ReportScore",
+      "type": "object"
+    },
+    "ReportSections": {
+      "description": "The report body.",
+      "properties": {
+        "executive_summary": {
+          "$ref": "#/$defs/ExecutiveSummary"
+        },
+        "hiring_signals": {
+          "$ref": "#/$defs/SignalSection"
+        },
+        "market_trends": {
+          "$ref": "#/$defs/SignalSection"
+        },
+        "org_briefing": {
+          "$ref": "#/$defs/OrgBriefing"
+        },
+        "talent_signals": {
+          "$ref": "#/$defs/SignalSection"
+        }
+      },
+      "required": [
+        "executive_summary",
+        "market_trends",
+        "talent_signals",
+        "hiring_signals"
+      ],
+      "title": "ReportSections",
+      "type": "object"
+    },
+    "SignalItem": {
+      "description": "One signal in a report section.\n\n``confidence`` and ``evidence`` are present on plans that include them\nand absent on the expired-trial preview.",
+      "properties": {
+        "category": {
+          "description": "Signal category, for example market_trend, research_paper, talent or hiring_signal.",
+          "title": "Category",
+          "type": "string"
+        },
+        "company": {
+          "title": "Company",
+          "type": "string"
+        },
+        "confidence": {
+          "title": "Confidence",
+          "type": "number"
+        },
+        "detail": {
+          "title": "Detail",
+          "type": "string"
+        },
+        "entity_key": {
+          "title": "Entity Key",
+          "type": "string"
+        },
+        "entity_type": {
+          "title": "Entity Type",
+          "type": "string"
+        },
+        "evidence": {
+          "additionalProperties": true,
+          "description": "The source metadata behind the counts, as collected.",
+          "title": "Evidence",
+          "type": "object"
+        },
+        "example_headline": {
+          "title": "Example Headline",
+          "type": "string"
+        },
+        "hiring_status": {
+          "title": "Hiring Status",
+          "type": "string"
+        },
+        "relevance": {
+          "title": "Relevance",
+          "type": "number"
+        },
+        "source": {
+          "description": "Source ids that observed the signal, comma-separated.",
+          "title": "Source",
+          "type": "string"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "title": "Timestamp",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "url": {
+          "title": "Url",
+          "type": "string"
+        },
+        "velocity": {
+          "additionalProperties": true,
+          "description": "Week-over-week movement of the signal.",
+          "title": "Velocity",
+          "type": "object"
+        }
+      },
+      "required": [
+        "source",
+        "title",
+        "detail",
+        "category",
+        "timestamp"
+      ],
+      "title": "SignalItem",
+      "type": "object"
+    },
+    "SignalSection": {
+      "description": "A section of signals, capped by the plan.",
+      "properties": {
+        "count": {
+          "description": "Number of items in data.",
+          "minimum": 0.0,
+          "title": "Count",
+          "type": "integer"
+        },
+        "data": {
+          "items": {
+            "$ref": "#/$defs/SignalItem"
+          },
+          "title": "Data",
+          "type": "array"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "count",
+        "data"
+      ],
+      "title": "SignalSection",
+      "type": "object"
+    },
+    "TrendAnalysis": {
+      "description": "Week-over-week movement across the retained collection history.\n``status`` is ``insufficient_history`` until there is history to compare.",
+      "properties": {
+        "analysis_timestamp": {
+          "title": "Analysis Timestamp",
+          "type": "string"
+        },
+        "declining": {
+          "items": {
+            "$ref": "#/$defs/TrendMovement"
+          },
+          "title": "Declining",
+          "type": "array"
+        },
+        "emerging": {
+          "items": {
+            "$ref": "#/$defs/TrendMovement"
+          },
+          "title": "Emerging",
+          "type": "array"
+        },
+        "engine": {
+          "title": "Engine",
+          "type": "string"
+        },
+        "hot_memory": {
+          "additionalProperties": true,
+          "title": "Hot Memory",
+          "type": "object"
+        },
+        "silent_but_rising": {
+          "items": {
+            "$ref": "#/$defs/TrendMovement"
+          },
+          "title": "Silent But Rising",
+          "type": "array"
+        },
+        "snapshot_count": {
+          "title": "Snapshot Count",
+          "type": "integer"
+        },
+        "spikes": {
+          "items": {
+            "$ref": "#/$defs/TrendMovement"
+          },
+          "title": "Spikes",
+          "type": "array"
+        },
+        "status": {
+          "description": "ok, or insufficient_history before any history exists.",
+          "title": "Status",
+          "type": "string"
+        },
+        "summary": {
+          "title": "Summary",
+          "type": "string"
+        },
+        "tracking_stats": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "Tracking Stats",
+          "type": "object"
+        },
+        "velocity": {
+          "items": {
+            "$ref": "#/$defs/TrendMovement"
+          },
+          "title": "Velocity",
+          "type": "array"
+        },
+        "weeks_of_data": {
+          "title": "Weeks Of Data",
+          "type": "number"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "title": "TrendAnalysis",
+      "type": "object"
+    },
+    "TrendMovement": {
+      "description": "A topic's movement against its own history.",
+      "properties": {
+        "baseline_is_partial": {
+          "title": "Baseline Is Partial",
+          "type": "boolean"
+        },
+        "baseline_metric": {
+          "title": "Baseline Metric",
+          "type": "number"
+        },
+        "category": {
+          "title": "Category",
+          "type": "string"
+        },
+        "change_pct": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Null when there is no baseline yet.",
+          "title": "Change Pct"
+        },
+        "current_confidence": {
+          "title": "Current Confidence",
+          "type": "number"
+        },
+        "current_mentions": {
+          "title": "Current Mentions",
+          "type": "integer"
+        },
+        "current_metric": {
+          "title": "Current Metric",
+          "type": "number"
+        },
+        "current_sources": {
+          "title": "Current Sources",
+          "type": "integer"
+        },
+        "last_confidence": {
+          "title": "Last Confidence",
+          "type": "number"
+        },
+        "last_seen_days_ago": {
+          "title": "Last Seen Days Ago",
+          "type": "integer"
+        },
+        "metric_kind": {
+          "title": "Metric Kind",
+          "type": "string"
+        },
+        "metric_trend": {
+          "title": "Metric Trend",
+          "type": "string"
+        },
+        "presence": {
+          "title": "Presence",
+          "type": "string"
+        },
+        "sources_list": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Sources List",
+          "type": "array"
+        },
+        "spike_magnitude": {
+          "title": "Spike Magnitude",
+          "type": "number"
+        },
+        "status": {
+          "title": "Status",
+          "type": "string"
+        },
+        "topic": {
+          "title": "Topic",
+          "type": "string"
+        },
+        "tracked_days": {
+          "title": "Tracked Days",
+          "type": "integer"
+        },
+        "tracked_days_before": {
+          "title": "Tracked Days Before",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "topic",
+        "category"
+      ],
+      "title": "TrendMovement",
+      "type": "object"
+    }
+  }
+}

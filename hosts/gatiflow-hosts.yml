@@ -1,4 +1,4 @@
-generated: '2026-09-25'
+generated: '2026-09-27'
 method: derived
 source: the pre-flight dossier, apis.yml pointers, spec servers, well-known, vendors -- nothing fetched here
 generator: derive-hosts.py
@@ -14,8 +14,10 @@ summary:
 hosts:
 - host: api.gatiflow.io
   found_by:
+  - pointer
   - apis[]
-  types: []
+  types:
+  - SBOM
   serves:
   - api
   registrable_domain: gatiflow.io
@@ -35,6 +37,18 @@ hosts:
   - PrivacyPolicy
   - AITransparency
   - DataSubjectRequest
+  - APIsJSON
+  - DeveloperPortal
+  - GettingStarted
+  - Pricing
+  - Security
+  - Blog
+  - Webhooks
+  - Roadmap
+  - PostmanCollection
+  - SupportLifetime
+  - CodeExamples
+  - APICatalog
   serves:
   - docs
   - hosting

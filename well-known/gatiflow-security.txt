@@ -1,0 +1,8 @@
+# GatiFlow security contact (RFC 9116).
+# The policy is section 11 of the Acceptable Use Policy: good-faith research,
+# acknowledgment within five business days, a ninety-day coordinated window.
+Contact: mailto:security@gatiflow.io
+Expires: 2027-09-25T00:00:00Z
+Policy: https://gatiflow.io/aup#responsible-disclosure
+Preferred-Languages: en, pt
+Canonical: https://gatiflow.io/.well-known/security.txt

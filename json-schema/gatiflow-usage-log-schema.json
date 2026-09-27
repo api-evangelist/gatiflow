@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/gatiflow/main/json-schema/gatiflow-usage-log-schema.json",
+  "title": "UsageLog",
+  "description": "The request log of the API key used on the call, newest first.",
+  "x-generated": "2026-09-27",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/gatiflow-usage-api-openapi.yml#/components/schemas/UsageLog",
+  "properties": {
+    "org_name": {
+      "title": "Org Name",
+      "type": "string"
+    },
+    "total_returned": {
+      "title": "Total Returned",
+      "type": "integer"
+    },
+    "usage": {
+      "items": {
+        "$ref": "#/$defs/UsageEvent"
+      },
+      "title": "Usage",
+      "type": "array"
+    }
+  },
+  "required": [
+    "org_name",
+    "total_returned",
+    "usage"
+  ],
+  "type": "object",
+  "$defs": {
+    "UsageEvent": {
+      "properties": {
+        "endpoint": {
+          "title": "Endpoint",
+          "type": "string"
+        },
+        "status_code": {
+          "title": "Status Code",
+          "type": "integer"
+        },
+        "timestamp": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "format": "date-time",
+          "title": "Timestamp"
+        }
+      },
+      "required": [
+        "endpoint",
+        "status_code",
+        "timestamp"
+      ],
+      "title": "UsageEvent",
+      "type": "object"
+    }
+  }
+}

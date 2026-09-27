@@ -1,0 +1,272 @@
+{
+  "auth": {
+    "apikey": [
+      {
+        "key": "key",
+        "type": "string",
+        "value": "X-API-Key"
+      },
+      {
+        "key": "value",
+        "type": "string",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "type": "string",
+        "value": "header"
+      }
+    ],
+    "type": "apikey"
+  },
+  "info": {
+    "_postman_id": "cecaf0ec-9f00-508c-ae78-9aae187381dc",
+    "description": "Every published operation of the GatiFlow Intelligence API, generated from https://gatiflow.io/openapi.json. Set apiKey to a key created on the API Keys page; the Deep Dive preview needs none, and the Daily Insights payload needs the web session in sessionToken instead.",
+    "name": "GatiFlow Intelligence API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "2.3.0"
+  },
+  "item": [
+    {
+      "item": [
+        {
+          "name": "Generate an intelligence report",
+          "request": {
+            "description": "Runs a report for the calling organization over the most recent collection cycle and returns it as JSON. Every signal carries its sources, a mention count and a confidence score, and on plans that include evidence, the raw evidence behind that count.\n\nSignal caps per plan: Starter 15, Pro 40, Business 100. An expired trial falls back to a watermarked 3-signal preview with confidence and evidence removed.\n\nResults are filtered to the topics configured on the organization profile. A successful call consumes one unit of the daily quota; a failed generation refunds it. If the underlying data is older than 24 hours the endpoint returns 503 with a Retry-After header rather than serving stale intelligence.\n\nThe schema_version query parameter selects the shape of the contract block, not the version of the payload: 1.1 and 1.2 both return the full contract with capabilities and limits, while the default 1.0 returns the compact one. The response reports the schema it actually is, at the top level and inside the contract, and the two always agree.",
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "intelligence",
+                "report"
+              ],
+              "query": [
+                {
+                  "description": "Schema Version",
+                  "disabled": true,
+                  "key": "schema_version",
+                  "value": "1.0"
+                }
+              ],
+              "raw": "{{baseUrl}}/api/v1/intelligence/report"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List retained report snapshots",
+          "request": {
+            "description": "Lists the report snapshots retained for this organization, newest first. Snapshots are written by the collection cycle, not by report calls, so this list reflects what was actually collected. Each entry carries a snapshot_id in the YYYYMMDDTHHmm format, which is what GET /intelligence/report/at/{snapshot_id} expects.\n\nRetention follows the plan: Starter keeps 7 days, Pro keeps 90 days, Business keeps 365 days. An expired trial retains nothing and receives an empty list.\n\nThis endpoint returns metadata only and does not consume daily quota, but it does count against the plan per-minute rate limit.",
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "intelligence",
+                "report-history"
+              ],
+              "query": [
+                {
+                  "description": "Limit",
+                  "disabled": true,
+                  "key": "limit",
+                  "value": "20"
+                }
+              ],
+              "raw": "{{baseUrl}}/api/v1/intelligence/report-history"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Retrieve an archived report snapshot",
+          "request": {
+            "description": "Returns a report that was archived by an earlier collection cycle, in the same shape as GET /intelligence/report. Use GET /intelligence/report-history to discover the ids that exist.\n\nsnapshot_id uses the YYYYMMDDTHHmm format, for example 20260509T1225. An id in any other shape returns 400 without a lookup.\n\nAvailability follows the plan retention window: Starter keeps 7 days, Pro keeps 90 days, Business keeps 365 days. A plan with no history receives 403, and an id outside the window returns 404.\n\nReading an archived snapshot does not consume daily quota, but it does count against the plan per-minute rate limit, including requests with an invalid id.",
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "intelligence",
+                "report",
+                "at",
+                ":snapshot_id"
+              ],
+              "raw": "{{baseUrl}}/api/v1/intelligence/report/at/:snapshot_id",
+              "variable": [
+                {
+                  "description": "",
+                  "key": "snapshot_id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Export the report as a file",
+          "request": {
+            "description": "Returns the same report as GET /intelligence/report, serialized to a downloadable file instead of JSON. The response body is the file itself, with a Content-Disposition attachment header and a dated filename.\n\nExport formats follow the plan: Starter has none and receives 403, Pro can export CSV, Business can export CSV and PDF.\n\nA successful export consumes one unit of the daily quota, the same as a report call. If the underlying data is older than 24 hours the endpoint returns 503 with a Retry-After header.",
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "intelligence",
+                "report",
+                "export"
+              ],
+              "query": [
+                {
+                  "description": "Format",
+                  "disabled": true,
+                  "key": "format",
+                  "value": "csv"
+                }
+              ],
+              "raw": "{{baseUrl}}/api/v1/intelligence/report/export"
+            }
+          },
+          "response": []
+        }
+      ],
+      "name": "intelligence"
+    },
+    {
+      "item": [
+        {
+          "name": "Get the latest Deep Dive preview",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "Returns the opening preview of the most recent Deep Dive article, plus its topic, title, word count and publication date. No authentication is required.\n\nThe full text is not served here. It stays behind authentication on the Deep Dive product page and is included with Starter, Pro and Business.\n\nDeep Dive articles are written by a language model from the collected signals, which the response declares. When nothing has been published yet the endpoint returns 200 with status set to no_article rather than an error.\n\nBecause the operation takes no credential there is no key to meter, so the ceiling is per caller address: 60 requests a minute, above which the endpoint returns 429. The article changes once a week, so a caller that polls has nothing to gain from a shorter interval.",
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "public",
+                "deep-dive"
+              ],
+              "raw": "{{baseUrl}}/api/v1/public/deep-dive"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get the Daily Insights payload",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{sessionToken}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Returns the shared Daily Insights report: the curated view of the latest collection cycle that backs the Insights page. Sections carry the same signal shape as the intelligence report, with sources, counts and confidence, and the evidence attached.\n\nThe payload is shaped to the caller plan. Pro and Business receive it whole. Starter receives the same report with per-signal velocity removed and section counts re-applied at the Starter caps. A paid or trialing plan is required; an expired trial receives 402.\n\nPass date as YYYY-MM-DD to read an archived day instead of the current one. An unknown date returns 404 and a malformed one returns 400.",
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "public",
+                "weekly-report"
+              ],
+              "query": [
+                {
+                  "description": "Date",
+                  "disabled": true,
+                  "key": "date",
+                  "value": ""
+                }
+              ],
+              "raw": "{{baseUrl}}/api/v1/public/weekly-report"
+            }
+          },
+          "response": []
+        }
+      ],
+      "name": "public"
+    },
+    {
+      "item": [
+        {
+          "name": "List recent calls made with this API key",
+          "request": {
+            "description": "Returns the request log for the API key used on this call: the endpoint, the HTTP status and the timestamp of each call, newest first, together with the organization name.\n\nThe scope is the key, not the organization. An organization holding several keys sees only the activity of the key that authenticated the request, so rotating a key starts a fresh log rather than continuing the old one.\n\nPass limit to change how many events come back. The default is 100 and the endpoint never returns more than 500, whatever is requested. Reading this log does not consume daily quota.",
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usage"
+              ],
+              "query": [
+                {
+                  "description": "Limit",
+                  "disabled": true,
+                  "key": "limit",
+                  "value": "100"
+                }
+              ],
+              "raw": "{{baseUrl}}/api/v1/usage"
+            }
+          },
+          "response": []
+        }
+      ],
+      "name": "usage"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "type": "string",
+      "value": "https://api.gatiflow.io"
+    },
+    {
+      "key": "apiKey",
+      "type": "string",
+      "value": ""
+    },
+    {
+      "key": "sessionToken",
+      "type": "string",
+      "value": ""
+    }
+  ]
+}

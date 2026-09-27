@@ -1,33 +1,31 @@
 {
   "provider": "gatiflow",
   "sources": [
-    "_original/gatiflow-openapi.json",
-    "gatiflow-openapi.yml"
+    "_original/gatiflow-openapi.json"
   ],
   "outputs": [
     "gatiflow-intelligence-api-openapi.yml",
     "gatiflow-public-api-openapi.yml",
-    "gatiflow-usage-api-openapi.yml"
+    "gatiflow-usage-api-openapi.yml",
+    "gatiflow-webhooks-api-openapi.yml"
   ],
-  "archived": [
-    "archived openapi/gatiflow-openapi.yml"
-  ],
+  "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
+    "1 archived document(s) dropped as subsets of other archived documents",
     "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "gatiflow-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "gatiflow-openapi.json: declared missing tag: intelligence",
     "gatiflow-openapi.json: declared missing tag: public",
     "gatiflow-openapi.json: declared missing tag: usage",
-    "gatiflow-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "gatiflow-openapi.yml: declared missing tag: intelligence",
-    "gatiflow-openapi.yml: declared missing tag: public",
-    "gatiflow-openapi.yml: declared missing tag: usage",
-    "tag 'intelligence' spans 2 source specs (gatiflow-openapi.json, gatiflow-openapi.yml): per-path servers applied",
-    "tag 'public' spans 2 source specs (gatiflow-openapi.json, gatiflow-openapi.yml): per-path servers applied",
-    "tag 'usage' spans 2 source specs (gatiflow-openapi.json, gatiflow-openapi.yml): per-path servers applied",
-    "apis.yml register: written (+3 apis, 3 total)"
+    "gatiflow-openapi.json: declared missing tag: webhooks",
+    "apis.yml register: written (+1 apis, 4 total)"
   ],
-  "skipped": []
+  "skipped": [
+    "_original/gatiflow-openapi.yml: archived document superseded by a larger archived document",
+    "gatiflow-intelligence-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "gatiflow-public-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "gatiflow-usage-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

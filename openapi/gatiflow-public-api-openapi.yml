@@ -1,16 +1,16 @@
 openapi: 3.2.0
 info:
-  title: Gatiflow Public API
-  version: 2.2.0
   contact:
     email: support@gatiflow.io
     name: GatiFlow Support
     url: https://gatiflow.io/api-docs
+  description: Customer-facing GatiFlow Intelligence API.
   license:
     name: Proprietary
     url: https://gatiflow.io/terms
   termsOfService: https://gatiflow.io/terms
-  description: 'Operations tagged public across 2 of this provider''s published API definitions: gatiflow-openapi.json, gatiflow-openapi.yml. Each path carries the servers of the definition it was published in.'
+  title: GatiFlow SaaS Public API
+  version: 2.3.0
 servers:
 - description: Production
   url: https://api.gatiflow.io
@@ -52,17 +52,19 @@ paths:
                     topic: inference cost
                     upgrade_message: Subscribe to Starter, Pro, or Business to read the full article.
                     word_count: 1834
-              schema: {}
+              schema:
+                $ref: '#/components/schemas/DeepDivePreview'
           description: Preview of the most recent Deep Dive article.
         '429':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
           description: 'Too many requests from this address. This operation takes no credential, so the ceiling is per caller address: 60 requests a minute.'
       security: []
       summary: Get the latest Deep Dive preview
       tags:
       - Public
-    servers:
-    - description: Production
-      url: https://api.gatiflow.io
   /api/v1/public/weekly-report:
     get:
       description: 'Returns the shared Daily Insights report: the curated view of the latest collection cycle that backs the Insights page. Sections carry the same signal shape as the intelligence report, with sources, counts and confidence, and the evidence attached.
@@ -100,15 +102,18 @@ paths:
                   value:
                     analytics:
                       market_overview:
-                        average_score: 0.82
-                        top_score: 0.82
+                        average_score: 84.0
+                        top_score: 84
                         total_profiles_analyzed: 1
                       role_distribution:
                         Senior Backend: 1
                       seniority_distribution:
-                        senior: 1
+                        junior_65_69: 0
+                        leadership_90_99: 0
+                        mid_70_79: 0
+                        senior_80_89: 1
                       seniority_levels:
-                      - senior
+                        senior: 1
                       stack_distribution:
                         rust: 1
                       strategic_insights: []
@@ -118,7 +123,7 @@ paths:
                       signup_url: https://gatiflow.io/register
                     generated_at: '2026-09-03T06:00:11.482913+00:00'
                     metadata:
-                      data_sources: up to 11
+                      data_sources: up to 13
                       product: GatiFlow Intelligence
                       report_type: Daily Insights
                       update_frequency: Every 6 hours
@@ -129,7 +134,7 @@ paths:
                       executive_summary:
                         narrative: ''
                         overall_confidence: 0.86
-                        summary: 'Full analysis of 38 signals from 9 of 11 sources. Top topics: rust, inference, postgres.'
+                        summary: 'Full analysis of 38 signals from 9 of 13 sources. Top topics: rust, inference, postgres. 1 talent signals identified.'
                         title: Market & Talent Intelligence Overview
                       hiring_signals:
                         count: 1
@@ -181,58 +186,519 @@ paths:
                     subtitle: The day's intelligence, distilled from the latest collection cycle.
                     title: GatiFlow Daily Insights — Sep 03, 2026
                     week_of: September 03, 2026
-              schema: {}
+              schema:
+                $ref: '#/components/schemas/DailyInsights'
           description: Daily Insights payload, shaped to the caller's plan.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: date is not in the YYYY-MM-DD format.
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: No web session, or the session token is invalid, expired or revoked.
+        '402':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The organization is not on a paid or trialing plan.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: No Insights snapshot exists for the requested date.
         '422':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-          description: Validation Error
+                $ref: '#/components/schemas/ErrorResponse'
+          description: A parameter is missing, malformed or out of range. error.details lists each problem.
+        '503':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: The current Insights report has not been generated yet, or the session could not be checked.
       security:
       - SessionBearer: []
       summary: Get the Daily Insights payload
       tags:
       - Public
-    servers:
-    - description: Production
-      url: https://api.gatiflow.io
 components:
   schemas:
-    HTTPValidationError:
+    ExecutiveSummary:
+      description: 'The report overview. ``narrative`` is written by a language model and
+
+        declared as such in ``metadata.ai_generated``.'
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
-      title: HTTPValidationError
+        narrative:
+          title: Narrative
+          type: string
+        overall_confidence:
+          title: Overall Confidence
+          type: number
+        summary:
+          title: Summary
+          type: string
+        title:
+          title: Title
+          type: string
+      required:
+      - title
+      - summary
+      - narrative
+      - overall_confidence
+      title: ExecutiveSummary
       type: object
-    ValidationError:
+    InsightsCallToAction:
+      properties:
+        api_docs:
+          title: Api Docs
+          type: string
+        message:
+          title: Message
+          type: string
+        signup_url:
+          title: Signup Url
+          type: string
+      required:
+      - message
+      - signup_url
+      - api_docs
+      title: InsightsCallToAction
+      type: object
+    MarketOverview:
+      properties:
+        average_score:
+          title: Average Score
+          type: number
+        top_score:
+          title: Top Score
+          type: number
+        total_profiles_analyzed:
+          title: Total Profiles Analyzed
+          type: integer
+      required:
+      - total_profiles_analyzed
+      - average_score
+      - top_score
+      title: MarketOverview
+      type: object
+    DailyInsights:
+      description: The shared Daily Insights report, shaped to the caller's plan.
+      properties:
+        analytics:
+          $ref: '#/components/schemas/ReportAnalytics'
+        cta:
+          $ref: '#/components/schemas/InsightsCallToAction'
+        generated_at:
+          format: date-time
+          title: Generated At
+          type: string
+        metadata:
+          $ref: '#/components/schemas/InsightsMetadata'
+        score:
+          $ref: '#/components/schemas/ReportScore'
+        sections:
+          $ref: '#/components/schemas/ReportSections'
+        subtitle:
+          title: Subtitle
+          type: string
+        title:
+          title: Title
+          type: string
+        week_of:
+          title: Week Of
+          type: string
+      required:
+      - generated_at
+      - week_of
+      - title
+      - subtitle
+      - sections
+      - score
+      - analytics
+      - cta
+      - metadata
+      title: DailyInsights
+      type: object
+    SignalItem:
+      description: 'One signal in a report section.
+
+
+        ``confidence`` and ``evidence`` are present on plans that include them
+
+        and absent on the expired-trial preview.'
+      properties:
+        category:
+          description: Signal category, for example market_trend, research_paper, talent or hiring_signal.
+          title: Category
+          type: string
+        company:
+          title: Company
+          type: string
+        confidence:
+          title: Confidence
+          type: number
+        detail:
+          title: Detail
+          type: string
+        entity_key:
+          title: Entity Key
+          type: string
+        entity_type:
+          title: Entity Type
+          type: string
+        evidence:
+          additionalProperties: true
+          description: The source metadata behind the counts, as collected.
+          title: Evidence
+          type: object
+        example_headline:
+          title: Example Headline
+          type: string
+        hiring_status:
+          title: Hiring Status
+          type: string
+        relevance:
+          title: Relevance
+          type: number
+        source:
+          description: Source ids that observed the signal, comma-separated.
+          title: Source
+          type: string
+        timestamp:
+          format: date-time
+          title: Timestamp
+          type: string
+        title:
+          title: Title
+          type: string
+        url:
+          title: Url
+          type: string
+        velocity:
+          additionalProperties: true
+          description: Week-over-week movement of the signal.
+          title: Velocity
+          type: object
+      required:
+      - source
+      - title
+      - detail
+      - category
+      - timestamp
+      title: SignalItem
+      type: object
+    DeepDivePreview:
+      description: 'The opening of the latest Deep Dive, or ``status: no_article``.'
+      properties:
+        full_article_available:
+          title: Full Article Available
+          type: boolean
+        id:
+          title: Id
+          type: string
+        message:
+          title: Message
+          type: string
+        preview:
+          title: Preview
+          type: string
+        published_at:
+          format: date-time
+          title: Published At
+          type: string
+        status:
+          enum:
+          - ok
+          - no_article
+          title: Status
+          type: string
+        title:
+          title: Title
+          type: string
+        topic:
+          title: Topic
+          type: string
+        upgrade_message:
+          title: Upgrade Message
+          type: string
+        word_count:
+          title: Word Count
+          type: integer
+      required:
+      - status
+      title: DeepDivePreview
+      type: object
+    ErrorDetail:
+      description: What went wrong, and the id to quote when asking about it.
+      properties:
+        code:
+          description: NOT_FOUND for a 404, VALIDATION_ERROR for a 422, HTTP_ERROR for every other refusal.
+          enum:
+          - HTTP_ERROR
+          - NOT_FOUND
+          - VALIDATION_ERROR
+          - INTERNAL_ERROR
+          title: Code
+          type: string
+        details:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - items:
+              $ref: '#/components/schemas/ValidationIssue'
+            type: array
+          description: The list of problems on a 422; an empty object otherwise.
+          title: Details
+        http_status:
+          title: Http Status
+          type: integer
+        message:
+          description: Why the request was refused, in plain words.
+          title: Message
+          type: string
+        request_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Also sent as the X-Request-ID response header.
+          title: Request Id
+      required:
+      - message
+      - code
+      - http_status
+      - request_id
+      - details
+      title: ErrorDetail
+      type: object
+    ErrorMetadata:
+      properties:
+        provider:
+          title: Provider
+          type: string
+        timestamp:
+          format: date-time
+          title: Timestamp
+          type: string
+        version:
+          title: Version
+          type: string
+      required:
+      - timestamp
+      - provider
+      - version
+      title: ErrorMetadata
+      type: object
+    ReportAnalytics:
+      description: Distributions over the talent profiles in the report.
+      properties:
+        market_overview:
+          $ref: '#/components/schemas/MarketOverview'
+        role_distribution:
+          additionalProperties:
+            type: integer
+          title: Role Distribution
+          type: object
+        seniority_distribution:
+          additionalProperties:
+            type: integer
+          description: Profiles per score band.
+          title: Seniority Distribution
+          type: object
+        seniority_levels:
+          additionalProperties:
+            type: integer
+          description: Profiles per seniority label.
+          title: Seniority Levels
+          type: object
+        stack_distribution:
+          additionalProperties:
+            type: integer
+          title: Stack Distribution
+          type: object
+        strategic_insights:
+          items:
+            type: string
+          title: Strategic Insights
+          type: array
+      required:
+      - market_overview
+      - seniority_distribution
+      - seniority_levels
+      - stack_distribution
+      - role_distribution
+      - strategic_insights
+      title: ReportAnalytics
+      type: object
+    ErrorResponse:
+      description: Every refusal the API returns, whatever its status.
+      properties:
+        error:
+          $ref: '#/components/schemas/ErrorDetail'
+        metadata:
+          $ref: '#/components/schemas/ErrorMetadata'
+        status:
+          const: error
+          title: Status
+          type: string
+      required:
+      - status
+      - error
+      - metadata
+      title: ErrorResponse
+      type: object
+    InsightsMetadata:
+      properties:
+        data_sources:
+          title: Data Sources
+          type: string
+        product:
+          title: Product
+          type: string
+        report_type:
+          title: Report Type
+          type: string
+        update_frequency:
+          title: Update Frequency
+          type: string
+      required:
+      - product
+      - data_sources
+      - update_frequency
+      - report_type
+      title: InsightsMetadata
+      type: object
+    ReportScore:
+      description: Aggregate confidence over the signals in the report.
+      properties:
+        categories:
+          additionalProperties:
+            type: number
+          title: Categories
+          type: object
+        collection_health:
+          additionalProperties: true
+          title: Collection Health
+          type: object
+        confidence_interval:
+          additionalProperties: true
+          title: Confidence Interval
+          type: object
+        cross_source_signals:
+          title: Cross Source Signals
+          type: integer
+        overall_confidence:
+          maximum: 1.0
+          minimum: 0.0
+          title: Overall Confidence
+          type: number
+        signal_count:
+          minimum: 0.0
+          title: Signal Count
+          type: integer
+        source_diversity:
+          title: Source Diversity
+          type: integer
+      required:
+      - overall_confidence
+      - signal_count
+      title: ReportScore
+      type: object
+    ReportSections:
+      description: The report body.
+      properties:
+        executive_summary:
+          $ref: '#/components/schemas/ExecutiveSummary'
+        hiring_signals:
+          $ref: '#/components/schemas/SignalSection'
+        market_trends:
+          $ref: '#/components/schemas/SignalSection'
+        org_briefing:
+          $ref: '#/components/schemas/OrgBriefing'
+        talent_signals:
+          $ref: '#/components/schemas/SignalSection'
+      required:
+      - executive_summary
+      - market_trends
+      - talent_signals
+      - hiring_signals
+      title: ReportSections
+      type: object
+    SignalSection:
+      description: A section of signals, capped by the plan.
+      properties:
+        count:
+          description: Number of items in data.
+          minimum: 0.0
+          title: Count
+          type: integer
+        data:
+          items:
+            $ref: '#/components/schemas/SignalItem'
+          title: Data
+          type: array
+        title:
+          title: Title
+          type: string
+      required:
+      - title
+      - count
+      - data
+      title: SignalSection
+      type: object
+    ValidationIssue:
+      description: One problem with the request, as a 422 lists it in ``error.details``.
       properties:
         ctx:
-          title: Context
-          type: object
+          description: The constraint that failed, as text.
+          title: Ctx
+          type: string
         input:
           title: Input
         loc:
+          description: Where the problem is, for example ['query', 'limit'].
           items:
             anyOf:
             - type: string
             - type: integer
-          title: Location
+          title: Loc
           type: array
         msg:
-          title: Message
+          title: Msg
           type: string
         type:
-          title: Error Type
+          title: Type
+          type: string
+        url:
+          title: Url
           type: string
       required:
+      - type
       - loc
       - msg
-      - type
-      title: ValidationError
+      title: ValidationIssue
+      type: object
+    OrgBriefing:
+      description: 'Business plan only: a paragraph on the organization''s own watchlist.'
+      properties:
+        narrative:
+          title: Narrative
+          type: string
+        title:
+          title: Title
+          type: string
+      required:
+      - title
+      - narrative
+      title: OrgBriefing
       type: object
   securitySchemes:
     ApiKeyAuth:
@@ -248,6 +714,8 @@ components:
 externalDocs:
   description: API documentation
   url: https://gatiflow.io/api-docs
-x-refined-from:
-- gatiflow-openapi.json
-- gatiflow-openapi.yml
+x-provenance:
+  generated_from: the running routes (app/api/public_docs.py), compared byte for byte by the test suite
+  method: published
+  publisher: GatiFlow
+  source: https://gatiflow.io/openapi.json

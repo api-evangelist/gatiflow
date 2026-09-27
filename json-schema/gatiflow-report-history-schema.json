@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/gatiflow/main/json-schema/gatiflow-report-history-schema.json",
+  "title": "ReportHistory",
+  "description": "Retained snapshots, newest first.",
+  "x-generated": "2026-09-27",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/gatiflow-intelligence-api-openapi.yml#/components/schemas/ReportHistory",
+  "properties": {
+    "count": {
+      "title": "Count",
+      "type": "integer"
+    },
+    "plan": {
+      "title": "Plan",
+      "type": "string"
+    },
+    "retention_days": {
+      "minimum": 0.0,
+      "title": "Retention Days",
+      "type": "integer"
+    },
+    "snapshots": {
+      "items": {
+        "$ref": "#/$defs/SnapshotSummary"
+      },
+      "title": "Snapshots",
+      "type": "array"
+    }
+  },
+  "required": [
+    "snapshots",
+    "count",
+    "plan",
+    "retention_days"
+  ],
+  "type": "object",
+  "$defs": {
+    "SnapshotSummary": {
+      "properties": {
+        "generated_at": {
+          "format": "date-time",
+          "title": "Generated At",
+          "type": "string"
+        },
+        "signal_count": {
+          "title": "Signal Count",
+          "type": "integer"
+        },
+        "snapshot_id": {
+          "description": "YYYYMMDDTHHmm",
+          "pattern": "^\\d{8}T\\d{4}$",
+          "title": "Snapshot Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "snapshot_id",
+        "generated_at",
+        "signal_count"
+      ],
+      "title": "SnapshotSummary",
+      "type": "object"
+    }
+  }
+}

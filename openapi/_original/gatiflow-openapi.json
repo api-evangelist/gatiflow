@@ -1,29 +1,1479 @@
 {
   "components": {
     "schemas": {
-      "HTTPValidationError": {
+      "AIGeneratedDeclaration": {
+        "description": "Which parts of the payload a language model wrote.",
         "properties": {
-          "detail": {
+          "applies_to": {
             "items": {
-              "$ref": "#/components/schemas/ValidationError"
+              "type": "string"
             },
-            "title": "Detail",
+            "title": "Applies To",
+            "type": "array"
+          },
+          "model": {
+            "title": "Model",
+            "type": "string"
+          },
+          "purpose": {
+            "title": "Purpose",
+            "type": "string"
+          },
+          "regulation": {
+            "title": "Regulation",
+            "type": "string"
+          }
+        },
+        "required": [
+          "applies_to",
+          "model",
+          "purpose"
+        ],
+        "title": "AIGeneratedDeclaration",
+        "type": "object"
+      },
+      "AlertData": {
+        "properties": {
+          "alert_count": {
+            "minimum": 1.0,
+            "title": "Alert Count",
+            "type": "integer"
+          },
+          "alerts": {
+            "items": {
+              "discriminator": {
+                "mapping": {
+                  "emerging": "#/components/schemas/EmergingAlert",
+                  "new_hirer": "#/components/schemas/NewHirerAlert",
+                  "spike": "#/components/schemas/SpikeAlert"
+                },
+                "propertyName": "type"
+              },
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/SpikeAlert"
+                },
+                {
+                  "$ref": "#/components/schemas/EmergingAlert"
+                },
+                {
+                  "$ref": "#/components/schemas/NewHirerAlert"
+                }
+              ]
+            },
+            "title": "Alerts",
+            "type": "array"
+          },
+          "generated_at": {
+            "format": "date-time",
+            "title": "Generated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "alert_count",
+          "alerts",
+          "generated_at"
+        ],
+        "title": "AlertData",
+        "type": "object"
+      },
+      "AlertEvent": {
+        "description": "The body of every ``intelligence:alert`` delivery.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/AlertData"
+          },
+          "event": {
+            "const": "intelligence:alert",
+            "title": "Event",
+            "type": "string"
+          }
+        },
+        "required": [
+          "event",
+          "data"
+        ],
+        "title": "AlertEvent",
+        "type": "object"
+      },
+      "ClientInfo": {
+        "description": "Who the report was built for and how much of today's quota is used.",
+        "properties": {
+          "client_name": {
+            "title": "Client Name",
+            "type": "string"
+          },
+          "daily_limit": {
+            "title": "Daily Limit",
+            "type": "integer"
+          },
+          "org_name": {
+            "title": "Org Name",
+            "type": "string"
+          },
+          "plan": {
+            "title": "Plan",
+            "type": "string"
+          },
+          "subscription_status": {
+            "title": "Subscription Status",
+            "type": "string"
+          },
+          "trial_days_remaining": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Trial Days Remaining"
+          },
+          "used_today": {
+            "title": "Used Today",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "client_name",
+          "org_name",
+          "plan",
+          "daily_limit",
+          "used_today"
+        ],
+        "title": "ClientInfo",
+        "type": "object"
+      },
+      "DailyInsights": {
+        "description": "The shared Daily Insights report, shaped to the caller's plan.",
+        "properties": {
+          "analytics": {
+            "$ref": "#/components/schemas/ReportAnalytics"
+          },
+          "cta": {
+            "$ref": "#/components/schemas/InsightsCallToAction"
+          },
+          "generated_at": {
+            "format": "date-time",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/InsightsMetadata"
+          },
+          "score": {
+            "$ref": "#/components/schemas/ReportScore"
+          },
+          "sections": {
+            "$ref": "#/components/schemas/ReportSections"
+          },
+          "subtitle": {
+            "title": "Subtitle",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "week_of": {
+            "title": "Week Of",
+            "type": "string"
+          }
+        },
+        "required": [
+          "generated_at",
+          "week_of",
+          "title",
+          "subtitle",
+          "sections",
+          "score",
+          "analytics",
+          "cta",
+          "metadata"
+        ],
+        "title": "DailyInsights",
+        "type": "object"
+      },
+      "DeepDivePreview": {
+        "description": "The opening of the latest Deep Dive, or ``status: no_article``.",
+        "properties": {
+          "full_article_available": {
+            "title": "Full Article Available",
+            "type": "boolean"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "preview": {
+            "title": "Preview",
+            "type": "string"
+          },
+          "published_at": {
+            "format": "date-time",
+            "title": "Published At",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "ok",
+              "no_article"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "topic": {
+            "title": "Topic",
+            "type": "string"
+          },
+          "upgrade_message": {
+            "title": "Upgrade Message",
+            "type": "string"
+          },
+          "word_count": {
+            "title": "Word Count",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "title": "DeepDivePreview",
+        "type": "object"
+      },
+      "EmergingAlert": {
+        "description": "A watched topic appeared, with no baseline to compare against yet.",
+        "properties": {
+          "current_mentions": {
+            "title": "Current Mentions",
+            "type": "integer"
+          },
+          "sources": {
+            "description": "Number of independent sources that observed it.",
+            "title": "Sources",
+            "type": "integer"
+          },
+          "topic": {
+            "title": "Topic",
+            "type": "string"
+          },
+          "type": {
+            "const": "emerging",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "topic",
+          "current_mentions",
+          "sources"
+        ],
+        "title": "EmergingAlert",
+        "type": "object"
+      },
+      "ErrorDetail": {
+        "description": "What went wrong, and the id to quote when asking about it.",
+        "properties": {
+          "code": {
+            "description": "NOT_FOUND for a 404, VALIDATION_ERROR for a 422, HTTP_ERROR for every other refusal.",
+            "enum": [
+              "HTTP_ERROR",
+              "NOT_FOUND",
+              "VALIDATION_ERROR",
+              "INTERNAL_ERROR"
+            ],
+            "title": "Code",
+            "type": "string"
+          },
+          "details": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "items": {
+                  "$ref": "#/components/schemas/ValidationIssue"
+                },
+                "type": "array"
+              }
+            ],
+            "description": "The list of problems on a 422; an empty object otherwise.",
+            "title": "Details"
+          },
+          "http_status": {
+            "title": "Http Status",
+            "type": "integer"
+          },
+          "message": {
+            "description": "Why the request was refused, in plain words.",
+            "title": "Message",
+            "type": "string"
+          },
+          "request_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Also sent as the X-Request-ID response header.",
+            "title": "Request Id"
+          }
+        },
+        "required": [
+          "message",
+          "code",
+          "http_status",
+          "request_id",
+          "details"
+        ],
+        "title": "ErrorDetail",
+        "type": "object"
+      },
+      "ErrorMetadata": {
+        "properties": {
+          "provider": {
+            "title": "Provider",
+            "type": "string"
+          },
+          "timestamp": {
+            "format": "date-time",
+            "title": "Timestamp",
+            "type": "string"
+          },
+          "version": {
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "timestamp",
+          "provider",
+          "version"
+        ],
+        "title": "ErrorMetadata",
+        "type": "object"
+      },
+      "ErrorResponse": {
+        "description": "Every refusal the API returns, whatever its status.",
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/ErrorDetail"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/ErrorMetadata"
+          },
+          "status": {
+            "const": "error",
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "error",
+          "metadata"
+        ],
+        "title": "ErrorResponse",
+        "type": "object"
+      },
+      "ExecutiveSummary": {
+        "description": "The report overview. ``narrative`` is written by a language model and\ndeclared as such in ``metadata.ai_generated``.",
+        "properties": {
+          "narrative": {
+            "title": "Narrative",
+            "type": "string"
+          },
+          "overall_confidence": {
+            "title": "Overall Confidence",
+            "type": "number"
+          },
+          "summary": {
+            "title": "Summary",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "title",
+          "summary",
+          "narrative",
+          "overall_confidence"
+        ],
+        "title": "ExecutiveSummary",
+        "type": "object"
+      },
+      "InsightsCallToAction": {
+        "properties": {
+          "api_docs": {
+            "title": "Api Docs",
+            "type": "string"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "signup_url": {
+            "title": "Signup Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "message",
+          "signup_url",
+          "api_docs"
+        ],
+        "title": "InsightsCallToAction",
+        "type": "object"
+      },
+      "InsightsMetadata": {
+        "properties": {
+          "data_sources": {
+            "title": "Data Sources",
+            "type": "string"
+          },
+          "product": {
+            "title": "Product",
+            "type": "string"
+          },
+          "report_type": {
+            "title": "Report Type",
+            "type": "string"
+          },
+          "update_frequency": {
+            "title": "Update Frequency",
+            "type": "string"
+          }
+        },
+        "required": [
+          "product",
+          "data_sources",
+          "update_frequency",
+          "report_type"
+        ],
+        "title": "InsightsMetadata",
+        "type": "object"
+      },
+      "IntelligenceReport": {
+        "description": "The intelligence report for the calling organization.\n\nThe same shape is served for an archived snapshot, which carries no\n``client_info`` because it was built by the collection cycle rather than\nfor a caller.",
+        "properties": {
+          "analytics": {
+            "$ref": "#/components/schemas/ReportAnalytics"
+          },
+          "client_info": {
+            "$ref": "#/components/schemas/ClientInfo"
+          },
+          "contract": {
+            "$ref": "#/components/schemas/ReportContract"
+          },
+          "generated_at": {
+            "format": "date-time",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/ReportMetadata"
+          },
+          "org_id": {
+            "title": "Org Id",
+            "type": "string"
+          },
+          "plan": {
+            "title": "Plan",
+            "type": "string"
+          },
+          "schema_version": {
+            "description": "The contract shape this payload follows, 1.0 or 1.2.",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "score": {
+            "$ref": "#/components/schemas/ReportScore"
+          },
+          "sections": {
+            "$ref": "#/components/schemas/ReportSections"
+          },
+          "trend_analysis": {
+            "$ref": "#/components/schemas/TrendAnalysis"
+          }
+        },
+        "required": [
+          "schema_version",
+          "org_id",
+          "plan",
+          "generated_at",
+          "contract",
+          "metadata",
+          "score",
+          "sections",
+          "analytics"
+        ],
+        "title": "IntelligenceReport",
+        "type": "object"
+      },
+      "MarketOverview": {
+        "properties": {
+          "average_score": {
+            "title": "Average Score",
+            "type": "number"
+          },
+          "top_score": {
+            "title": "Top Score",
+            "type": "number"
+          },
+          "total_profiles_analyzed": {
+            "title": "Total Profiles Analyzed",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "total_profiles_analyzed",
+          "average_score",
+          "top_score"
+        ],
+        "title": "MarketOverview",
+        "type": "object"
+      },
+      "NewHirerAlert": {
+        "description": "A watched company appeared in the hiring feed for the first time.",
+        "properties": {
+          "company": {
+            "title": "Company",
+            "type": "string"
+          },
+          "source": {
+            "title": "Source",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "type": {
+            "const": "new_hirer",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "company",
+          "title",
+          "source"
+        ],
+        "title": "NewHirerAlert",
+        "type": "object"
+      },
+      "OrgBriefing": {
+        "description": "Business plan only: a paragraph on the organization's own watchlist.",
+        "properties": {
+          "narrative": {
+            "title": "Narrative",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "title",
+          "narrative"
+        ],
+        "title": "OrgBriefing",
+        "type": "object"
+      },
+      "ReportAnalytics": {
+        "description": "Distributions over the talent profiles in the report.",
+        "properties": {
+          "market_overview": {
+            "$ref": "#/components/schemas/MarketOverview"
+          },
+          "role_distribution": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Role Distribution",
+            "type": "object"
+          },
+          "seniority_distribution": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "description": "Profiles per score band.",
+            "title": "Seniority Distribution",
+            "type": "object"
+          },
+          "seniority_levels": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "description": "Profiles per seniority label.",
+            "title": "Seniority Levels",
+            "type": "object"
+          },
+          "stack_distribution": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Stack Distribution",
+            "type": "object"
+          },
+          "strategic_insights": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Strategic Insights",
             "type": "array"
           }
         },
-        "title": "HTTPValidationError",
+        "required": [
+          "market_overview",
+          "seniority_distribution",
+          "seniority_levels",
+          "stack_distribution",
+          "role_distribution",
+          "strategic_insights"
+        ],
+        "title": "ReportAnalytics",
         "type": "object"
       },
-      "ValidationError": {
+      "ReportCapabilities": {
+        "properties": {
+          "exports": {
+            "description": "Export formats the plan includes.",
+            "items": {
+              "enum": [
+                "csv",
+                "pdf"
+              ],
+              "type": "string"
+            },
+            "title": "Exports",
+            "type": "array"
+          },
+          "org_briefing": {
+            "title": "Org Briefing",
+            "type": "boolean"
+          },
+          "show_confidence": {
+            "title": "Show Confidence",
+            "type": "boolean"
+          },
+          "show_evidence": {
+            "title": "Show Evidence",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "exports",
+          "show_evidence",
+          "show_confidence",
+          "org_briefing"
+        ],
+        "title": "ReportCapabilities",
+        "type": "object"
+      },
+      "ReportContract": {
+        "description": "What the plan entitles the caller to. Schema 1.0, the default, carries\nthe first three fields only; 1.1 and 1.2 add capabilities and limits.",
+        "properties": {
+          "capabilities": {
+            "$ref": "#/components/schemas/ReportCapabilities"
+          },
+          "limits": {
+            "$ref": "#/components/schemas/ReportLimits"
+          },
+          "plan_level": {
+            "title": "Plan Level",
+            "type": "string"
+          },
+          "report_type": {
+            "title": "Report Type",
+            "type": "string"
+          },
+          "schema_version": {
+            "title": "Schema Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "schema_version",
+          "plan_level",
+          "report_type"
+        ],
+        "title": "ReportContract",
+        "type": "object"
+      },
+      "ReportHistory": {
+        "description": "Retained snapshots, newest first.",
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "plan": {
+            "title": "Plan",
+            "type": "string"
+          },
+          "retention_days": {
+            "minimum": 0.0,
+            "title": "Retention Days",
+            "type": "integer"
+          },
+          "snapshots": {
+            "items": {
+              "$ref": "#/components/schemas/SnapshotSummary"
+            },
+            "title": "Snapshots",
+            "type": "array"
+          }
+        },
+        "required": [
+          "snapshots",
+          "count",
+          "plan",
+          "retention_days"
+        ],
+        "title": "ReportHistory",
+        "type": "object"
+      },
+      "ReportLimits": {
+        "properties": {
+          "max_signals": {
+            "title": "Max Signals",
+            "type": "integer"
+          },
+          "max_talents": {
+            "title": "Max Talents",
+            "type": "integer"
+          },
+          "max_trends": {
+            "title": "Max Trends",
+            "type": "integer"
+          },
+          "profile_companies": {
+            "title": "Profile Companies",
+            "type": "integer"
+          },
+          "profile_topics": {
+            "title": "Profile Topics",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "max_trends",
+          "max_talents",
+          "max_signals"
+        ],
+        "title": "ReportLimits",
+        "type": "object"
+      },
+      "ReportMetadata": {
+        "description": "Provenance of the report: when it was built, from what, and how fresh\nthe underlying data is.",
+        "properties": {
+          "ai_generated": {
+            "$ref": "#/components/schemas/AIGeneratedDeclaration"
+          },
+          "collection_health": {
+            "additionalProperties": true,
+            "title": "Collection Health",
+            "type": "object"
+          },
+          "confidentiality": {
+            "title": "Confidentiality",
+            "type": "string"
+          },
+          "corroboration_gate": {
+            "enum": [
+              "active",
+              "inactive"
+            ],
+            "title": "Corroboration Gate",
+            "type": "string"
+          },
+          "data_age_hours": {
+            "title": "Data Age Hours",
+            "type": "number"
+          },
+          "data_collected_at": {
+            "title": "Data Collected At",
+            "type": "string"
+          },
+          "data_source": {
+            "title": "Data Source",
+            "type": "string"
+          },
+          "generated_at": {
+            "format": "date-time",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "narrative_credits": {
+            "additionalProperties": true,
+            "title": "Narrative Credits",
+            "type": "object"
+          },
+          "narrative_exhausted": {
+            "title": "Narrative Exhausted",
+            "type": "boolean"
+          },
+          "product": {
+            "title": "Product",
+            "type": "string"
+          },
+          "quality": {
+            "additionalProperties": true,
+            "title": "Quality",
+            "type": "object"
+          },
+          "raw_observations_held": {
+            "title": "Raw Observations Held",
+            "type": "integer"
+          },
+          "relevance_ranking": {
+            "enum": [
+              "active",
+              "neutral"
+            ],
+            "title": "Relevance Ranking",
+            "type": "string"
+          },
+          "report_version": {
+            "title": "Report Version",
+            "type": "string"
+          },
+          "staleness_warning": {
+            "title": "Staleness Warning",
+            "type": "string"
+          },
+          "watermark": {
+            "description": "Present on the expired-trial preview only.",
+            "title": "Watermark",
+            "type": "string"
+          }
+        },
+        "required": [
+          "generated_at",
+          "product",
+          "report_version",
+          "confidentiality",
+          "ai_generated"
+        ],
+        "title": "ReportMetadata",
+        "type": "object"
+      },
+      "ReportScore": {
+        "description": "Aggregate confidence over the signals in the report.",
+        "properties": {
+          "categories": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "title": "Categories",
+            "type": "object"
+          },
+          "collection_health": {
+            "additionalProperties": true,
+            "title": "Collection Health",
+            "type": "object"
+          },
+          "confidence_interval": {
+            "additionalProperties": true,
+            "title": "Confidence Interval",
+            "type": "object"
+          },
+          "cross_source_signals": {
+            "title": "Cross Source Signals",
+            "type": "integer"
+          },
+          "overall_confidence": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Overall Confidence",
+            "type": "number"
+          },
+          "signal_count": {
+            "minimum": 0.0,
+            "title": "Signal Count",
+            "type": "integer"
+          },
+          "source_diversity": {
+            "title": "Source Diversity",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "overall_confidence",
+          "signal_count"
+        ],
+        "title": "ReportScore",
+        "type": "object"
+      },
+      "ReportSections": {
+        "description": "The report body.",
+        "properties": {
+          "executive_summary": {
+            "$ref": "#/components/schemas/ExecutiveSummary"
+          },
+          "hiring_signals": {
+            "$ref": "#/components/schemas/SignalSection"
+          },
+          "market_trends": {
+            "$ref": "#/components/schemas/SignalSection"
+          },
+          "org_briefing": {
+            "$ref": "#/components/schemas/OrgBriefing"
+          },
+          "talent_signals": {
+            "$ref": "#/components/schemas/SignalSection"
+          }
+        },
+        "required": [
+          "executive_summary",
+          "market_trends",
+          "talent_signals",
+          "hiring_signals"
+        ],
+        "title": "ReportSections",
+        "type": "object"
+      },
+      "SignalItem": {
+        "description": "One signal in a report section.\n\n``confidence`` and ``evidence`` are present on plans that include them\nand absent on the expired-trial preview.",
+        "properties": {
+          "category": {
+            "description": "Signal category, for example market_trend, research_paper, talent or hiring_signal.",
+            "title": "Category",
+            "type": "string"
+          },
+          "company": {
+            "title": "Company",
+            "type": "string"
+          },
+          "confidence": {
+            "title": "Confidence",
+            "type": "number"
+          },
+          "detail": {
+            "title": "Detail",
+            "type": "string"
+          },
+          "entity_key": {
+            "title": "Entity Key",
+            "type": "string"
+          },
+          "entity_type": {
+            "title": "Entity Type",
+            "type": "string"
+          },
+          "evidence": {
+            "additionalProperties": true,
+            "description": "The source metadata behind the counts, as collected.",
+            "title": "Evidence",
+            "type": "object"
+          },
+          "example_headline": {
+            "title": "Example Headline",
+            "type": "string"
+          },
+          "hiring_status": {
+            "title": "Hiring Status",
+            "type": "string"
+          },
+          "relevance": {
+            "title": "Relevance",
+            "type": "number"
+          },
+          "source": {
+            "description": "Source ids that observed the signal, comma-separated.",
+            "title": "Source",
+            "type": "string"
+          },
+          "timestamp": {
+            "format": "date-time",
+            "title": "Timestamp",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "url": {
+            "title": "Url",
+            "type": "string"
+          },
+          "velocity": {
+            "additionalProperties": true,
+            "description": "Week-over-week movement of the signal.",
+            "title": "Velocity",
+            "type": "object"
+          }
+        },
+        "required": [
+          "source",
+          "title",
+          "detail",
+          "category",
+          "timestamp"
+        ],
+        "title": "SignalItem",
+        "type": "object"
+      },
+      "SignalSection": {
+        "description": "A section of signals, capped by the plan.",
+        "properties": {
+          "count": {
+            "description": "Number of items in data.",
+            "minimum": 0.0,
+            "title": "Count",
+            "type": "integer"
+          },
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/SignalItem"
+            },
+            "title": "Data",
+            "type": "array"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "title",
+          "count",
+          "data"
+        ],
+        "title": "SignalSection",
+        "type": "object"
+      },
+      "SnapshotSummary": {
+        "properties": {
+          "generated_at": {
+            "format": "date-time",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "signal_count": {
+            "title": "Signal Count",
+            "type": "integer"
+          },
+          "snapshot_id": {
+            "description": "YYYYMMDDTHHmm",
+            "pattern": "^\\d{8}T\\d{4}$",
+            "title": "Snapshot Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "snapshot_id",
+          "generated_at",
+          "signal_count"
+        ],
+        "title": "SnapshotSummary",
+        "type": "object"
+      },
+      "SpikeAlert": {
+        "description": "A watched topic grew past the spike threshold against its baseline.",
+        "properties": {
+          "change_pct": {
+            "title": "Change Pct",
+            "type": "number"
+          },
+          "current_mentions": {
+            "title": "Current Mentions",
+            "type": "integer"
+          },
+          "sources": {
+            "description": "Number of independent sources that observed it.",
+            "title": "Sources",
+            "type": "integer"
+          },
+          "topic": {
+            "title": "Topic",
+            "type": "string"
+          },
+          "type": {
+            "const": "spike",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "topic",
+          "change_pct",
+          "current_mentions",
+          "sources"
+        ],
+        "title": "SpikeAlert",
+        "type": "object"
+      },
+      "StaleDataDetail": {
+        "description": "Why a report was refused as too old to serve.",
+        "properties": {
+          "data_age_hours": {
+            "description": "Age of the newest collected data, in hours.",
+            "title": "Data Age Hours",
+            "type": "number"
+          },
+          "error": {
+            "const": "data_too_stale",
+            "title": "Error",
+            "type": "string"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "threshold_hours": {
+            "description": "The ceiling the operation enforces, in hours.",
+            "title": "Threshold Hours",
+            "type": "number"
+          }
+        },
+        "required": [
+          "error",
+          "message",
+          "data_age_hours",
+          "threshold_hours"
+        ],
+        "title": "StaleDataDetail",
+        "type": "object"
+      },
+      "StaleDataError": {
+        "description": "The 503 an operation returns rather than serve intelligence older than\nits freshness ceiling. The same envelope as every error, with a structured\n``error.message``, sent with a ``Retry-After`` header.",
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/StaleDataErrorDetail"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/ErrorMetadata"
+          },
+          "status": {
+            "const": "error",
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "error",
+          "metadata"
+        ],
+        "title": "StaleDataError",
+        "type": "object"
+      },
+      "StaleDataErrorDetail": {
+        "properties": {
+          "code": {
+            "const": "HTTP_ERROR",
+            "title": "Code",
+            "type": "string"
+          },
+          "details": {
+            "additionalProperties": true,
+            "title": "Details",
+            "type": "object"
+          },
+          "http_status": {
+            "const": 503,
+            "title": "Http Status",
+            "type": "integer"
+          },
+          "message": {
+            "$ref": "#/components/schemas/StaleDataDetail"
+          },
+          "request_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Request Id"
+          }
+        },
+        "required": [
+          "message",
+          "code",
+          "http_status",
+          "request_id",
+          "details"
+        ],
+        "title": "StaleDataErrorDetail",
+        "type": "object"
+      },
+      "TrendAnalysis": {
+        "description": "Week-over-week movement across the retained collection history.\n``status`` is ``insufficient_history`` until there is history to compare.",
+        "properties": {
+          "analysis_timestamp": {
+            "title": "Analysis Timestamp",
+            "type": "string"
+          },
+          "declining": {
+            "items": {
+              "$ref": "#/components/schemas/TrendMovement"
+            },
+            "title": "Declining",
+            "type": "array"
+          },
+          "emerging": {
+            "items": {
+              "$ref": "#/components/schemas/TrendMovement"
+            },
+            "title": "Emerging",
+            "type": "array"
+          },
+          "engine": {
+            "title": "Engine",
+            "type": "string"
+          },
+          "hot_memory": {
+            "additionalProperties": true,
+            "title": "Hot Memory",
+            "type": "object"
+          },
+          "silent_but_rising": {
+            "items": {
+              "$ref": "#/components/schemas/TrendMovement"
+            },
+            "title": "Silent But Rising",
+            "type": "array"
+          },
+          "snapshot_count": {
+            "title": "Snapshot Count",
+            "type": "integer"
+          },
+          "spikes": {
+            "items": {
+              "$ref": "#/components/schemas/TrendMovement"
+            },
+            "title": "Spikes",
+            "type": "array"
+          },
+          "status": {
+            "description": "ok, or insufficient_history before any history exists.",
+            "title": "Status",
+            "type": "string"
+          },
+          "summary": {
+            "title": "Summary",
+            "type": "string"
+          },
+          "tracking_stats": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Tracking Stats",
+            "type": "object"
+          },
+          "velocity": {
+            "items": {
+              "$ref": "#/components/schemas/TrendMovement"
+            },
+            "title": "Velocity",
+            "type": "array"
+          },
+          "weeks_of_data": {
+            "title": "Weeks Of Data",
+            "type": "number"
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "title": "TrendAnalysis",
+        "type": "object"
+      },
+      "TrendMovement": {
+        "description": "A topic's movement against its own history.",
+        "properties": {
+          "baseline_is_partial": {
+            "title": "Baseline Is Partial",
+            "type": "boolean"
+          },
+          "baseline_metric": {
+            "title": "Baseline Metric",
+            "type": "number"
+          },
+          "category": {
+            "title": "Category",
+            "type": "string"
+          },
+          "change_pct": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Null when there is no baseline yet.",
+            "title": "Change Pct"
+          },
+          "current_confidence": {
+            "title": "Current Confidence",
+            "type": "number"
+          },
+          "current_mentions": {
+            "title": "Current Mentions",
+            "type": "integer"
+          },
+          "current_metric": {
+            "title": "Current Metric",
+            "type": "number"
+          },
+          "current_sources": {
+            "title": "Current Sources",
+            "type": "integer"
+          },
+          "last_confidence": {
+            "title": "Last Confidence",
+            "type": "number"
+          },
+          "last_seen_days_ago": {
+            "title": "Last Seen Days Ago",
+            "type": "integer"
+          },
+          "metric_kind": {
+            "title": "Metric Kind",
+            "type": "string"
+          },
+          "metric_trend": {
+            "title": "Metric Trend",
+            "type": "string"
+          },
+          "presence": {
+            "title": "Presence",
+            "type": "string"
+          },
+          "sources_list": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Sources List",
+            "type": "array"
+          },
+          "spike_magnitude": {
+            "title": "Spike Magnitude",
+            "type": "number"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "topic": {
+            "title": "Topic",
+            "type": "string"
+          },
+          "tracked_days": {
+            "title": "Tracked Days",
+            "type": "integer"
+          },
+          "tracked_days_before": {
+            "title": "Tracked Days Before",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "topic",
+          "category"
+        ],
+        "title": "TrendMovement",
+        "type": "object"
+      },
+      "UsageEvent": {
+        "properties": {
+          "endpoint": {
+            "title": "Endpoint",
+            "type": "string"
+          },
+          "status_code": {
+            "title": "Status Code",
+            "type": "integer"
+          },
+          "timestamp": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "format": "date-time",
+            "title": "Timestamp"
+          }
+        },
+        "required": [
+          "endpoint",
+          "status_code",
+          "timestamp"
+        ],
+        "title": "UsageEvent",
+        "type": "object"
+      },
+      "UsageLog": {
+        "description": "The request log of the API key used on the call, newest first.",
+        "properties": {
+          "org_name": {
+            "title": "Org Name",
+            "type": "string"
+          },
+          "total_returned": {
+            "title": "Total Returned",
+            "type": "integer"
+          },
+          "usage": {
+            "items": {
+              "$ref": "#/components/schemas/UsageEvent"
+            },
+            "title": "Usage",
+            "type": "array"
+          }
+        },
+        "required": [
+          "org_name",
+          "total_returned",
+          "usage"
+        ],
+        "title": "UsageLog",
+        "type": "object"
+      },
+      "ValidationIssue": {
+        "description": "One problem with the request, as a 422 lists it in ``error.details``.",
         "properties": {
           "ctx": {
-            "title": "Context",
-            "type": "object"
+            "description": "The constraint that failed, as text.",
+            "title": "Ctx",
+            "type": "string"
           },
           "input": {
             "title": "Input"
           },
           "loc": {
+            "description": "Where the problem is, for example ['query', 'limit'].",
             "items": {
               "anyOf": [
                 {
@@ -34,24 +1484,28 @@
                 }
               ]
             },
-            "title": "Location",
+            "title": "Loc",
             "type": "array"
           },
           "msg": {
-            "title": "Message",
+            "title": "Msg",
             "type": "string"
           },
           "type": {
-            "title": "Error Type",
+            "title": "Type",
+            "type": "string"
+          },
+          "url": {
+            "title": "Url",
             "type": "string"
           }
         },
         "required": [
+          "type",
           "loc",
-          "msg",
-          "type"
+          "msg"
         ],
-        "title": "ValidationError",
+        "title": "ValidationIssue",
         "type": "object"
       }
     },
@@ -87,7 +1541,7 @@
     },
     "termsOfService": "https://gatiflow.io/terms",
     "title": "GatiFlow SaaS API — Public API",
-    "version": "2.2.0"
+    "version": "2.3.0"
   },
   "openapi": "3.1.0",
   "paths": {
@@ -135,19 +1589,22 @@
                     "value": {
                       "analytics": {
                         "market_overview": {
-                          "average_score": 0.82,
-                          "top_score": 0.82,
+                          "average_score": 84.0,
+                          "top_score": 84,
                           "total_profiles_analyzed": 1
                         },
                         "role_distribution": {
                           "Senior Backend": 1
                         },
                         "seniority_distribution": {
+                          "junior_65_69": 0,
+                          "leadership_90_99": 0,
+                          "mid_70_79": 0,
+                          "senior_80_89": 1
+                        },
+                        "seniority_levels": {
                           "senior": 1
                         },
-                        "seniority_levels": [
-                          "senior"
-                        ],
                         "stack_distribution": {
                           "rust": 1
                         },
@@ -204,7 +1661,7 @@
                         "executive_summary": {
                           "narrative": "",
                           "overall_confidence": 0.86,
-                          "summary": "Full analysis of 38 signals from 9 of 11 sources. Top topics: rust, inference, postgres.",
+                          "summary": "Full analysis of 38 signals from 9 of 13 sources. Top topics: rust, inference, postgres. 1 talent signals identified.",
                           "title": "Market & Talent Intelligence Overview"
                         },
                         "hiring_signals": {
@@ -319,19 +1776,22 @@
                     "value": {
                       "analytics": {
                         "market_overview": {
-                          "average_score": 0.82,
-                          "top_score": 0.82,
+                          "average_score": 84.0,
+                          "top_score": 84,
                           "total_profiles_analyzed": 1
                         },
                         "role_distribution": {
                           "Senior Backend": 1
                         },
                         "seniority_distribution": {
+                          "junior_65_69": 0,
+                          "leadership_90_99": 0,
+                          "mid_70_79": 0,
+                          "senior_80_89": 1
+                        },
+                        "seniority_levels": {
                           "senior": 1
                         },
-                        "seniority_levels": [
-                          "senior"
-                        ],
                         "stack_distribution": {
                           "rust": 1
                         },
@@ -386,7 +1846,7 @@
                         "executive_summary": {
                           "narrative": "",
                           "overall_confidence": 0.86,
-                          "summary": "Full analysis of 38 signals from 9 of 11 sources. Top topics: rust, inference, postgres.",
+                          "summary": "Full analysis of 38 signals from 9 of 13 sources. Top topics: rust, inference, postgres. 1 talent signals identified.",
                           "title": "Market & Talent Intelligence Overview"
                         },
                         "hiring_signals": {
@@ -496,20 +1956,118 @@
                     }
                   }
                 },
-                "schema": {}
+                "schema": {
+                  "$ref": "#/components/schemas/IntelligenceReport"
+                }
               }
             },
-            "description": "Intelligence report for the calling organization."
+            "description": "Intelligence report for the calling organization.",
+            "headers": {
+              "X-DailyQuota-Limit": {
+                "description": "Calls the plan allows per day.",
+                "schema": {
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              },
+              "X-DailyQuota-Remaining": {
+                "description": "Calls left in today's quota.",
+                "schema": {
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Limit": {
+                "description": "Requests the plan allows in one rate-limit window.",
+                "schema": {
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Remaining": {
+                "description": "Requests left in the current window.",
+                "schema": {
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Reset-Seconds": {
+                "description": "Length of the sliding window, in seconds. A request refused with 429 succeeds once this many seconds have passed.",
+                "schema": {
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "The X-API-Key header is missing, or the key is unknown, revoked or expired."
+          },
+          "402": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "The organization has no subscription, or the subscription is not active."
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "The organization is inactive, its owner's email address is still unverified after the three-day grace period, or the key lacks the intelligence:read scope."
           },
           "422": {
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             },
-            "description": "Validation Error"
+            "description": "A parameter is missing, malformed or out of range. error.details lists each problem."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "The plan's per-minute rate limit or daily quota is exhausted. error.message says which: Rate limit exceeded, or Daily quota exceeded."
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StaleDataError"
+                }
+              }
+            },
+            "description": "The underlying data is older than 24 hours. Sent with a Retry-After header, in seconds.",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before asking again.",
+                "schema": {
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -593,20 +2151,85 @@
                     }
                   }
                 },
-                "schema": {}
+                "schema": {
+                  "$ref": "#/components/schemas/ReportHistory"
+                }
               }
             },
-            "description": "Snapshot metadata for this organization, newest first."
+            "description": "Snapshot metadata for this organization, newest first.",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "description": "Requests the plan allows in one rate-limit window.",
+                "schema": {
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Remaining": {
+                "description": "Requests left in the current window.",
+                "schema": {
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Reset-Seconds": {
+                "description": "Length of the sliding window, in seconds. A request refused with 429 succeeds once this many seconds have passed.",
+                "schema": {
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "The X-API-Key header is missing, or the key is unknown, revoked or expired."
+          },
+          "402": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "The organization has no subscription, or the subscription is not active."
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "The organization is inactive, its owner's email address is still unverified after the three-day grace period, or the key lacks the intelligence:read scope."
           },
           "422": {
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             },
-            "description": "Validation Error"
+            "description": "A parameter is missing, malformed or out of range. error.details lists each problem."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "The plan's per-minute rate limit is exhausted: error.message is Rate limit exceeded."
           }
         },
         "security": [
@@ -662,19 +2285,22 @@
                     "value": {
                       "analytics": {
                         "market_overview": {
-                          "average_score": 0.82,
-                          "top_score": 0.82,
+                          "average_score": 84.0,
+                          "top_score": 84,
                           "total_profiles_analyzed": 1
                         },
                         "role_distribution": {
                           "Senior Backend": 1
                         },
                         "seniority_distribution": {
+                          "junior_65_69": 0,
+                          "leadership_90_99": 0,
+                          "mid_70_79": 0,
+                          "senior_80_89": 1
+                        },
+                        "seniority_levels": {
                           "senior": 1
                         },
-                        "seniority_levels": [
-                          "senior"
-                        ],
                         "stack_distribution": {
                           "rust": 1
                         },
@@ -731,7 +2357,7 @@
                         "executive_summary": {
                           "narrative": "",
                           "overall_confidence": 0.86,
-                          "summary": "Full analysis of 38 signals from 9 of 11 sources. Top topics: rust, inference, postgres.",
+                          "summary": "Full analysis of 38 signals from 9 of 13 sources. Top topics: rust, inference, postgres. 1 talent signals identified.",
                           "title": "Market & Talent Intelligence Overview"
                         },
                         "hiring_signals": {
@@ -841,29 +2467,105 @@
                     }
                   }
                 },
-                "schema": {}
+                "schema": {
+                  "$ref": "#/components/schemas/IntelligenceReport"
+                }
               }
             },
-            "description": "The archived report for the requested snapshot_id."
+            "description": "The archived report for the requested snapshot_id.",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "description": "Requests the plan allows in one rate-limit window.",
+                "schema": {
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Remaining": {
+                "description": "Requests left in the current window.",
+                "schema": {
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Reset-Seconds": {
+                "description": "Length of the sliding window, in seconds. A request refused with 429 succeeds once this many seconds have passed.",
+                "schema": {
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              }
+            }
           },
           "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
             "description": "snapshot_id is not in the YYYYMMDDTHHmm format."
           },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "The X-API-Key header is missing, or the key is unknown, revoked or expired."
+          },
+          "402": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "The organization has no subscription, or the subscription is not active."
+          },
           "403": {
-            "description": "The plan does not retain history."
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "The plan does not retain history, the organization is inactive, its owner's email address is still unverified after the three-day grace period, or the key lacks the intelligence:read scope."
           },
           "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
             "description": "No snapshot with that id inside the plan retention window."
           },
           "422": {
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             },
-            "description": "Validation Error"
+            "description": "A parameter is missing, malformed or out of range. error.details lists each problem."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "The plan's per-minute rate limit is exhausted: error.message is Rate limit exceeded."
           }
         },
         "security": [
@@ -920,26 +2622,120 @@
                 }
               },
               "text/csv": {
+                "example": "section,title,detail,source,category,confidence,url,timestamp\r\nmarket_trends,rust,Strength: high | Mentions: 16,\"hackernews,arxiv\",market_trend,0.91,https://news.ycombinator.com/item?id=41234567,2026-09-03T06:00:11.482913+00:00\r\ntalent_signals,'@octodev,\"Senior Rust engineer, 8 public repositories this quarter\",github,talent,0.82,https://github.com/octodev,2026-09-03T06:00:11.482913+00:00\r\nhiring_signals,Series B infrastructure hiring,Backend openings up week over week,hiring,hiring_signal,0.77,,2026-09-03T06:00:11.482913+00:00\r\n",
                 "schema": {
                   "format": "binary",
                   "type": "string"
                 }
               }
             },
-            "description": "The report as a file attachment. Content-Type follows the requested format."
+            "description": "The report as a file attachment. Content-Type follows the requested format.",
+            "headers": {
+              "X-DailyQuota-Limit": {
+                "description": "Calls the plan allows per day.",
+                "schema": {
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              },
+              "X-DailyQuota-Remaining": {
+                "description": "Calls left in today's quota.",
+                "schema": {
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Limit": {
+                "description": "Requests the plan allows in one rate-limit window.",
+                "schema": {
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Remaining": {
+                "description": "Requests left in the current window.",
+                "schema": {
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Reset-Seconds": {
+                "description": "Length of the sliding window, in seconds. A request refused with 429 succeeds once this many seconds have passed.",
+                "schema": {
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "The X-API-Key header is missing, or the key is unknown, revoked or expired."
+          },
+          "402": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "The organization has no subscription, or the subscription is not active."
           },
           "403": {
-            "description": "The plan does not include the requested export format."
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "The plan does not include the requested export format, the organization is inactive, its owner's email address is still unverified after the three-day grace period, or the key lacks the intelligence:read scope."
           },
           "422": {
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             },
-            "description": "Validation Error"
+            "description": "A parameter is missing, malformed or out of range. error.details lists each problem."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "The plan's per-minute rate limit or daily quota is exhausted. error.message says which: Rate limit exceeded, or Daily quota exceeded."
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StaleDataError"
+                }
+              }
+            },
+            "description": "The underlying data is older than 24 hours. Sent with a Retry-After header, in seconds.",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before asking again.",
+                "schema": {
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -984,12 +2780,21 @@
                     }
                   }
                 },
-                "schema": {}
+                "schema": {
+                  "$ref": "#/components/schemas/DeepDivePreview"
+                }
               }
             },
             "description": "Preview of the most recent Deep Dive article."
           },
           "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
             "description": "Too many requests from this address. This operation takes no credential, so the ceiling is per caller address: 60 requests a minute."
           }
         },
@@ -1048,19 +2853,22 @@
                     "value": {
                       "analytics": {
                         "market_overview": {
-                          "average_score": 0.82,
-                          "top_score": 0.82,
+                          "average_score": 84.0,
+                          "top_score": 84,
                           "total_profiles_analyzed": 1
                         },
                         "role_distribution": {
                           "Senior Backend": 1
                         },
                         "seniority_distribution": {
+                          "junior_65_69": 0,
+                          "leadership_90_99": 0,
+                          "mid_70_79": 0,
+                          "senior_80_89": 1
+                        },
+                        "seniority_levels": {
                           "senior": 1
                         },
-                        "seniority_levels": [
-                          "senior"
-                        ],
                         "stack_distribution": {
                           "rust": 1
                         },
@@ -1073,7 +2881,7 @@
                       },
                       "generated_at": "2026-09-03T06:00:11.482913+00:00",
                       "metadata": {
-                        "data_sources": "up to 11",
+                        "data_sources": "up to 13",
                         "product": "GatiFlow Intelligence",
                         "report_type": "Daily Insights",
                         "update_frequency": "Every 6 hours"
@@ -1086,7 +2894,7 @@
                         "executive_summary": {
                           "narrative": "",
                           "overall_confidence": 0.86,
-                          "summary": "Full analysis of 38 signals from 9 of 11 sources. Top topics: rust, inference, postgres.",
+                          "summary": "Full analysis of 38 signals from 9 of 13 sources. Top topics: rust, inference, postgres. 1 talent signals identified.",
                           "title": "Market & Talent Intelligence Overview"
                         },
                         "hiring_signals": {
@@ -1160,20 +2968,72 @@
                     }
                   }
                 },
-                "schema": {}
+                "schema": {
+                  "$ref": "#/components/schemas/DailyInsights"
+                }
               }
             },
             "description": "Daily Insights payload, shaped to the caller's plan."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "date is not in the YYYY-MM-DD format."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "No web session, or the session token is invalid, expired or revoked."
+          },
+          "402": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "The organization is not on a paid or trialing plan."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "No Insights snapshot exists for the requested date."
           },
           "422": {
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             },
-            "description": "Validation Error"
+            "description": "A parameter is missing, malformed or out of range. error.details lists each problem."
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "The current Insights report has not been generated yet, or the session could not be checked."
           }
         },
         "security": [
@@ -1257,20 +3117,52 @@
                     }
                   }
                 },
-                "schema": {}
+                "schema": {
+                  "$ref": "#/components/schemas/UsageLog"
+                }
               }
             },
             "description": "Recent calls made with the API key used on this request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "The X-API-Key header is missing, or the key is unknown, revoked or expired."
+          },
+          "402": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "The organization has no subscription, or the subscription is not active."
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "The organization is inactive, or its owner's email address is still unverified after the three-day grace period."
           },
           "422": {
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             },
-            "description": "Validation Error"
+            "description": "A parameter is missing, malformed or out of range. error.details lists each problem."
           }
         },
         "security": [
@@ -1290,5 +3182,95 @@
       "description": "Production",
       "url": "https://api.gatiflow.io"
     }
-  ]
+  ],
+  "webhooks": {
+    "intelligence:alert": {
+      "post": {
+        "description": "Sent to every active webhook of an organization on the Pro or Business plan when a collection cycle raises alerts that match its watchlist: a watched topic spiking or emerging, or a watched company appearing in the hiring feed for the first time. Alerts are raised while Signal Alerts is switched on in Settings, and one delivery carries every alert the cycle raised for the organization.\n\nCollection runs every six hours and delivery runs in the same cycle, right after the alerts are raised. A delivery that is not acknowledged is retried at each following cycle, up to five attempts, with the same X-GatiFlow-Delivery-Id; after the fifth failure the webhook is switched off and the organization owner is emailed. Ordering between deliveries is not guaranteed.\n\nVerify every request before acting on it: X-GatiFlow-Signature is t=<unix timestamp>,v1=<hex>, where <hex> is the HMAC-SHA256 of '<timestamp>.<raw body>' under the secret shown once when the webhook was created. See https://gatiflow.io/api-docs/webhooks.",
+        "operationId": "intelligenceAlert",
+        "parameters": [
+          {
+            "description": "The event type, the same value as event in the body.",
+            "in": "header",
+            "name": "X-GatiFlow-Event",
+            "required": true,
+            "schema": {
+              "enum": [
+                "intelligence:alert"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "t=<unix timestamp>,v1=<HMAC-SHA256 hex of '<timestamp>.<raw body>' under the webhook secret>. Compare in constant time and reject a mismatch.",
+            "in": "header",
+            "name": "X-GatiFlow-Signature",
+            "required": true,
+            "schema": {
+              "pattern": "^t=[0-9]+,v1=[0-9a-f]{64}$",
+              "type": "string"
+            }
+          },
+          {
+            "description": "The t= value of the signature, on its own. It is fixed when the event is raised and travels unchanged through every retry.",
+            "in": "header",
+            "name": "X-GatiFlow-Timestamp",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "description": "One id per logical delivery, repeated on every retry. Use it to discard duplicates.",
+            "in": "header",
+            "name": "X-GatiFlow-Delivery-Id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Which attempt this is, 1 to 5.",
+            "in": "header",
+            "name": "X-GatiFlow-Attempt",
+            "required": true,
+            "schema": {
+              "maximum": 5,
+              "minimum": 1,
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AlertEvent"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "2XX": {
+            "description": "Acknowledged. Any status below 400 within 10 seconds counts as delivered; redirects are not followed."
+          },
+          "default": {
+            "description": "A 4xx or 5xx, a timeout or a refused connection is a failed attempt and is retried."
+          }
+        },
+        "summary": "Alerts raised for the organization's watchlist",
+        "tags": [
+          "webhooks"
+        ]
+      }
+    }
+  },
+  "x-provenance": {
+    "generated_from": "the running routes (app/api/public_docs.py), compared byte for byte by the test suite",
+    "method": "published",
+    "publisher": "GatiFlow",
+    "source": "https://gatiflow.io/openapi.json"
+  }
 }

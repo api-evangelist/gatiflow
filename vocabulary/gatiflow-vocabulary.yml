@@ -1,20 +1,204 @@
-generated: '2026-09-25'
+generated: '2026-09-27'
 method: derived
 generator: derive-vocabulary.py
-source: openapi/gatiflow-openapi.yml
+source:
+- openapi/gatiflow-intelligence-api-openapi.yml
+- openapi/gatiflow-public-api-openapi.yml
+- openapi/gatiflow-usage-api-openapi.yml
+- openapi/gatiflow-webhooks-api-openapi.yml
 vocabulary:
   name: GatiFlow Domain Vocabulary
   description: 'Terms declared by GatiFlow''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions.
     Derived, not authored.'
-  version: '2026-09-25'
+  version: '2026-09-27'
   terms:
-  - term: HTTPValidationError
-    definition: 'Object declared by the contract with fields: detail.'
+  - term: StaleDataError
+    definition: The 503 an operation returns rather than serve intelligence older than its freshness ceiling. The same envelope as every error,
+      with a structured ``error.message``, sent with a ``Retry-After`` header.
     tags:
     - Object
-    source: openapi/gatiflow-openapi.yml#/components/schemas/HTTPValidationError
-  - term: ValidationError
-    definition: 'Object declared by the contract with fields: ctx, input, loc, msg, type.'
+    source: openapi/gatiflow-intelligence-api-openapi.yml#/components/schemas/StaleDataError
+  - term: ErrorDetail
+    definition: What went wrong, and the id to quote when asking about it.
     tags:
     - Object
-    source: openapi/gatiflow-openapi.yml#/components/schemas/ValidationError
+    source: openapi/gatiflow-intelligence-api-openapi.yml#/components/schemas/ErrorDetail
+  - term: ErrorMetadata
+    definition: 'Object declared by the contract with fields: provider, timestamp, version.'
+    tags:
+    - Object
+    source: openapi/gatiflow-intelligence-api-openapi.yml#/components/schemas/ErrorMetadata
+  - term: StaleDataErrorDetail
+    definition: 'Object declared by the contract with fields: code, details, http_status, message, request_id.'
+    tags:
+    - Object
+    source: openapi/gatiflow-intelligence-api-openapi.yml#/components/schemas/StaleDataErrorDetail
+  - term: ErrorResponse
+    definition: Every refusal the API returns, whatever its status.
+    tags:
+    - Object
+    source: openapi/gatiflow-intelligence-api-openapi.yml#/components/schemas/ErrorResponse
+  - term: IntelligenceReport
+    definition: The intelligence report for the calling organization. The same shape is served for an archived snapshot, which carries no ``client_info``
+      because it was built by the collection cycle rather than for a caller.
+    tags:
+    - Object
+    source: openapi/gatiflow-intelligence-api-openapi.yml#/components/schemas/IntelligenceReport
+  - term: ReportMetadata
+    definition: 'Provenance of the report: when it was built, from what, and how fresh the underlying data is.'
+    tags:
+    - Object
+    source: openapi/gatiflow-intelligence-api-openapi.yml#/components/schemas/ReportMetadata
+  - term: ReportContract
+    definition: What the plan entitles the caller to. Schema 1.0, the default, carries the first three fields only; 1.1 and 1.2 add capabilities
+      and limits.
+    tags:
+    - Object
+    source: openapi/gatiflow-intelligence-api-openapi.yml#/components/schemas/ReportContract
+  - term: ReportSections
+    definition: The report body.
+    tags:
+    - Object
+    source: openapi/gatiflow-intelligence-api-openapi.yml#/components/schemas/ReportSections
+  - term: MarketOverview
+    definition: 'Object declared by the contract with fields: average_score, top_score, total_profiles_analyzed.'
+    tags:
+    - Object
+    source: openapi/gatiflow-intelligence-api-openapi.yml#/components/schemas/MarketOverview
+  - term: SnapshotSummary
+    definition: 'Object declared by the contract with fields: generated_at, signal_count, snapshot_id.'
+    tags:
+    - Object
+    source: openapi/gatiflow-intelligence-api-openapi.yml#/components/schemas/SnapshotSummary
+  - term: ReportAnalytics
+    definition: Distributions over the talent profiles in the report.
+    tags:
+    - Object
+    source: openapi/gatiflow-intelligence-api-openapi.yml#/components/schemas/ReportAnalytics
+  - term: ReportCapabilities
+    definition: 'Object declared by the contract with fields: exports, org_briefing, show_confidence, show_evidence.'
+    tags:
+    - Object
+    source: openapi/gatiflow-intelligence-api-openapi.yml#/components/schemas/ReportCapabilities
+  - term: ReportScore
+    definition: Aggregate confidence over the signals in the report.
+    tags:
+    - Object
+    source: openapi/gatiflow-intelligence-api-openapi.yml#/components/schemas/ReportScore
+  - term: ReportLimits
+    definition: 'Object declared by the contract with fields: max_signals, max_talents, max_trends, profile_companies, profile_topics.'
+    tags:
+    - Object
+    source: openapi/gatiflow-intelligence-api-openapi.yml#/components/schemas/ReportLimits
+  - term: ValidationIssue
+    definition: One problem with the request, as a 422 lists it in ``error.details``.
+    tags:
+    - Object
+    source: openapi/gatiflow-intelligence-api-openapi.yml#/components/schemas/ValidationIssue
+  - term: ExecutiveSummary
+    definition: The report overview. ``narrative`` is written by a language model and declared as such in ``metadata.ai_generated``.
+    tags:
+    - Object
+    source: openapi/gatiflow-intelligence-api-openapi.yml#/components/schemas/ExecutiveSummary
+  - term: ClientInfo
+    definition: Who the report was built for and how much of today's quota is used.
+    tags:
+    - Object
+    source: openapi/gatiflow-intelligence-api-openapi.yml#/components/schemas/ClientInfo
+  - term: TrendMovement
+    definition: A topic's movement against its own history.
+    tags:
+    - Object
+    source: openapi/gatiflow-intelligence-api-openapi.yml#/components/schemas/TrendMovement
+  - term: SignalItem
+    definition: One signal in a report section. ``confidence`` and ``evidence`` are present on plans that include them and absent on the expired-trial
+      preview.
+    tags:
+    - Object
+    source: openapi/gatiflow-intelligence-api-openapi.yml#/components/schemas/SignalItem
+  - term: StaleDataDetail
+    definition: Why a report was refused as too old to serve.
+    tags:
+    - Object
+    source: openapi/gatiflow-intelligence-api-openapi.yml#/components/schemas/StaleDataDetail
+  - term: AIGeneratedDeclaration
+    definition: Which parts of the payload a language model wrote.
+    tags:
+    - Object
+    source: openapi/gatiflow-intelligence-api-openapi.yml#/components/schemas/AIGeneratedDeclaration
+  - term: TrendAnalysis
+    definition: Week-over-week movement across the retained collection history. ``status`` is ``insufficient_history`` until there is history
+      to compare.
+    tags:
+    - Object
+    source: openapi/gatiflow-intelligence-api-openapi.yml#/components/schemas/TrendAnalysis
+  - term: ReportHistory
+    definition: Retained snapshots, newest first.
+    tags:
+    - Object
+    source: openapi/gatiflow-intelligence-api-openapi.yml#/components/schemas/ReportHistory
+  - term: SignalSection
+    definition: A section of signals, capped by the plan.
+    tags:
+    - Object
+    source: openapi/gatiflow-intelligence-api-openapi.yml#/components/schemas/SignalSection
+  - term: OrgBriefing
+    definition: 'Business plan only: a paragraph on the organization''s own watchlist.'
+    tags:
+    - Object
+    source: openapi/gatiflow-intelligence-api-openapi.yml#/components/schemas/OrgBriefing
+  - term: InsightsCallToAction
+    definition: 'Object declared by the contract with fields: api_docs, message, signup_url.'
+    tags:
+    - Object
+    source: openapi/gatiflow-public-api-openapi.yml#/components/schemas/InsightsCallToAction
+  - term: DailyInsights
+    definition: The shared Daily Insights report, shaped to the caller's plan.
+    tags:
+    - Object
+    source: openapi/gatiflow-public-api-openapi.yml#/components/schemas/DailyInsights
+  - term: DeepDivePreview
+    definition: 'The opening of the latest Deep Dive, or ``status: no_article``.'
+    tags:
+    - Object
+    source: openapi/gatiflow-public-api-openapi.yml#/components/schemas/DeepDivePreview
+  - term: InsightsMetadata
+    definition: 'Object declared by the contract with fields: data_sources, product, report_type, update_frequency.'
+    tags:
+    - Object
+    source: openapi/gatiflow-public-api-openapi.yml#/components/schemas/InsightsMetadata
+  - term: UsageLog
+    definition: The request log of the API key used on the call, newest first.
+    tags:
+    - Object
+    source: openapi/gatiflow-usage-api-openapi.yml#/components/schemas/UsageLog
+  - term: UsageEvent
+    definition: 'Object declared by the contract with fields: endpoint, status_code, timestamp.'
+    tags:
+    - Object
+    source: openapi/gatiflow-usage-api-openapi.yml#/components/schemas/UsageEvent
+  - term: SpikeAlert
+    definition: A watched topic grew past the spike threshold against its baseline.
+    tags:
+    - Object
+    source: openapi/gatiflow-webhooks-api-openapi.yml#/components/schemas/SpikeAlert
+  - term: AlertEvent
+    definition: The body of every ``intelligence:alert`` delivery.
+    tags:
+    - Object
+    source: openapi/gatiflow-webhooks-api-openapi.yml#/components/schemas/AlertEvent
+  - term: NewHirerAlert
+    definition: A watched company appeared in the hiring feed for the first time.
+    tags:
+    - Object
+    source: openapi/gatiflow-webhooks-api-openapi.yml#/components/schemas/NewHirerAlert
+  - term: EmergingAlert
+    definition: A watched topic appeared, with no baseline to compare against yet.
+    tags:
+    - Object
+    source: openapi/gatiflow-webhooks-api-openapi.yml#/components/schemas/EmergingAlert
+  - term: AlertData
+    definition: 'Object declared by the contract with fields: alert_count, alerts, generated_at.'
+    tags:
+    - Object
+    source: openapi/gatiflow-webhooks-api-openapi.yml#/components/schemas/AlertData

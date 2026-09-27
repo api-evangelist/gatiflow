@@ -18,7 +18,7 @@ x-tier-reason: enrichment pass 2026-09-21 (local-v5; was apis.io/add submission 
 position: Producing
 specificationVersion: '0.20'
 created: '2026-09-21'
-modified: '2026-09-25'
+modified: '2026-09-27'
 image: https://gatiflow.io/favicon.svg
 tags:
 - Market Intelligence
@@ -45,6 +45,16 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Webhooks
+  url: asyncapi/gatiflow-webhooks.yml
+- type: Deprecation
+  url: https://gatiflow.io/api-docs#versioning
+- type: SecurityTxt
+  url: well-known/gatiflow-security.txt
+- type: WellKnown
+  url: well-known/gatiflow-well-known.yml
+- type: VulnerabilityDisclosure
+  url: security/gatiflow-vulnerability-disclosure.yml
 - type: Hosts
   url: hosts/gatiflow-hosts.yml
 - type: Vendors
@@ -118,11 +128,32 @@ common:
 - type: Blog
   url: https://gatiflow.io/academy
 - type: Webhooks
-  url: https://gatiflow.io/
+  url: https://gatiflow.io/api-docs/webhooks
+- type: Roadmap
+  url: https://gatiflow.io/roadmap
+- type: PostmanCollection
+  url: https://gatiflow.io/postman_collection.json
+- type: SBOM
+  url: https://api.gatiflow.io/sbom.cdx.json
+- type: SupportLifetime
+  url: https://gatiflow.io/api-docs#versioning
+- type: CodeExamples
+  url: https://gatiflow.io/api-docs/examples
+- type: APICatalog
+  url: https://gatiflow.io/.well-known/api-catalog
+- type: ContentSignal
+  url: https://gatiflow.io/robots.txt
+- type: Console
+  url: https://api.gatiflow.io/docs
+- type: FinOps
+  url: finops/gatiflow-finops.yml
 apis:
 - aid: gatiflow:gatiflow-intelligence-api
   name: GatiFlow Intelligence API
-  description: The intelligence API from GatiFlow — 4 operation(s) for intelligence.
+  description: The intelligence operations of the GatiFlow Intelligence API — the current intelligence report (content
+    scales with plan), snapshot history, one archived report by snapshot id, and a CSV/PDF export of the signals.
+    Authenticated with a gf_-prefixed key in X-API-Key; rate limited per plan with X-RateLimit-* and X-DailyQuota-*
+    headers.
   humanURL: https://gatiflow.io/api-docs
   baseURL: https://api.gatiflow.io
   tags:
@@ -130,15 +161,25 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/gatiflow-intelligence-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted)
+    url: https://gatiflow.io/openapi.json
   - type: Documentation
     url: https://gatiflow.io/api-docs
   - type: APIReference
     url: https://api.gatiflow.io/docs
   - type: SignUp
     url: https://gatiflow.io/register
+  - type: PostmanCollection
+    url: postman/gatiflow-postman-collection.json
+  - type: JSONSchema
+    url: json-schema/gatiflow-intelligence-report-schema.json
+  - type: JSONSchema
+    url: json-schema/gatiflow-report-history-schema.json
 - aid: gatiflow:gatiflow-public-api
   name: GatiFlow Public API
-  description: The public API from GatiFlow — 2 operation(s) for public.
+  description: The public operations of the GatiFlow Intelligence API — the Daily Insights payload (API key required)
+    and the latest Saturday Deep Dive preview (title, excerpt and word count, no credential required).
   humanURL: https://gatiflow.io/api-docs
   baseURL: https://api.gatiflow.io
   tags:
@@ -146,15 +187,25 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/gatiflow-public-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted)
+    url: https://gatiflow.io/openapi.json
   - type: Documentation
     url: https://gatiflow.io/api-docs
   - type: APIReference
     url: https://api.gatiflow.io/docs
   - type: SignUp
     url: https://gatiflow.io/register
+  - type: PostmanCollection
+    url: postman/gatiflow-postman-collection.json
+  - type: JSONSchema
+    url: json-schema/gatiflow-daily-insights-schema.json
+  - type: JSONSchema
+    url: json-schema/gatiflow-deep-dive-preview-schema.json
 - aid: gatiflow:gatiflow-usage-api
   name: GatiFlow Usage API
-  description: The usage API from GatiFlow — 1 operation(s) for usage.
+  description: The usage operation of the GatiFlow Intelligence API — recent calls made with the API key used on
+    the request (limit up to 500), so a scheduled job can audit its own traffic without a second log.
   humanURL: https://gatiflow.io/api-docs
   baseURL: https://api.gatiflow.io
   tags:
@@ -162,14 +213,40 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/gatiflow-usage-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted)
+    url: https://gatiflow.io/openapi.json
   - type: Documentation
     url: https://gatiflow.io/api-docs
   - type: APIReference
     url: https://api.gatiflow.io/docs
   - type: SignUp
     url: https://gatiflow.io/register
+  - type: PostmanCollection
+    url: postman/gatiflow-postman-collection.json
+  - type: JSONSchema
+    url: json-schema/gatiflow-usage-log-schema.json
+- aid: gatiflow:gatiflow-webhooks-api
+  name: GatiFlow Webhooks API
+  description: The intelligence:alert webhook GatiFlow pushes to HTTPS endpoints registered by Pro and Business
+    organizations — spike, emerging and new_hirer alerts matching the watchlist, signed with HMAC-SHA256 (X-GatiFlow-Signature)
+    and retried each six-hour cycle up to 5 attempts. Also published as AsyncAPI 3.0 at gatiflow.io/asyncapi.json.
+  humanURL: https://gatiflow.io/api-docs/webhooks
+  baseURL: https://api.gatiflow.io
+  tags:
+  - webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/gatiflow-webhooks-api-openapi.yml
+  - type: Documentation
+    url: https://gatiflow.io/api-docs/webhooks
+  - type: AsyncAPI
+    url: asyncapi/gatiflow-webhooks-asyncapi.json
+  - type: AsyncAPI
+    name: AsyncAPI (provider-hosted)
+    url: https://gatiflow.io/asyncapi.json
 x-enrichment:
-  date: '2026-09-25'
+  date: '2026-09-27'
   status: enriched
-  artifacts_added: 2
+  artifacts_added: 6
   pass: local-v5
