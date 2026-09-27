@@ -1,0 +1,253 @@
+openapi: 3.2.0
+info:
+  title: Gatiflow Public API
+  version: 2.2.0
+  contact:
+    email: support@gatiflow.io
+    name: GatiFlow Support
+    url: https://gatiflow.io/api-docs
+  license:
+    name: Proprietary
+    url: https://gatiflow.io/terms
+  termsOfService: https://gatiflow.io/terms
+  description: 'Operations tagged public across 2 of this provider''s published API definitions: gatiflow-openapi.json, gatiflow-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- description: Production
+  url: https://api.gatiflow.io
+tags:
+- name: Public
+paths:
+  /api/v1/public/deep-dive:
+    get:
+      description: 'Returns the opening preview of the most recent Deep Dive article, plus its topic, title, word count and publication date. No authentication is required.
+
+
+        The full text is not served here. It stays behind authentication on the Deep Dive product page and is included with Starter, Pro and Business.
+
+
+        Deep Dive articles are written by a language model from the collected signals, which the response declares. When nothing has been published yet the endpoint returns 200 with status set to no_article rather than an error.
+
+
+        Because the operation takes no credential there is no key to meter, so the ceiling is per caller address: 60 requests a minute, above which the endpoint returns 429. The article changes once a week, so a caller that polls has nothing to gain from a shorter interval.'
+      operationId: get_latest_deep_dive_api_v1_public_deep_dive_get
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                none_yet:
+                  summary: Nothing published yet
+                  value:
+                    message: No deep dive available yet. Check back Saturday morning.
+                    status: no_article
+                published:
+                  summary: An article is published
+                  value:
+                    full_article_available: true
+                    id: 9d41f0a2-6c58-4c9e-8a3b-27d5e1b40f6a
+                    preview: The first two paragraphs of the article, in plain text.
+                    published_at: '2026-08-30T09:00:00+00:00'
+                    status: ok
+                    title: What Falling Inference Prices Did To The Infrastructure Layer
+                    topic: inference cost
+                    upgrade_message: Subscribe to Starter, Pro, or Business to read the full article.
+                    word_count: 1834
+              schema: {}
+          description: Preview of the most recent Deep Dive article.
+        '429':
+          description: 'Too many requests from this address. This operation takes no credential, so the ceiling is per caller address: 60 requests a minute.'
+      security: []
+      summary: Get the latest Deep Dive preview
+      tags:
+      - Public
+    servers:
+    - description: Production
+      url: https://api.gatiflow.io
+  /api/v1/public/weekly-report:
+    get:
+      description: 'Returns the shared Daily Insights report: the curated view of the latest collection cycle that backs the Insights page. Sections carry the same signal shape as the intelligence report, with sources, counts and confidence, and the evidence attached.
+
+
+        The payload is shaped to the caller plan. Pro and Business receive it whole. Starter receives the same report with per-signal velocity removed and section counts re-applied at the Starter caps. A paid or trialing plan is required; an expired trial receives 402.
+
+
+        Pass date as YYYY-MM-DD to read an archived day instead of the current one. An unknown date returns 404 and a malformed one returns 400.'
+      operationId: weekly_report_api_v1_public_weekly_report_get
+      parameters:
+      - in: query
+        name: date
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Date
+      - in: header
+        name: authorization
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Authorization
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                pro:
+                  summary: Current day, Pro key
+                  value:
+                    analytics:
+                      market_overview:
+                        average_score: 0.82
+                        top_score: 0.82
+                        total_profiles_analyzed: 1
+                      role_distribution:
+                        Senior Backend: 1
+                      seniority_distribution:
+                        senior: 1
+                      seniority_levels:
+                      - senior
+                      stack_distribution:
+                        rust: 1
+                      strategic_insights: []
+                    cta:
+                      api_docs: https://api.gatiflow.io/docs
+                      message: Get full reports with evidence, exports, and custom topics via API.
+                      signup_url: https://gatiflow.io/register
+                    generated_at: '2026-09-03T06:00:11.482913+00:00'
+                    metadata:
+                      data_sources: up to 11
+                      product: GatiFlow Intelligence
+                      report_type: Daily Insights
+                      update_frequency: Every 6 hours
+                    score:
+                      overall_confidence: 0.86
+                      signal_count: 38
+                    sections:
+                      executive_summary:
+                        narrative: ''
+                        overall_confidence: 0.86
+                        summary: 'Full analysis of 38 signals from 9 of 11 sources. Top topics: rust, inference, postgres.'
+                        title: Market & Talent Intelligence Overview
+                      hiring_signals:
+                        count: 1
+                        data:
+                        - category: hiring_signal
+                          confidence: 0.77
+                          detail: Backend openings up week over week
+                          evidence:
+                            company_size: 50-200
+                            trend: expanding
+                          source: hiring
+                          timestamp: '2026-09-03T06:00:11.482913+00:00'
+                          title: Series B infrastructure hiring
+                        title: Hiring & Opportunity Signals
+                      market_trends:
+                        count: 1
+                        data:
+                        - category: market_trend
+                          confidence: 0.91
+                          detail: 'Strength: high | Mentions: 16'
+                          evidence:
+                            mentions: 16
+                            metric: mentions
+                            sources:
+                            - hackernews
+                            - arxiv
+                            title: rust
+                          source: hackernews,arxiv
+                          timestamp: '2026-09-03T06:00:11.482913+00:00'
+                          title: rust
+                          url: https://news.ycombinator.com/item?id=41234567
+                        title: Market Intelligence Signals
+                      talent_signals:
+                        count: 1
+                        data:
+                        - category: talent
+                          confidence: 0.82
+                          detail: Senior Rust engineer, 8 public repositories this quarter
+                          evidence:
+                            role: Senior Backend
+                            seniority: senior
+                            stack:
+                            - rust
+                          source: github
+                          timestamp: '2026-09-03T06:00:11.482913+00:00'
+                          title: '@octodev'
+                          url: https://github.com/octodev
+                        title: Talent Intelligence Signals
+                    subtitle: The day's intelligence, distilled from the latest collection cycle.
+                    title: GatiFlow Daily Insights — Sep 03, 2026
+                    week_of: September 03, 2026
+              schema: {}
+          description: Daily Insights payload, shaped to the caller's plan.
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - SessionBearer: []
+      summary: Get the Daily Insights payload
+      tags:
+      - Public
+    servers:
+    - description: Production
+      url: https://api.gatiflow.io
+components:
+  schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    ValidationError:
+      properties:
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      description: API key (prefix gf_) created in Dashboard → API Keys.
+      in: header
+      name: X-API-Key
+      type: apiKey
+    SessionBearer:
+      bearerFormat: JWT
+      description: Web session token issued to the browser at sign-in. It is not part of the public API and cannot be created from an API key; an API key sent to an operation that requires it receives 401.
+      scheme: bearer
+      type: http
+externalDocs:
+  description: API documentation
+  url: https://gatiflow.io/api-docs
+x-refined-from:
+- gatiflow-openapi.json
+- gatiflow-openapi.yml

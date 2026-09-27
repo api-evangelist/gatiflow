@@ -122,29 +122,46 @@ common:
 apis:
 - aid: gatiflow:gatiflow-intelligence-api
   name: GatiFlow Intelligence API
-  description: A read-only JSON API over the GatiFlow signal pipeline. Seven published operations return the current
-    intelligence report (content scales with plan), its retained snapshots, a point-in-time snapshot by id, a CSV/PDF
-    file export (CSV on Pro, CSV or PDF on Business), the shared Daily Insights payload, the latest Deep Dive preview
-    (the one operation needing no credential), and the calls made with an API key. Authentication is a gf_-prefixed
-    API key in the X-API-Key header; a separate JWT session bearer is web-app only. Per-plan rate limits and daily
-    quotas are surfaced in X-RateLimit-* and X-DailyQuota-* headers, and the report endpoint returns 503 with Retry-After
-    rather than serving intelligence older than 24 hours. OpenAPI 3.1, version 2.2.0, served at gatiflow.io/openapi.json
-    with servers[] https://api.gatiflow.io.
+  description: The intelligence API from GatiFlow — 4 operation(s) for intelligence.
   humanURL: https://gatiflow.io/api-docs
   baseURL: https://api.gatiflow.io
-  image: https://gatiflow.io/favicon.svg
   tags:
-  - Market Intelligence
-  - Developer Signals
-  - Trends
-  - Hiring
-  - Research
+  - intelligence
   properties:
   - type: OpenAPI
-    url: openapi/gatiflow-openapi.yml
+    url: openapi/gatiflow-intelligence-api-openapi.yml
+  - type: Documentation
+    url: https://gatiflow.io/api-docs
+  - type: APIReference
+    url: https://api.gatiflow.io/docs
+  - type: SignUp
+    url: https://gatiflow.io/register
+- aid: gatiflow:gatiflow-public-api
+  name: GatiFlow Public API
+  description: The public API from GatiFlow — 2 operation(s) for public.
+  humanURL: https://gatiflow.io/api-docs
+  baseURL: https://api.gatiflow.io
+  tags:
+  - public
+  properties:
   - type: OpenAPI
-    name: GatiFlow Intelligence API OpenAPI (provider-hosted)
-    url: https://gatiflow.io/openapi.json
+    url: openapi/gatiflow-public-api-openapi.yml
+  - type: Documentation
+    url: https://gatiflow.io/api-docs
+  - type: APIReference
+    url: https://api.gatiflow.io/docs
+  - type: SignUp
+    url: https://gatiflow.io/register
+- aid: gatiflow:gatiflow-usage-api
+  name: GatiFlow Usage API
+  description: The usage API from GatiFlow — 1 operation(s) for usage.
+  humanURL: https://gatiflow.io/api-docs
+  baseURL: https://api.gatiflow.io
+  tags:
+  - usage
+  properties:
+  - type: OpenAPI
+    url: openapi/gatiflow-usage-api-openapi.yml
   - type: Documentation
     url: https://gatiflow.io/api-docs
   - type: APIReference

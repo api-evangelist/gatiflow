@@ -1,0 +1,141 @@
+openapi: 3.2.0
+info:
+  title: Gatiflow Usage API
+  version: 2.2.0
+  contact:
+    email: support@gatiflow.io
+    name: GatiFlow Support
+    url: https://gatiflow.io/api-docs
+  license:
+    name: Proprietary
+    url: https://gatiflow.io/terms
+  termsOfService: https://gatiflow.io/terms
+  description: 'Operations tagged usage across 2 of this provider''s published API definitions: gatiflow-openapi.json, gatiflow-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- description: Production
+  url: https://api.gatiflow.io
+tags:
+- name: Usage
+paths:
+  /api/v1/usage:
+    get:
+      description: 'Returns the request log for the API key used on this call: the endpoint, the HTTP status and the timestamp of each call, newest first, together with the organization name.
+
+
+        The scope is the key, not the organization. An organization holding several keys sees only the activity of the key that authenticated the request, so rotating a key starts a fresh log rather than continuing the old one.
+
+
+        Pass limit to change how many events come back. The default is 100 and the endpoint never returns more than 500, whatever is requested. Reading this log does not consume daily quota.'
+      operationId: get_my_usage_api_v1_usage_get
+      parameters:
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          title: Limit
+          type: integer
+      - in: header
+        name: X-API-Key
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: X-Api-Key
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                no_calls:
+                  summary: A key that has not been used yet
+                  value:
+                    org_name: Acme Capital
+                    total_returned: 0
+                    usage: []
+                recent:
+                  summary: The last few calls made with this key
+                  value:
+                    org_name: Acme Capital
+                    total_returned: 3
+                    usage:
+                    - endpoint: /intelligence/report
+                      status_code: 200
+                      timestamp: '2026-09-03T06:00:11.482913+00:00'
+                    - endpoint: /intelligence/report/export?format=csv
+                      status_code: 200
+                      timestamp: '2026-09-03T05:58:02.194771+00:00'
+                    - endpoint: /intelligence/report
+                      status_code: 429
+                      timestamp: '2026-09-03T05:57:41.008320+00:00'
+              schema: {}
+          description: Recent calls made with the API key used on this request.
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - ApiKeyAuth: []
+      summary: List recent calls made with this API key
+      tags:
+      - Usage
+    servers:
+    - description: Production
+      url: https://api.gatiflow.io
+components:
+  schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    ValidationError:
+      properties:
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      description: API key (prefix gf_) created in Dashboard → API Keys.
+      in: header
+      name: X-API-Key
+      type: apiKey
+    SessionBearer:
+      bearerFormat: JWT
+      description: Web session token issued to the browser at sign-in. It is not part of the public API and cannot be created from an API key; an API key sent to an operation that requires it receives 401.
+      scheme: bearer
+      type: http
+externalDocs:
+  description: API documentation
+  url: https://gatiflow.io/api-docs
+x-refined-from:
+- gatiflow-openapi.json
+- gatiflow-openapi.yml
