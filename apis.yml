@@ -178,7 +178,7 @@ apis:
     url: json-schema/gatiflow-report-history-schema.json
 - aid: gatiflow:gatiflow-public-api
   name: GatiFlow Public API
-  description: The public operations of the GatiFlow Intelligence API — the Daily Insights payload (API key required)
+  description: The public operations of the GatiFlow Intelligence API — the Daily Insights payload (web-app session auth, not an API key: an API key receives 401 there)
     and the latest Saturday Deep Dive preview (title, excerpt and word count, no credential required).
   humanURL: https://gatiflow.io/api-docs
   baseURL: https://api.gatiflow.io

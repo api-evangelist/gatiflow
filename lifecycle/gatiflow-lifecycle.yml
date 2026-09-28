@@ -25,8 +25,8 @@ deprecation:
 status_page: https://stats.uptimerobot.com/9fR5IzLq0q
 changelog: https://gatiflow.io/changelog
 deprecated_operations: []
-note: Status page is an UptimeRobot public status board linked from the site footer as "Status". Data-inquiry /
-  incident contact is support@gatiflow.io. Versioning, deprecation and support-lifetime text is verbatim from the
+note: Status page is an UptimeRobot public status board linked from the site footer as "Status". Data requests go
+  to privacy@gatiflow.io and security reports to security@gatiflow.io (GatiFlow, 2026-09-28). Versioning, deprecation and support-lifetime text is verbatim from the
   "Versioning and deprecation" section of gatiflow.io/api-docs (HTTP 200, 2026-09-27); the 2026-09-21 pass found
   no published deprecation policy.
 support_lifetime: A version receives fixes, security fixes included, until its Sunset date, and it is never sunset

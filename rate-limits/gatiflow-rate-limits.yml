@@ -22,55 +22,56 @@ limits:
   plan: Free
   window: minute
   max: 5
-  scope: per-api-key
+  scope: per-organization
   limit_text: Free 5
   kind: rate
 - name: Starter per-minute
   plan: Starter
   window: minute
   max: 60
-  scope: per-api-key
+  scope: per-organization
   limit_text: Starter 60
   kind: rate
 - name: Pro per-minute
   plan: Pro
   window: minute
   max: 120
-  scope: per-api-key
+  scope: per-organization
   limit_text: Pro 120
   kind: rate
 - name: Business per-minute
   plan: Business
   window: minute
   max: 300
-  scope: per-api-key
+  scope: per-organization
   limit_text: Business 300
   kind: rate
 - name: Free daily quota
   plan: Free
   window: day
   max: 10
-  scope: per-api-key
+  scope: per-organization
   limit_text: Free 10/day
   kind: quota
 - name: Starter daily quota
   plan: Starter
   window: day
   max: 2000
-  scope: per-api-key
+  scope: per-organization
   limit_text: Starter 2,000/day
   kind: quota
 - name: Pro daily quota
   plan: Pro
   window: day
   max: 10000
-  scope: per-api-key
+  scope: per-organization
   limit_text: Pro 10,000/day
   kind: quota
 - name: Business daily quota
   plan: Business
   window: day
   max: 50000
-  scope: per-api-key
+  scope: per-organization
   limit_text: Business 50,000/day
   kind: quota
+scope_note: Limits and daily quotas apply per ORGANIZATION -- every API key an organization holds draws on the same limits (GatiFlow, 2026-09-28; stated in apis.json/llms.txt).

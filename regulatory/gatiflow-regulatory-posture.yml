@@ -1,4 +1,4 @@
-generated: '2026-09-27'
+generated: '2026-09-28'
 method: searched
 source: https://gatiflow.io/compliance
 signals:
@@ -67,6 +67,65 @@ signals:
       fetched: '2026-09-27'
       quote: Support lifetime. A version receives fixes, security fixes included, until its Sunset date, and it
         is never sunset less than 90 days after its successor is published.
+  sub_processors:
+    url: https://gatiflow.io/privacy#processors
+    section: Privacy Policy v1.5, section 6
+    evidence:
+    - source: https://gatiflow.io/privacy
+      http_status: 200
+      fetched: '2026-09-28'
+      quote: Current list of sub-processors, section 6 of the Privacy Policy.
+    note: Provider-published; pointed out by GatiFlow (Rege, 2026-09-28) and verified on the live page.
+  data_residency:
+    url: https://gatiflow.io/privacy#data-residency
+    section: Privacy Policy, data residency
+    evidence:
+    - source: https://gatiflow.io/privacy
+      http_status: 200
+      fetched: '2026-09-28'
+      quote: '"Personal data is stored and processed in the United States, by the processors listed in section 6
+        and at the locations shown there" (one stated exception for transactional email).'
+    note: Provider-published; pointed out by GatiFlow (Rege, 2026-09-28) and verified on the live page.
+  incident_notification:
+    url: https://gatiflow.io/privacy#incident-notification
+    section: Privacy Policy, incident notification
+    evidence:
+    - source: https://gatiflow.io/privacy
+      http_status: 200
+      fetched: '2026-09-28'
+      quote: '"we notify the affected customers without undue delay and no later than 72 hours after becoming aware
+        of it"'
+    note: Provider-published; pointed out by GatiFlow (Rege, 2026-09-28) and verified on the live page.
+  global_privacy_control:
+    url: https://gatiflow.io/privacy#global-privacy-control
+    section: Privacy Policy, Global Privacy Control
+    evidence:
+    - source: https://gatiflow.io/privacy
+      http_status: 200
+      fetched: '2026-09-28'
+      quote: '"A browser that sends the Global Privacy Control signal (Sec-GPC: 1) is treated as having opted out
+        of both"'
+    note: Provider-published; pointed out by GatiFlow (Rege, 2026-09-28) and verified on the live page.
+  training_data:
+    url: https://gatiflow.io/compliance#training-data
+    section: Compliance, training data
+    evidence:
+    - source: https://gatiflow.io/compliance
+      http_status: 200
+      fetched: '2026-09-28'
+      quote: '"GatiFlow trains, fine-tunes or distils no machine-learning model, so there is no training dataset
+        to summarise."'
+    note: Provider-published; pointed out by GatiFlow (Rege, 2026-09-28) and verified on the live page.
+  exit_terms:
+    url: https://gatiflow.io/terms#effect-of-termination
+    section: Terms, effect of termination
+    evidence:
+    - source: https://gatiflow.io/terms
+      http_status: 200
+      fetched: '2026-09-28'
+      quote: '"Leaving the Service costs nothing." Organization data can be exported as JSON during and after the
+        subscription, with no fee to export or terminate.'
+    note: Provider-published; pointed out by GatiFlow (Rege, 2026-09-28) and verified on the live page.
 note: 'Horizontal regulatory signals harvested from GatiFlow''s own compliance, changelog, opt-out and API documentation
   pages. 2026-09-27: a CycloneDX 1.6 SBOM of the running API (api.gatiflow.io/sbom.cdx.json, 52 components) and
   a stated support lifetime were added. No VPAT/accessibility conformance report, dated subprocessor table, or transparency
