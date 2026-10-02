@@ -128,6 +128,7 @@ signals:
     note: Provider-published; pointed out by GatiFlow (Rege, 2026-09-28) and verified on the live page.
 note: 'Horizontal regulatory signals harvested from GatiFlow''s own compliance, changelog, opt-out and API documentation
   pages. 2026-09-27: a CycloneDX 1.6 SBOM of the running API (api.gatiflow.io/sbom.cdx.json, 52 components) and
-  a stated support lifetime were added. No VPAT/accessibility conformance report, dated subprocessor table, or transparency
-  report with substance was found — those signals are honestly absent. GatiFlow self-attests GDPR/LGPD/CCPA/PIPEDA/APPI/PDPA/UK-DPA
+  a stated support lifetime were added. 2026-09-28: the subprocessor table, data-residency, incident-notification, GPC, training-data
+  and exit-assistance pages are published and pointed to from apis.yml. No VPAT/accessibility conformance report or
+  transparency report with substance was found — those signals are honestly absent. GatiFlow self-attests GDPR/LGPD/CCPA/PIPEDA/APPI/PDPA/UK-DPA
   compliance (see security/gatiflow-trust-center.yml).'

@@ -147,6 +147,18 @@ common:
   url: https://api.gatiflow.io/docs
 - type: FinOps
   url: finops/gatiflow-finops.yml
+- type: Subprocessors
+  url: https://gatiflow.io/privacy#processors
+- type: DataResidency
+  url: https://gatiflow.io/privacy#data-residency
+- type: IncidentNotification
+  url: https://gatiflow.io/privacy#incident-notification
+- type: GlobalPrivacyControl
+  url: https://gatiflow.io/privacy#global-privacy-control
+- type: TrainingDataSummary
+  url: https://gatiflow.io/compliance#training-data
+- type: ExitAssistance
+  url: https://gatiflow.io/terms#effect-of-termination
 apis:
 - aid: gatiflow:gatiflow-intelligence-api
   name: GatiFlow Intelligence API
