@@ -169,6 +169,8 @@ apis:
   humanURL: https://gatiflow.io/api-docs
   baseURL: https://api.gatiflow.io
   tags:
+  - Intelligence
+  tags_raw:
   - intelligence
   properties:
   - type: OpenAPI
@@ -195,6 +197,8 @@ apis:
   humanURL: https://gatiflow.io/api-docs
   baseURL: https://api.gatiflow.io
   tags:
+  - Public
+  tags_raw:
   - public
   properties:
   - type: OpenAPI
@@ -221,6 +225,8 @@ apis:
   humanURL: https://gatiflow.io/api-docs
   baseURL: https://api.gatiflow.io
   tags:
+  - Usage
+  tags_raw:
   - usage
   properties:
   - type: OpenAPI
@@ -246,6 +252,8 @@ apis:
   humanURL: https://gatiflow.io/api-docs/webhooks
   baseURL: https://api.gatiflow.io
   tags:
+  - Webhook
+  tags_raw:
   - webhooks
   properties:
   - type: OpenAPI
