@@ -1,0 +1,12 @@
+{
+ "url": "https://gatiflow.io/openapi.json",
+ "requested_url": "https://gatiflow.io/openapi.json",
+ "status": 200,
+ "content_type": "application/json; charset=utf-8",
+ "bytes": 116484,
+ "sha256": "053eda6f86e89934205b733020d35001be133e71e47e5f35b44aa6a5cefac124",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
