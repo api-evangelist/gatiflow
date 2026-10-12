@@ -65,9 +65,9 @@ common:
   url: rate-limits/gatiflow-rate-limits.yml
 - type: Plans
   url: plans/gatiflow-plans-pricing.yml
-- type: SpectralRules
+- type: Spectral
   url: https://gatiflow.io/spectral.yaml
-- type: JSONLDContext
+- type: JSONLD
   url: https://gatiflow.io/context.jsonld
 - type: Vocabulary
   url: https://gatiflow.io/vocabulary.json
