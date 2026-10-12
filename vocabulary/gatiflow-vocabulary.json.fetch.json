@@ -1,0 +1,13 @@
+{
+ "url": "https://gatiflow.io/vocabulary.json",
+ "requested_url": "https://gatiflow.io/vocabulary.json",
+ "status": 200,
+ "content_type": "application/json; charset=utf-8",
+ "bytes": 20862,
+ "sha256": "27ef7a3afb45296e522ef2aa3e85fd0e59342dd771586b00b2a81c1e6218a197",
+ "fetched_at": "2026-10-12",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "publisher": "GatiFlow",
+ "method": "published",
+ "note": "Saved verbatim from the provider at GatiFlow's request (Rege, 2026-10-11 correction); replaces our derived artifact of this type."
+}

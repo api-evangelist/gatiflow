@@ -1,0 +1,382 @@
+{
+  "generated_from": "https://gatiflow.io/openapi.json",
+  "method": "published",
+  "publisher": "GatiFlow",
+  "source": "https://gatiflow.io/vocabulary.json",
+  "vocabulary": {
+    "description": "The terms the GatiFlow API uses, each defined once, with the fields of the published contract that carry it. Written by GatiFlow; each term's identifier is its fragment, https://gatiflow.io/vocabulary.json#<id>, which the JSON-LD context at https://gatiflow.io/context.jsonld uses as the term's IRI.",
+    "name": "GatiFlow API Vocabulary",
+    "terms": [
+      {
+        "category": "Report",
+        "definition": "The JSON document GET /api/v1/intelligence/report returns for the calling organization: an executive summary, three signal sections (market trends, talent and hiring), analytics over the talent profiles, the trend analysis and the plan contract. It is built from the latest collection cycle and filtered to the topics on the organization profile.",
+        "fields": [
+          "https://gatiflow.io/openapi.json#/components/schemas/IntelligenceReport"
+        ],
+        "id": "Report",
+        "term": "Report"
+      },
+      {
+        "category": "Report",
+        "definition": "One pass over every public source, every six hours. A source that does not answer is skipped and the report states how complete the cycle was. Each cycle also archives the snapshots that report history is read from.",
+        "fields": [
+          "https://gatiflow.io/openapi.json#/components/schemas/ReportMetadata/properties/collection_health"
+        ],
+        "id": "collectionCycle",
+        "term": "Collection cycle"
+      },
+      {
+        "category": "Report",
+        "definition": "A public system GatiFlow collects from, such as GitHub, arXiv, PyPI, npm or Hacker News. The source field of a signal names every source that observed it, comma-separated.",
+        "fields": [
+          "https://gatiflow.io/openapi.json#/components/schemas/SignalItem/properties/source"
+        ],
+        "id": "source",
+        "term": "Source"
+      },
+      {
+        "category": "Report",
+        "definition": "One data point from a public source that indicates market activity: a trending repository, a package, a paper or a discussion for market trends, a public developer profile for talent, a job posting for hiring. It carries the sources that observed it, a category and, on the plans that include them, a confidence score and the evidence behind it.",
+        "fields": [
+          "https://gatiflow.io/openapi.json#/components/schemas/SignalItem"
+        ],
+        "id": "Signal",
+        "term": "Signal"
+      },
+      {
+        "category": "Report",
+        "definition": "What kind of activity a signal records, for example market_trend, research_paper, talent or hiring_signal. Market trends, research papers, package adoption and the other trend categories are the ones the corroboration rule applies to; talent and hiring signals are scored on their own criteria.",
+        "fields": [
+          "https://gatiflow.io/openapi.json#/components/schemas/SignalItem/properties/category"
+        ],
+        "id": "category",
+        "term": "Signal category"
+      },
+      {
+        "category": "Report",
+        "definition": "A technology keyword a signal is matched to, from a curated list; content that matches no listed keyword is dropped rather than guessed. The topics on an organization profile filter its report.",
+        "fields": [
+          "https://gatiflow.io/openapi.json#/components/schemas/TrendMovement/properties/topic",
+          "https://gatiflow.io/openapi.json#/components/schemas/SpikeAlert/properties/topic"
+        ],
+        "id": "topic",
+        "term": "Topic"
+      },
+      {
+        "category": "Report",
+        "definition": "The source metadata behind a signal's counts, as collected, attached on the plans that include it.",
+        "fields": [
+          "https://gatiflow.io/openapi.json#/components/schemas/SignalItem/properties/evidence"
+        ],
+        "id": "evidence",
+        "term": "Evidence"
+      },
+      {
+        "category": "Report",
+        "definition": "The prose overview of a report. It is written by a language model, and metadata.ai_generated says which parts and which model.",
+        "fields": [
+          "https://gatiflow.io/openapi.json#/components/schemas/ExecutiveSummary/properties/narrative",
+          "https://gatiflow.io/openapi.json#/components/schemas/ReportMetadata/properties/ai_generated"
+        ],
+        "id": "narrative",
+        "term": "Narrative"
+      },
+      {
+        "category": "Report",
+        "definition": "The block of a report that states what the plan entitles the caller to. The schema_version parameter selects its shape: 1.0, the default, is compact; 1.1 and 1.2 add capabilities and limits.",
+        "fields": [
+          "https://gatiflow.io/openapi.json#/components/schemas/ReportContract",
+          "https://gatiflow.io/openapi.json#/components/schemas/ReportContract/properties/schema_version"
+        ],
+        "id": "contract",
+        "term": "Plan contract"
+      },
+      {
+        "category": "Report",
+        "definition": "The topics and companies an organization configures in Settings. The topics filter its report; topics and companies order each section by relevance and make up its watchlist; the plan caps how many of each apply.",
+        "fields": [
+          "https://gatiflow.io/openapi.json#/components/schemas/ReportLimits/properties/profile_topics",
+          "https://gatiflow.io/openapi.json#/components/schemas/ReportLimits/properties/profile_companies"
+        ],
+        "id": "organizationProfile",
+        "term": "Organization profile"
+      },
+      {
+        "category": "Report",
+        "definition": "With an organization profile configured, each section is ordered by relevance to its topics and companies, and items from watched companies come first; without one the order is neutral. metadata.relevance_ranking says which applied.",
+        "fields": [
+          "https://gatiflow.io/openapi.json#/components/schemas/SignalItem/properties/relevance",
+          "https://gatiflow.io/openapi.json#/components/schemas/ReportMetadata/properties/relevance_ranking"
+        ],
+        "id": "relevance",
+        "term": "Relevance ranking"
+      },
+      {
+        "category": "Report",
+        "definition": "A report archived by a collection cycle, addressed by a snapshot_id in the YYYYMMDDTHHmm format. A plan keeps snapshots for its retention window, which the history response states as retention_days.",
+        "fields": [
+          "https://gatiflow.io/openapi.json#/components/schemas/SnapshotSummary",
+          "https://gatiflow.io/openapi.json#/components/schemas/SnapshotSummary/properties/snapshot_id",
+          "https://gatiflow.io/openapi.json#/components/schemas/ReportHistory/properties/retention_days"
+        ],
+        "id": "Snapshot",
+        "term": "Snapshot"
+      },
+      {
+        "category": "Report",
+        "definition": "The age past which the report and the export refuse to serve: when the newest collected data is older than 24 hours they answer 503 with a Retry-After header instead of stale intelligence.",
+        "fields": [
+          "https://gatiflow.io/openapi.json#/components/schemas/StaleDataError",
+          "https://gatiflow.io/openapi.json#/components/schemas/StaleDataDetail/properties/threshold_hours"
+        ],
+        "id": "freshnessCeiling",
+        "term": "Freshness ceiling"
+      },
+      {
+        "category": "Movement",
+        "definition": "Each topic's movement against its own history, read from up to 14 days of retained collections: velocity, spikes, emerging and declining topics. Its status is insufficient_history until there is history to compare.",
+        "fields": [
+          "https://gatiflow.io/openapi.json#/components/schemas/TrendAnalysis",
+          "https://gatiflow.io/openapi.json#/components/schemas/IntelligenceReport/properties/trend_analysis"
+        ],
+        "id": "TrendAnalysis",
+        "term": "Trend analysis"
+      },
+      {
+        "category": "Movement",
+        "definition": "A topic's own earlier activity, the reference its movement is measured against: the mean of the previous week's collections, or the first value observed when the topic is younger than that, which baseline_is_partial flags.",
+        "fields": [
+          "https://gatiflow.io/openapi.json#/components/schemas/TrendMovement/properties/baseline_metric",
+          "https://gatiflow.io/openapi.json#/components/schemas/TrendMovement/properties/baseline_is_partial"
+        ],
+        "id": "baseline",
+        "term": "Baseline"
+      },
+      {
+        "category": "Movement",
+        "definition": "Movement over time. In the trend analysis, the topics whose magnitude metric (repository stars, package downloads, discussion score or mentions) changed against their baseline, week over week. On a signal, on Pro and Business, the change in its stars, mentions or followers since the previous collection, with the hours between the two.",
+        "fields": [
+          "https://gatiflow.io/openapi.json#/components/schemas/TrendAnalysis/properties/velocity",
+          "https://gatiflow.io/openapi.json#/components/schemas/SignalItem/properties/velocity"
+        ],
+        "id": "velocity",
+        "term": "Velocity"
+      },
+      {
+        "category": "Movement",
+        "definition": "A topic whose magnitude metric rose by more than 100% against its baseline, from a level high enough not to be noise.",
+        "fields": [
+          "https://gatiflow.io/openapi.json#/components/schemas/TrendAnalysis/properties/spikes",
+          "https://gatiflow.io/openapi.json#/components/schemas/TrendMovement/properties/spike_magnitude",
+          "https://gatiflow.io/openapi.json#/components/schemas/SpikeAlert"
+        ],
+        "id": "spike",
+        "term": "Spike"
+      },
+      {
+        "category": "Movement",
+        "definition": "A topic first seen across the whole retained history within the last 72 hours, with no baseline to compare against yet, that clears a floor: seen or mentioned more than once, observed with high confidence, or carrying enough magnitude.",
+        "fields": [
+          "https://gatiflow.io/openapi.json#/components/schemas/TrendAnalysis/properties/emerging",
+          "https://gatiflow.io/openapi.json#/components/schemas/EmergingAlert"
+        ],
+        "id": "emerging",
+        "term": "Emerging"
+      },
+      {
+        "category": "Movement",
+        "definition": "A topic absent from the collections for at least 3 days after being present on at least 3 distinct days. One whose metric was still rising when it went silent is listed as silent_but_rising instead.",
+        "fields": [
+          "https://gatiflow.io/openapi.json#/components/schemas/TrendAnalysis/properties/declining",
+          "https://gatiflow.io/openapi.json#/components/schemas/TrendAnalysis/properties/silent_but_rising"
+        ],
+        "id": "declining",
+        "term": "Declining"
+      },
+      {
+        "category": "Movement",
+        "definition": "A topic's movement against its baseline, in percent. Null while there is no baseline.",
+        "fields": [
+          "https://gatiflow.io/openapi.json#/components/schemas/TrendMovement/properties/change_pct",
+          "https://gatiflow.io/openapi.json#/components/schemas/SpikeAlert/properties/change_pct"
+        ],
+        "id": "changePercent",
+        "term": "Change"
+      },
+      {
+        "category": "Signal quality",
+        "definition": "The publication rule for trend-category signals: one reaches a report only once two independent sources confirm it in the same cycle, or one source repeats it across two collection cycles. A single observation from a single source is recorded and held back until then. Talent and hiring signals are not gated this way.",
+        "fields": [
+          "https://gatiflow.io/openapi.json#/components/schemas/ReportMetadata/properties/corroboration_gate",
+          "https://gatiflow.io/openapi.json#/components/schemas/ReportMetadata/properties/raw_observations_held"
+        ],
+        "id": "corroboration",
+        "term": "Corroboration"
+      },
+      {
+        "category": "Signal quality",
+        "definition": "A number from 0 to 1 that says how strong and how well supported a signal is now; it is not a prediction. For a corroborated trend signal it is computed from evidence as source authority times source diversity times persistence, scaled down by any penalty its collector applied, and kept between a floor and a ceiling; other signals keep the score their collector assigned. A report's overall_confidence aggregates it over the report's signals.",
+        "fields": [
+          "https://gatiflow.io/openapi.json#/components/schemas/SignalItem/properties/confidence",
+          "https://gatiflow.io/openapi.json#/components/schemas/ReportScore/properties/overall_confidence"
+        ],
+        "id": "confidence",
+        "term": "Confidence"
+      },
+      {
+        "category": "Signal quality",
+        "definition": "How much a source is trusted as a witness, as a weight per source. A signal's authority is the highest weight among the sources that observed it.",
+        "id": "sourceAuthority",
+        "term": "Source authority"
+      },
+      {
+        "category": "Signal quality",
+        "definition": "How many independent sources observed a signal. Each source up to three raises its confidence.",
+        "id": "sourceDiversity",
+        "term": "Source diversity"
+      },
+      {
+        "category": "Signal quality",
+        "definition": "How long a signal's entity has been observed since it was first seen. Longer persistence raises confidence, up to a cap.",
+        "id": "persistence",
+        "term": "Persistence"
+      },
+      {
+        "category": "Signal quality",
+        "definition": "On a hiring signal, new when the company was first observed hiring less than 14 days ago, recurring otherwise. A new hirer on an organization's watchlist raises an alert.",
+        "fields": [
+          "https://gatiflow.io/openapi.json#/components/schemas/SignalItem/properties/hiring_status",
+          "https://gatiflow.io/openapi.json#/components/schemas/NewHirerAlert"
+        ],
+        "id": "hiringStatus",
+        "term": "Hiring status"
+      },
+      {
+        "category": "Access",
+        "definition": "The credential for the API: a key with the gf_ prefix, created on the API Keys page and sent in the X-API-Key header. It belongs to an organization and may carry an expiry date.",
+        "fields": [
+          "https://gatiflow.io/openapi.json#/components/securitySchemes/ApiKeyAuth"
+        ],
+        "id": "ApiKey",
+        "term": "API key"
+      },
+      {
+        "category": "Access",
+        "definition": "The web-app session token issued at sign-in and sent as Authorization: Bearer. One published operation takes it, GET /api/v1/public/weekly-report, and an API key sent there receives 401.",
+        "fields": [
+          "https://gatiflow.io/openapi.json#/components/securitySchemes/SessionBearer"
+        ],
+        "id": "SessionBearer",
+        "term": "Session bearer"
+      },
+      {
+        "category": "Access",
+        "definition": "An operation that takes no credential at all: GET /api/v1/public/deep-dive. It is capped per caller address instead of per organization, and its 429 states the ceiling.",
+        "fields": [
+          "https://gatiflow.io/openapi.json#/paths/~1api~1v1~1public~1deep-dive/get"
+        ],
+        "id": "noCredential",
+        "term": "Keyless operation"
+      },
+      {
+        "category": "Access",
+        "definition": "Free, Starter, Pro or Business. The plan sets a report's caps on signals, trends and talent profiles, whether evidence, per-signal velocity and exports are included, how long snapshots are kept, the per-minute rate limit and the daily quota.",
+        "fields": [
+          "https://gatiflow.io/openapi.json#/components/schemas/IntelligenceReport/properties/plan",
+          "https://gatiflow.io/openapi.json#/components/schemas/ReportContract/properties/plan_level"
+        ],
+        "id": "plan",
+        "term": "Plan"
+      },
+      {
+        "category": "Access",
+        "definition": "Requests per minute an organization may make, set by its plan and shared by every API key it holds. The operations that meter it report it in X-RateLimit-* headers and refuse with 429 past it.",
+        "fields": [
+          "https://gatiflow.io/openapi.json#/paths/~1api~1v1~1intelligence~1report/get/responses/200/headers/X-RateLimit-Limit"
+        ],
+        "id": "rateLimit",
+        "term": "Rate limit"
+      },
+      {
+        "category": "Access",
+        "definition": "Reports and exports an organization may fetch per day, set by its plan and shared by every API key it holds. Only a successful report or export consumes it.",
+        "fields": [
+          "https://gatiflow.io/openapi.json#/paths/~1api~1v1~1intelligence~1report/get/responses/200/headers/X-DailyQuota-Limit",
+          "https://gatiflow.io/openapi.json#/components/schemas/ClientInfo/properties/daily_limit",
+          "https://gatiflow.io/openapi.json#/components/schemas/ClientInfo/properties/used_today"
+        ],
+        "id": "dailyQuota",
+        "term": "Daily quota"
+      },
+      {
+        "category": "Access",
+        "definition": "One entry per successful report or export fetched with an API key, newest first, read at GET /api/v1/usage. It belongs to the key, not to the organization, so rotating a key starts a new log.",
+        "fields": [
+          "https://gatiflow.io/openapi.json#/components/schemas/UsageLog",
+          "https://gatiflow.io/openapi.json#/components/schemas/UsageEvent"
+        ],
+        "id": "UsageLog",
+        "term": "Usage log"
+      },
+      {
+        "category": "Access",
+        "definition": "The one shape every refusal takes: status error, then error with message, code, http_status, request_id and details, then metadata. The 503 that refuses stale data carries a structured message in the same envelope.",
+        "fields": [
+          "https://gatiflow.io/openapi.json#/components/schemas/ErrorResponse",
+          "https://gatiflow.io/openapi.json#/components/schemas/StaleDataError"
+        ],
+        "id": "ErrorEnvelope",
+        "term": "Error envelope"
+      },
+      {
+        "category": "Access",
+        "definition": "The id of one request, in error.request_id and in the X-Request-ID response header. Quote it when writing to support.",
+        "fields": [
+          "https://gatiflow.io/openapi.json#/components/schemas/ErrorDetail/properties/request_id"
+        ],
+        "id": "requestId",
+        "term": "Request id"
+      },
+      {
+        "category": "Published content",
+        "definition": "The weekly long-form article on the week's most impactful topic, free to read on gatiflow.io. GET /api/v1/public/deep-dive returns its preview and its address with no credential.",
+        "fields": [
+          "https://gatiflow.io/openapi.json#/components/schemas/DeepDivePreview"
+        ],
+        "id": "DeepDive",
+        "term": "Deep Dive"
+      },
+      {
+        "category": "Published content",
+        "definition": "The shared daily report behind the Insights page, shaped to the caller's plan and served to the web-app session, not to an API key.",
+        "fields": [
+          "https://gatiflow.io/openapi.json#/components/schemas/DailyInsights"
+        ],
+        "id": "DailyInsights",
+        "term": "Daily Insights"
+      },
+      {
+        "category": "Events",
+        "definition": "A notice a collection cycle raises for an organization's watchlist: a watched topic spiking or emerging, or a watched company appearing in the hiring feed for the first time. On Pro and Business it is delivered by webhook.",
+        "fields": [
+          "https://gatiflow.io/openapi.json#/components/schemas/AlertEvent",
+          "https://gatiflow.io/openapi.json#/components/schemas/SpikeAlert",
+          "https://gatiflow.io/openapi.json#/components/schemas/EmergingAlert",
+          "https://gatiflow.io/openapi.json#/components/schemas/NewHirerAlert"
+        ],
+        "id": "Alert",
+        "term": "Watchlist alert"
+      },
+      {
+        "category": "Events",
+        "definition": "An HTTPS endpoint an organization on Pro or Business registers in Settings. GatiFlow sends it intelligence:alert events signed with HMAC-SHA256 in X-GatiFlow-Signature, and retries a delivery that is not acknowledged at each following cycle, up to five attempts with the same X-GatiFlow-Delivery-Id.",
+        "fields": [
+          "https://gatiflow.io/openapi.json#/webhooks/intelligence:alert/post"
+        ],
+        "id": "Webhook",
+        "term": "Webhook"
+      }
+    ],
+    "version": "2.5.0"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "actions": [
+    {
+      "description": "Takes the web-app session, not an API key: a client built for a key gets 401 here.",
+      "remove": true,
+      "target": "$.paths['/api/v1/public/weekly-report']"
+    },
+    {
+      "description": "No remaining operation takes the web-app session.",
+      "remove": true,
+      "target": "$.components.securitySchemes.SessionBearer"
+    },
+    {
+      "description": "Referenced only by the removed operation.",
+      "remove": true,
+      "target": "$.components.schemas.DailyInsights"
+    },
+    {
+      "description": "Referenced only by the removed operation.",
+      "remove": true,
+      "target": "$.components.schemas.InsightsCallToAction"
+    },
+    {
+      "description": "Referenced only by the removed operation.",
+      "remove": true,
+      "target": "$.components.schemas.InsightsMetadata"
+    }
+  ],
+  "extends": "https://gatiflow.io/openapi.json",
+  "info": {
+    "title": "GatiFlow API for an API key",
+    "version": "2.5.0"
+  },
+  "overlay": "1.0.0",
+  "x-provenance": {
+    "generated_from": "https://gatiflow.io/openapi.json",
+    "method": "published",
+    "publisher": "GatiFlow",
+    "source": "https://gatiflow.io/overlays/api-key-client.json"
+  }
+}

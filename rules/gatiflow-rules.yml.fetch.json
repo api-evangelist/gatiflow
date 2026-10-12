@@ -1,0 +1,13 @@
+{
+ "url": "https://gatiflow.io/spectral.yaml",
+ "requested_url": "https://gatiflow.io/spectral.yaml",
+ "status": 200,
+ "content_type": "text/yaml; charset=utf-8",
+ "bytes": 16642,
+ "sha256": "989757319d7c14f2dafc917b34c0bb71d0e63cb76a4f2dd0869fab296e811419",
+ "fetched_at": "2026-10-12",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "publisher": "GatiFlow",
+ "method": "published",
+ "note": "Saved verbatim from the provider at GatiFlow's request (Rege, 2026-10-11 correction); replaces our derived artifact of this type."
+}

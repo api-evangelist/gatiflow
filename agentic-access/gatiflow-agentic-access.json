@@ -1,0 +1,171 @@
+{
+  "definitions": {
+    "action-class": "connected: the call reads data on the organization's behalf; acting: the call changes something in the world.",
+    "audience": "The API host a credential for this call is valid at.",
+    "audit": "none or required: whether the call must leave an audit record.",
+    "consequence": "read, write, physical or safety-critical: the worst thing the call can do.",
+    "escalation": "human-in-the-loop: none, conditional or required, whether a person approves the call first.",
+    "subject": "required when the credential identifies a person (the web-app session); optional when it identifies an organization (an API key) or nothing."
+  },
+  "description": "How an agent may call each GatiFlow API operation, in the x-agentic-access shape. Every published operation reads: none writes, none needs a person to approve it, and none must leave an audit record. The same classification is inline in the contract, on each operation, so an agent reads it from the document it already fetched.",
+  "generated_from": "https://gatiflow.io/openapi.json",
+  "method": "published",
+  "operations": [
+    {
+      "method": "get",
+      "operationId": "report_api_v1_intelligence_report_get",
+      "path": "/api/v1/intelligence/report",
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ],
+      "summary": "Generate an intelligence report",
+      "x-agentic-access": {
+        "action-class": "connected",
+        "audience": "https://api.gatiflow.io",
+        "audit": "none",
+        "consequence": "read",
+        "escalation": {
+          "human-in-the-loop": "none"
+        },
+        "subject": "optional"
+      }
+    },
+    {
+      "method": "get",
+      "operationId": "report_history_list_api_v1_intelligence_report_history_get",
+      "path": "/api/v1/intelligence/report-history",
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ],
+      "summary": "List retained report snapshots",
+      "x-agentic-access": {
+        "action-class": "connected",
+        "audience": "https://api.gatiflow.io",
+        "audit": "none",
+        "consequence": "read",
+        "escalation": {
+          "human-in-the-loop": "none"
+        },
+        "subject": "optional"
+      }
+    },
+    {
+      "method": "get",
+      "operationId": "report_at_snapshot_api_v1_intelligence_report_at__snapshot_id__get",
+      "path": "/api/v1/intelligence/report/at/{snapshot_id}",
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ],
+      "summary": "Retrieve an archived report snapshot",
+      "x-agentic-access": {
+        "action-class": "connected",
+        "audience": "https://api.gatiflow.io",
+        "audit": "none",
+        "consequence": "read",
+        "escalation": {
+          "human-in-the-loop": "none"
+        },
+        "subject": "optional"
+      }
+    },
+    {
+      "method": "get",
+      "operationId": "export_report_api_v1_intelligence_report_export_get",
+      "path": "/api/v1/intelligence/report/export",
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ],
+      "summary": "Export the report as a file",
+      "x-agentic-access": {
+        "action-class": "connected",
+        "audience": "https://api.gatiflow.io",
+        "audit": "none",
+        "consequence": "read",
+        "escalation": {
+          "human-in-the-loop": "none"
+        },
+        "subject": "optional"
+      }
+    },
+    {
+      "method": "get",
+      "operationId": "get_latest_deep_dive_api_v1_public_deep_dive_get",
+      "path": "/api/v1/public/deep-dive",
+      "security": [],
+      "summary": "Get the latest Deep Dive preview",
+      "x-agentic-access": {
+        "action-class": "connected",
+        "audience": "https://api.gatiflow.io",
+        "audit": "none",
+        "consequence": "read",
+        "escalation": {
+          "human-in-the-loop": "none"
+        },
+        "subject": "optional"
+      }
+    },
+    {
+      "method": "get",
+      "operationId": "weekly_report_api_v1_public_weekly_report_get",
+      "path": "/api/v1/public/weekly-report",
+      "security": [
+        {
+          "SessionBearer": []
+        }
+      ],
+      "summary": "Get the Daily Insights payload",
+      "x-agentic-access": {
+        "action-class": "connected",
+        "audience": "https://api.gatiflow.io",
+        "audit": "none",
+        "consequence": "read",
+        "escalation": {
+          "human-in-the-loop": "none"
+        },
+        "subject": "required"
+      }
+    },
+    {
+      "method": "get",
+      "operationId": "get_my_usage_api_v1_usage_get",
+      "path": "/api/v1/usage",
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ],
+      "summary": "List recent calls made with this API key",
+      "x-agentic-access": {
+        "action-class": "connected",
+        "audience": "https://api.gatiflow.io",
+        "audit": "none",
+        "consequence": "read",
+        "escalation": {
+          "human-in-the-loop": "none"
+        },
+        "subject": "optional"
+      }
+    }
+  ],
+  "publisher": "GatiFlow",
+  "source": "https://gatiflow.io/agentic-access.json",
+  "summary": {
+    "by_action_class": {
+      "connected": 7
+    },
+    "by_consequence": {
+      "read": 7
+    },
+    "human_in_the_loop_required": 0,
+    "operations": 7
+  },
+  "version": "2.5.0"
+}

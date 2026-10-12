@@ -1,40 +1,103 @@
 {
   "@context": {
-    "@vocab": "https://gatiflow.io/schema#",
-    "schema": "https://schema.org/",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "@version": 1.1,
+    "AlertEvent": "gatiflow:Alert",
+    "DailyInsights": "gatiflow:DailyInsights",
+    "DeepDivePreview": "schema:Article",
+    "EmergingAlert": "gatiflow:Alert",
+    "ErrorResponse": "gatiflow:ErrorEnvelope",
+    "IntelligenceReport": "gatiflow:Report",
+    "NewHirerAlert": "gatiflow:Alert",
+    "SignalItem": "gatiflow:Signal",
+    "SnapshotSummary": "gatiflow:Snapshot",
+    "SpikeAlert": "gatiflow:Alert",
+    "TrendAnalysis": "gatiflow:TrendAnalysis",
+    "UsageLog": "gatiflow:UsageLog",
+    "baseline_metric": {
+      "@id": "gatiflow:baseline",
+      "@type": "xsd:decimal"
+    },
+    "category": {
+      "@id": "gatiflow:category"
+    },
+    "change_pct": {
+      "@id": "gatiflow:changePercent",
+      "@type": "xsd:decimal"
+    },
+    "company": {
+      "@id": "schema:hiringOrganization"
+    },
+    "confidence": {
+      "@id": "gatiflow:confidence",
+      "@type": "xsd:decimal"
+    },
     "dcterms": "http://purl.org/dc/terms/",
-    "gatiflow": "https://gatiflow.io/schema#",
-    "HTTPValidationError": "gatiflow:HTTPValidationError",
     "detail": {
-      "@id": "gatiflow:detail",
-      "@container": "@list"
+      "@id": "schema:description"
     },
-    "ValidationError": "gatiflow:ValidationError",
-    "ctx": {
-      "@id": "gatiflow:ctx"
+    "evidence": {
+      "@id": "gatiflow:evidence",
+      "@type": "@json"
     },
-    "input": {
-      "@id": "gatiflow:input"
+    "gatiflow": "https://gatiflow.io/vocabulary.json#",
+    "generated_at": {
+      "@id": "schema:dateCreated",
+      "@type": "xsd:dateTime"
     },
-    "loc": {
-      "@id": "gatiflow:loc",
-      "@container": "@list"
+    "hiring_status": {
+      "@id": "gatiflow:hiringStatus"
     },
-    "msg": {
-      "@id": "gatiflow:msg",
-      "@type": "xsd:string"
+    "narrative": {
+      "@id": "gatiflow:narrative"
     },
-    "type": {
-      "@id": "gatiflow:type",
-      "@type": "xsd:string"
-    }
+    "plan": {
+      "@id": "gatiflow:plan"
+    },
+    "preview": {
+      "@id": "schema:abstract"
+    },
+    "published_at": {
+      "@id": "schema:datePublished",
+      "@type": "xsd:dateTime"
+    },
+    "relevance": {
+      "@id": "gatiflow:relevance",
+      "@type": "xsd:decimal"
+    },
+    "request_id": {
+      "@id": "gatiflow:requestId"
+    },
+    "schema": "https://schema.org/",
+    "snapshot_id": {
+      "@id": "gatiflow:Snapshot"
+    },
+    "source": {
+      "@id": "gatiflow:source"
+    },
+    "title": {
+      "@id": "schema:name"
+    },
+    "topic": {
+      "@id": "gatiflow:topic"
+    },
+    "url": {
+      "@id": "schema:url",
+      "@type": "@id"
+    },
+    "velocity": {
+      "@id": "gatiflow:velocity",
+      "@type": "@json"
+    },
+    "word_count": {
+      "@id": "schema:wordCount",
+      "@type": "xsd:integer"
+    },
+    "xsd": "http://www.w3.org/2001/XMLSchema#"
   },
-  "@type": "schema:Dataset",
-  "schema:name": "GatiFlow API JSON-LD context",
-  "schema:description": "A JSON-LD @context for the objects GatiFlow's own API contract declares: one class per component schema, one property per declared field, typed from the contract. Derived by script (derive-json-ld.py, 2026-09-21) from openapi/gatiflow-openapi.yml.",
-  "dcterms:created": "2026-09-21",
-  "dcterms:source": [
-    "openapi/gatiflow-openapi.yml"
-  ]
+  "@id": "https://gatiflow.io/context.jsonld",
+  "dcterms:description": "Maps the fields of GatiFlow API responses to the GatiFlow API Vocabulary and to schema.org. Use it as \"@context\": \"https://gatiflow.io/context.jsonld\" over a response from https://api.gatiflow.io.",
+  "dcterms:hasVersion": "2.5.0",
+  "dcterms:publisher": "GatiFlow",
+  "dcterms:source": "https://gatiflow.io/openapi.json",
+  "dcterms:title": "GatiFlow API JSON-LD context"
 }

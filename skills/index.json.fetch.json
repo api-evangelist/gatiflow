@@ -1,0 +1,13 @@
+{
+ "url": "https://gatiflow.io/.well-known/agent-skills/index.json",
+ "requested_url": "https://gatiflow.io/.well-known/agent-skills/index.json",
+ "status": 200,
+ "content_type": "application/json; charset=utf-8",
+ "bytes": 839,
+ "sha256": "9febcd0b13112b696087bbf5ac4decedbad95b6a57836bb057cbfa86fcf97f36",
+ "fetched_at": "2026-10-12",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "publisher": "GatiFlow",
+ "method": "published",
+ "note": "Saved verbatim from the provider at GatiFlow's request (Rege, 2026-10-11 correction); replaces our derived artifact of this type."
+}

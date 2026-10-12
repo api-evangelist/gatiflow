@@ -1,0 +1,346 @@
+{
+  "description": "The standards the GatiFlow API and the documents that describe it follow, each with the document that shows it, and the standards it does not follow, said as plainly. status is implemented, policy (a commitment that applies when its trigger happens) or not-implemented.",
+  "method": "published",
+  "publisher": "GatiFlow",
+  "source": "https://gatiflow.io/conformance.json",
+  "standards": [
+    {
+      "conforms": true,
+      "detail": "The published contract, generated from the running routes and validated against the OpenAPI 3.1 schema on every change.",
+      "evidence": [
+        "https://gatiflow.io/openapi.json"
+      ],
+      "id": "openapi-3.1",
+      "name": "OpenAPI Specification 3.1",
+      "status": "implemented",
+      "url": "https://spec.openapis.org/oas/v3.1.0"
+    },
+    {
+      "conforms": true,
+      "detail": "The contract's types, and one standalone schema per response at /schemas/<Name>.json.",
+      "evidence": [
+        "https://gatiflow.io/schemas/IntelligenceReport.json"
+      ],
+      "id": "json-schema-2020-12",
+      "name": "JSON Schema 2020-12",
+      "status": "implemented",
+      "url": "https://json-schema.org/draft/2020-12/schema"
+    },
+    {
+      "conforms": true,
+      "detail": "The webhook GatiFlow sends, generated from the webhooks section of the contract.",
+      "evidence": [
+        "https://gatiflow.io/asyncapi.json"
+      ],
+      "id": "asyncapi-3.0",
+      "name": "AsyncAPI 3.0",
+      "status": "implemented",
+      "url": "https://www.asyncapi.com/docs/reference/specification/v3.0.0"
+    },
+    {
+      "conforms": true,
+      "detail": "The contract an API key can call, as an overlay on the published contract.",
+      "evidence": [
+        "https://gatiflow.io/overlays/api-key-client.json"
+      ],
+      "id": "openapi-overlay-1.0",
+      "name": "OpenAPI Overlay Specification 1.0",
+      "status": "implemented",
+      "url": "https://spec.openapis.org/overlay/v1.0.0"
+    },
+    {
+      "conforms": true,
+      "detail": "The rules the contract is held to, extending spectral:oas. The contract passes it with no finding at any severity.",
+      "evidence": [
+        "https://gatiflow.io/spectral.yaml"
+      ],
+      "id": "spectral-ruleset",
+      "name": "Spectral ruleset",
+      "status": "implemented",
+      "url": "https://docs.stoplight.io/docs/spectral/"
+    },
+    {
+      "conforms": true,
+      "detail": "A context mapping response fields to the vocabulary and to schema.org.",
+      "evidence": [
+        "https://gatiflow.io/context.jsonld"
+      ],
+      "id": "json-ld-1.1",
+      "name": "JSON-LD 1.1",
+      "status": "implemented",
+      "url": "https://www.w3.org/TR/json-ld11/"
+    },
+    {
+      "conforms": true,
+      "detail": "Served as application/linkset+json with the RFC's profile.",
+      "evidence": [
+        "https://gatiflow.io/.well-known/api-catalog"
+      ],
+      "id": "rfc9727-api-catalog",
+      "name": "RFC 9727, api-catalog: A Well-Known URI and Link Relation to Help Discover APIs",
+      "status": "implemented",
+      "url": "https://www.rfc-editor.org/rfc/rfc9727"
+    },
+    {
+      "conforms": true,
+      "detail": "The format of the API catalog.",
+      "evidence": [
+        "https://gatiflow.io/.well-known/api-catalog"
+      ],
+      "id": "rfc9264-linkset",
+      "name": "RFC 9264, Linkset: Media Types and a Link Relation Type for Link Sets",
+      "status": "implemented",
+      "url": "https://www.rfc-editor.org/rfc/rfc9264"
+    },
+    {
+      "conforms": true,
+      "detail": "Contact, Expires and Canonical, with the expiry kept inside a year.",
+      "evidence": [
+        "https://gatiflow.io/.well-known/security.txt"
+      ],
+      "id": "rfc9116-security-txt",
+      "name": "RFC 9116, A File Format to Aid in Security Vulnerability Disclosure",
+      "status": "implemented",
+      "url": "https://www.rfc-editor.org/rfc/rfc9116"
+    },
+    {
+      "conforms": true,
+      "detail": "The discovery documents live under /.well-known/.",
+      "evidence": [
+        "https://gatiflow.io/.well-known/api-catalog",
+        "https://gatiflow.io/.well-known/security.txt",
+        "https://gatiflow.io/.well-known/agent-skills/index.json"
+      ],
+      "id": "rfc8615-well-known-uris",
+      "name": "RFC 8615, Well-Known Uniform Resource Identifiers",
+      "status": "implemented",
+      "url": "https://www.rfc-editor.org/rfc/rfc8615"
+    },
+    {
+      "conforms": true,
+      "detail": "Policy: from the day a deprecation is announced, the operation's responses carry Deprecation. No operation is deprecated today; the ruleset refuses a deprecated operation that does not declare it.",
+      "evidence": [
+        "https://gatiflow.io/api-docs#versioning",
+        "https://gatiflow.io/spectral.yaml"
+      ],
+      "id": "rfc9745-deprecation-header",
+      "name": "RFC 9745, The Deprecation HTTP Response Header Field",
+      "status": "policy",
+      "url": "https://www.rfc-editor.org/rfc/rfc9745"
+    },
+    {
+      "conforms": true,
+      "detail": "Policy: a deprecated operation carries Sunset with its removal date, no sooner than 90 days after the notice. No operation is deprecated today.",
+      "evidence": [
+        "https://gatiflow.io/api-docs#versioning",
+        "https://gatiflow.io/spectral.yaml"
+      ],
+      "id": "rfc8594-sunset-header",
+      "name": "RFC 8594, The Sunset HTTP Header Field",
+      "status": "policy",
+      "url": "https://www.rfc-editor.org/rfc/rfc8594"
+    },
+    {
+      "conforms": true,
+      "detail": "The web-app session is sent as Authorization: Bearer. It is the only bearer token the API takes; there is no OAuth authorization server.",
+      "evidence": [
+        "https://gatiflow.io/openapi.json#/components/securitySchemes/SessionBearer"
+      ],
+      "id": "rfc6750-bearer-token",
+      "name": "RFC 6750, OAuth 2.0 Bearer Token Usage",
+      "status": "implemented",
+      "url": "https://www.rfc-editor.org/rfc/rfc6750"
+    },
+    {
+      "conforms": true,
+      "detail": "The web-app session token is a JWT.",
+      "evidence": [
+        "https://gatiflow.io/openapi.json#/components/securitySchemes/SessionBearer"
+      ],
+      "id": "rfc7519-jwt",
+      "name": "RFC 7519, JSON Web Token",
+      "status": "implemented",
+      "url": "https://www.rfc-editor.org/rfc/rfc7519"
+    },
+    {
+      "conforms": true,
+      "detail": "Every webhook request is signed: X-GatiFlow-Signature is the HMAC-SHA256 of the timestamp and the raw body under the webhook's secret.",
+      "evidence": [
+        "https://gatiflow.io/api-docs/webhooks",
+        "https://gatiflow.io/asyncapi.json"
+      ],
+      "id": "rfc2104-hmac-sha256",
+      "name": "RFC 2104, HMAC, with SHA-256",
+      "status": "implemented",
+      "url": "https://www.rfc-editor.org/rfc/rfc2104"
+    },
+    {
+      "conforms": true,
+      "detail": "Every rate-limited operation documents the 429 its limit produces.",
+      "evidence": [
+        "https://gatiflow.io/openapi.json"
+      ],
+      "id": "rfc6585-429",
+      "name": "RFC 6585, status code 429 Too Many Requests",
+      "status": "implemented",
+      "url": "https://www.rfc-editor.org/rfc/rfc6585#section-4"
+    },
+    {
+      "conforms": true,
+      "detail": "The 503 that refuses stale data carries Retry-After, in seconds.",
+      "evidence": [
+        "https://gatiflow.io/openapi.json"
+      ],
+      "id": "rfc9110-retry-after",
+      "name": "RFC 9110, HTTP Semantics: Retry-After",
+      "status": "implemented",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110#field.retry-after"
+    },
+    {
+      "conforms": true,
+      "detail": "The software bill of materials of the running API, read from the packages the service has installed.",
+      "evidence": [
+        "https://api.gatiflow.io/sbom.cdx.json"
+      ],
+      "id": "cyclonedx-1.6",
+      "name": "CycloneDX 1.6",
+      "status": "implemented",
+      "url": "https://cyclonedx.org/docs/1.6/json/"
+    },
+    {
+      "conforms": true,
+      "detail": "One request per published operation, generated from the contract.",
+      "evidence": [
+        "https://gatiflow.io/postman_collection.json"
+      ],
+      "id": "postman-collection-2.1",
+      "name": "Postman Collection Format 2.1",
+      "status": "implemented",
+      "url": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    {
+      "conforms": true,
+      "detail": "The index of the API and every document that describes it.",
+      "evidence": [
+        "https://gatiflow.io/apis.json"
+      ],
+      "id": "apis-json-0.19",
+      "name": "APIs.json 0.19",
+      "status": "implemented",
+      "url": "https://apisjson.org"
+    },
+    {
+      "conforms": true,
+      "detail": "The surface in plain language, for a reader with no one watching.",
+      "evidence": [
+        "https://gatiflow.io/llms.txt"
+      ],
+      "id": "llms-txt",
+      "name": "llms.txt",
+      "status": "implemented",
+      "url": "https://llmstxt.org"
+    },
+    {
+      "conforms": true,
+      "detail": "Operating instructions for an agent working with the report, listed in a discovery index with the digest of their bytes.",
+      "evidence": [
+        "https://gatiflow.io/.well-known/agent-skills/gatiflow-intelligence/SKILL.md",
+        "https://gatiflow.io/.well-known/agent-skills/index.json"
+      ],
+      "id": "agent-skills",
+      "name": "Agent Skills (SKILL.md) and Agent Skills discovery 0.2.0",
+      "status": "implemented",
+      "url": "https://agentskills.io"
+    },
+    {
+      "conforms": true,
+      "detail": "Every operation classified, inline in the contract and gathered in one document.",
+      "evidence": [
+        "https://gatiflow.io/agentic-access.json",
+        "https://gatiflow.io/openapi.json"
+      ],
+      "id": "x-agentic-access",
+      "name": "x-agentic-access execution contracts",
+      "status": "implemented",
+      "url": "https://apis.io"
+    },
+    {
+      "conforms": true,
+      "detail": "The site's crawl rules.",
+      "evidence": [
+        "https://gatiflow.io/robots.txt"
+      ],
+      "id": "rfc9309-robots",
+      "name": "RFC 9309, Robots Exclusion Protocol",
+      "status": "implemented",
+      "url": "https://www.rfc-editor.org/rfc/rfc9309"
+    },
+    {
+      "conforms": true,
+      "detail": "search=yes, ai-input=yes, ai-train=no, as the Acceptable Use Policy says of the outputs.",
+      "evidence": [
+        "https://gatiflow.io/robots.txt"
+      ],
+      "id": "content-signals",
+      "name": "Content Signals",
+      "status": "implemented",
+      "url": "https://contentsignals.org"
+    },
+    {
+      "conforms": true,
+      "detail": "The public pages of the site.",
+      "evidence": [
+        "https://gatiflow.io/sitemap.xml"
+      ],
+      "id": "sitemaps-0.9",
+      "name": "Sitemaps XML format 0.9",
+      "status": "implemented",
+      "url": "https://www.sitemaps.org/protocol.html"
+    },
+    {
+      "conforms": false,
+      "detail": "Not implemented. Errors use GatiFlow's own envelope, as application/json; application/problem+json is never served.",
+      "evidence": [
+        "https://gatiflow.io/openapi.json#/components/schemas/ErrorResponse"
+      ],
+      "id": "rfc9457-problem-details",
+      "name": "RFC 9457, Problem Details for HTTP APIs",
+      "status": "not-implemented",
+      "url": "https://www.rfc-editor.org/rfc/rfc9457"
+    },
+    {
+      "conforms": false,
+      "detail": "Not implemented. The API takes an API key or the web-app session; OAuth 2.1 is on the roadmap.",
+      "evidence": [
+        "https://gatiflow.io/roadmap"
+      ],
+      "id": "oauth-2.1",
+      "name": "OAuth 2.1",
+      "status": "not-implemented",
+      "url": "https://datatracker.ietf.org/doc/draft-ietf-oauth-v2-1/"
+    },
+    {
+      "conforms": false,
+      "detail": "Not implemented. Limits are reported in X-RateLimit-* and X-DailyQuota-* headers, not in the draft's RateLimit and RateLimit-Policy fields.",
+      "evidence": [
+        "https://gatiflow.io/openapi.json"
+      ],
+      "id": "ratelimit-headers",
+      "name": "RateLimit header fields for HTTP (IETF draft)",
+      "status": "not-implemented",
+      "url": "https://datatracker.ietf.org/doc/draft-ietf-httpapi-ratelimit-headers/"
+    },
+    {
+      "conforms": false,
+      "detail": "Not implemented. There is no MCP server; one is on the roadmap.",
+      "evidence": [
+        "https://gatiflow.io/roadmap"
+      ],
+      "id": "mcp",
+      "name": "Model Context Protocol",
+      "status": "not-implemented",
+      "url": "https://modelcontextprotocol.io"
+    }
+  ],
+  "version": "2.5.0"
+}

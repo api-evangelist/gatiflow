@@ -18,7 +18,7 @@ x-tier-reason: enrichment pass 2026-09-21 (local-v5; was apis.io/add submission 
 position: Producing
 specificationVersion: '0.20'
 created: '2026-09-21'
-modified: '2026-09-27'
+modified: '2026-10-12'
 image: https://gatiflow.io/favicon.svg
 tags:
 - Market Intelligence
@@ -60,19 +60,21 @@ common:
 - type: Vendors
   url: vendors/gatiflow-vendors.yml
 - type: AgenticAccess
-  url: agentic-access/gatiflow-agentic-access.yml
+  url: https://gatiflow.io/agentic-access.json
 - type: RateLimits
   url: rate-limits/gatiflow-rate-limits.yml
 - type: Plans
   url: plans/gatiflow-plans-pricing.yml
-- type: Spectral
-  url: rules/gatiflow-rules.yml
-- type: JSONLD
-  url: json-ld/gatiflow-context.jsonld
+- type: SpectralRules
+  url: https://gatiflow.io/spectral.yaml
+- type: JSONLDContext
+  url: https://gatiflow.io/context.jsonld
 - type: Vocabulary
-  url: vocabulary/gatiflow-vocabulary.yml
+  url: https://gatiflow.io/vocabulary.json
 - type: AgentSkill
-  url: skills/_index.yml
+  url: https://gatiflow.io/.well-known/agent-skills/gatiflow-intelligence/SKILL.md
+- type: Overlay
+  url: https://gatiflow.io/overlays/api-key-client.json
 - type: DataModel
   url: data-model/gatiflow-data-model.yml
 - type: ChangeLog
@@ -96,7 +98,7 @@ common:
 - type: ErrorCatalog
   url: errors/gatiflow-problem-types.yml
 - type: Conformance
-  url: conformance/gatiflow-conformance.yml
+  url: https://gatiflow.io/conformance.json
 - type: LLMsTxt
   url: llms/gatiflow-llms.txt
 - type: ChangeLog

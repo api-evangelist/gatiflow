@@ -1,0 +1,12 @@
+{
+  "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
+  "skills": [
+    {
+      "description": "Read GatiFlow's market, talent and hiring intelligence through its API with an API key - fetch the organization's current report, walk retained snapshots for movement instead of calling again, export the report as a file, and check what a key has used - and report confidence, corroboration and trend movement without overstating them. Use when a task needs developer-ecosystem signals (trending technologies, papers, packages, talent, hiring) from GatiFlow.",
+      "digest": "sha256:cd6a5fbc57d11157b3a19e815dc94abfb4d178e6a2efb4af350bdc5b81e85b75",
+      "name": "gatiflow-intelligence",
+      "type": "skill-md",
+      "url": "https://gatiflow.io/.well-known/agent-skills/gatiflow-intelligence/SKILL.md"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+ "url": "https://gatiflow.io/conformance.json",
+ "requested_url": "https://gatiflow.io/conformance.json",
+ "status": 200,
+ "content_type": "application/json; charset=utf-8",
+ "bytes": 12571,
+ "sha256": "f8a784edd25296f1b0fe1e41766ede6f8f5ee8cad85f436e5b5e3d31f2a059d7",
+ "fetched_at": "2026-10-12",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "publisher": "GatiFlow",
+ "method": "published",
+ "note": "Saved verbatim from the provider at GatiFlow's request (Rege, 2026-10-11 correction); replaces our derived artifact of this type."
+}

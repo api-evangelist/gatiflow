@@ -1,0 +1,13 @@
+{
+ "url": "https://gatiflow.io/agentic-access.json",
+ "requested_url": "https://gatiflow.io/agentic-access.json",
+ "status": 200,
+ "content_type": "application/json; charset=utf-8",
+ "bytes": 5311,
+ "sha256": "0431d4f27d0ba6ce372818f6a7b6a55e1c8d51460ac6e31dbe842b4c8a77e0e7",
+ "fetched_at": "2026-10-12",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "publisher": "GatiFlow",
+ "method": "published",
+ "note": "Saved verbatim from the provider at GatiFlow's request (Rege, 2026-10-11 correction); replaces our derived artifact of this type."
+}

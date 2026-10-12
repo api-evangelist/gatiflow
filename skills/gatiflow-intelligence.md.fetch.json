@@ -1,0 +1,13 @@
+{
+ "url": "https://gatiflow.io/.well-known/agent-skills/gatiflow-intelligence/SKILL.md",
+ "requested_url": "https://gatiflow.io/.well-known/agent-skills/gatiflow-intelligence/SKILL.md",
+ "status": 200,
+ "content_type": "text/markdown; charset=utf-8",
+ "bytes": 6472,
+ "sha256": "cd6a5fbc57d11157b3a19e815dc94abfb4d178e6a2efb4af350bdc5b81e85b75",
+ "fetched_at": "2026-10-12",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "publisher": "GatiFlow",
+ "method": "published",
+ "note": "Saved verbatim from the provider at GatiFlow's request (Rege, 2026-10-11 correction); replaces our derived artifact of this type."
+}
