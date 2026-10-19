@@ -8,7 +8,7 @@ created: '2026-09-27'
 # section) at the provider's request (Rege, 2026-09-27). Not harvested: GatiFlow publishes
 # no FinOps/FOCUS document of its own.
 method: authored
-modified: '2026-09-27'
+modified: '2026-10-19'
 tags:
 - Market Intelligence
 - Developer Signals
@@ -38,6 +38,13 @@ billingModel:
   freeTier: Free read-only tier after the 14-day Starter trial
   chargeCategories:
   - Purchase
+  primaryUnit: subscription
+  primaryUnitNote: >-
+    One flat monthly subscription per organization (Starter $49, Pro $149, Business $499; gatiflow.io
+    Pricing). API calls count against the plan's daily quota, which applies per organization across every
+    key it holds (Free 10/day, Starter 2,000/day, Pro 10,000/day, Business 50,000/day; gatiflow.io/api-docs
+    Rate Limits); they are never billed per call. Stated by GatiFlow (Rege, 2026-10-18) and checked against
+    both pages on 2026-10-19.
 plans:
 - name: Free (read-only)
   price: 0
